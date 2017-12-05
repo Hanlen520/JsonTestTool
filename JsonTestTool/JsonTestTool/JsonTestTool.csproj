@@ -51,21 +51,27 @@
   <ItemGroup>
     <Compile Include="Frame\FrmPerformentTest.cs">
       <SubType>Form</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Frame\FrmPerformentTest.designer.cs">
       <DependentUpon>FrmPerformentTest.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Frame\FrmTestSystem.cs">
       <SubType>Form</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Frame\FrmTestSystem.designer.cs">
       <DependentUpon>FrmTestSystem.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Frame\HelpForm.cs">
       <SubType>Form</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Frame\HelpForm.designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Frame\InfoForm.cs">
       <SubType>Form</SubType>
@@ -81,16 +87,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util\HttpUtil.cs" />
+    <Compile Include="Util\HttpUtil.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Util\MethodJsonString.cs" />
     <EmbeddedResource Include="Frame\FrmPerformentTest.resx">
       <DependentUpon>FrmPerformentTest.cs</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Frame\FrmTestSystem.resx">
       <DependentUpon>FrmTestSystem.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Frame\HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Frame\InfoForm.resx">
       <DependentUpon>InfoForm.cs</DependentUpon>

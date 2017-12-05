@@ -56,7 +56,7 @@
             // Lbl_IP
             // 
             this.Lbl_IP.AutoSize = true;
-            this.Lbl_IP.Location = new System.Drawing.Point(401, 14);
+            this.Lbl_IP.Location = new System.Drawing.Point(401, 9);
             this.Lbl_IP.Name = "Lbl_IP";
             this.Lbl_IP.Size = new System.Drawing.Size(17, 12);
             this.Lbl_IP.TabIndex = 1;
@@ -64,8 +64,9 @@
             // 
             // Lbl_Port
             // 
+            this.Lbl_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Lbl_Port.AutoSize = true;
-            this.Lbl_Port.Location = new System.Drawing.Point(570, 16);
+            this.Lbl_Port.Location = new System.Drawing.Point(568, 9);
             this.Lbl_Port.Name = "Lbl_Port";
             this.Lbl_Port.Size = new System.Drawing.Size(29, 12);
             this.Lbl_Port.TabIndex = 2;
@@ -73,7 +74,7 @@
             // 
             // Tb_IP
             // 
-            this.Tb_IP.Location = new System.Drawing.Point(403, 31);
+            this.Tb_IP.Location = new System.Drawing.Point(403, 24);
             this.Tb_IP.Multiline = true;
             this.Tb_IP.Name = "Tb_IP";
             this.Tb_IP.Size = new System.Drawing.Size(163, 20);
@@ -83,7 +84,8 @@
             // 
             // Tb_Port
             // 
-            this.Tb_Port.Location = new System.Drawing.Point(570, 31);
+            this.Tb_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Tb_Port.Location = new System.Drawing.Point(570, 24);
             this.Tb_Port.Multiline = true;
             this.Tb_Port.Name = "Tb_Port";
             this.Tb_Port.Size = new System.Drawing.Size(43, 20);
@@ -179,7 +181,7 @@
             // btn_GET
             // 
             this.btn_GET.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_GET.Location = new System.Drawing.Point(619, 56);
+            this.btn_GET.Location = new System.Drawing.Point(638, 56);
             this.btn_GET.Name = "btn_GET";
             this.btn_GET.Size = new System.Drawing.Size(100, 23);
             this.btn_GET.TabIndex = 13;
@@ -188,8 +190,9 @@
             // 
             // lb_RequestType
             // 
+            this.lb_RequestType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_RequestType.AutoSize = true;
-            this.lb_RequestType.Location = new System.Drawing.Point(617, 15);
+            this.lb_RequestType.Location = new System.Drawing.Point(623, 9);
             this.lb_RequestType.Name = "lb_RequestType";
             this.lb_RequestType.Size = new System.Drawing.Size(53, 12);
             this.lb_RequestType.TabIndex = 14;
@@ -197,6 +200,7 @@
             // 
             // cb_Request
             // 
+            this.cb_Request.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_Request.FormattingEnabled = true;
             this.cb_Request.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.cb_Request.Items.AddRange(new object[] {
@@ -204,9 +208,9 @@
             "api/hedacmdreq",
             "api/sysinfo",
             "xml/upload"});
-            this.cb_Request.Location = new System.Drawing.Point(625, 31);
+            this.cb_Request.Location = new System.Drawing.Point(625, 24);
             this.cb_Request.Name = "cb_Request";
-            this.cb_Request.Size = new System.Drawing.Size(116, 20);
+            this.cb_Request.Size = new System.Drawing.Size(113, 20);
             this.cb_Request.TabIndex = 15;
             this.cb_Request.Text = "api/hedajwreq";
             // 
@@ -233,7 +237,7 @@
             // 
             // tb_CaseFolder
             // 
-            this.tb_CaseFolder.Location = new System.Drawing.Point(12, 31);
+            this.tb_CaseFolder.Location = new System.Drawing.Point(12, 24);
             this.tb_CaseFolder.Multiline = true;
             this.tb_CaseFolder.Name = "tb_CaseFolder";
             this.tb_CaseFolder.Size = new System.Drawing.Size(385, 20);
@@ -243,7 +247,7 @@
             // lb_CaseFolder
             // 
             this.lb_CaseFolder.AutoSize = true;
-            this.lb_CaseFolder.Location = new System.Drawing.Point(11, 14);
+            this.lb_CaseFolder.Location = new System.Drawing.Point(12, 9);
             this.lb_CaseFolder.Name = "lb_CaseFolder";
             this.lb_CaseFolder.Size = new System.Drawing.Size(89, 12);
             this.lb_CaseFolder.TabIndex = 1;

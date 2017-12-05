@@ -30,44 +30,36 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoForm));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
-            this.label17 = new System.Windows.Forms.Label();
+            this.tb_bejson_Xml2Json = new System.Windows.Forms.TextBox();
+            this.pb_CanGiveUp = new System.Windows.Forms.PictureBox();
+            this.pb_RedFace = new System.Windows.Forms.PictureBox();
+            this.pb_Praise = new System.Windows.Forms.PictureBox();
+            this.lb_TellMeSomeThing = new System.Windows.Forms.Label();
+            this.lb_TestCaseHotWrite = new System.Windows.Forms.Label();
+            this.lb_SoftwareSoBad = new System.Windows.Forms.Label();
+            this.lb_Yo = new System.Windows.Forms.Label();
+            this.pb_Look = new System.Windows.Forms.PictureBox();
+            this.gb_SoftwareInformation = new System.Windows.Forms.GroupBox();
+            this.tb_CompanyUrl = new System.Windows.Forms.TextBox();
+            this.tb_Email = new System.Windows.Forms.TextBox();
+            this.tb_Github = new System.Windows.Forms.TextBox();
+            this.lb_SoftwareName = new System.Windows.Forms.Label();
+            this.lb_CompanyUrl = new System.Windows.Forms.Label();
+            this.lb_Github = new System.Windows.Forms.Label();
+            this.lb_Author = new System.Windows.Forms.Label();
+            this.lb_Email = new System.Windows.Forms.Label();
+            this.lb_Copyright = new System.Windows.Forms.Label();
+            this.lb_Anthony = new System.Windows.Forms.Label();
+            this.lb_Version = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_CanGiveUp)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RedFace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Praise)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Look)).BeginInit();
+            this.gb_SoftwareInformation.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -80,310 +72,241 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.textBox1);
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox5);
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox3);
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox2);
-            this.splitContainer1.Panel1.Controls.Add(this.label6);
-            this.splitContainer1.Panel1.Controls.Add(this.label9);
-            this.splitContainer1.Panel1.Controls.Add(this.label5);
-            this.splitContainer1.Panel1.Controls.Add(this.label4);
-            this.splitContainer1.Panel1.Controls.Add(this.pictureBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.tb_bejson_Xml2Json);
+            this.splitContainer1.Panel1.Controls.Add(this.pb_CanGiveUp);
+            this.splitContainer1.Panel1.Controls.Add(this.pb_RedFace);
+            this.splitContainer1.Panel1.Controls.Add(this.pb_Praise);
+            this.splitContainer1.Panel1.Controls.Add(this.lb_TellMeSomeThing);
+            this.splitContainer1.Panel1.Controls.Add(this.lb_TestCaseHotWrite);
+            this.splitContainer1.Panel1.Controls.Add(this.lb_SoftwareSoBad);
+            this.splitContainer1.Panel1.Controls.Add(this.lb_Yo);
+            this.splitContainer1.Panel1.Controls.Add(this.pb_Look);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer1.Panel2.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.gb_SoftwareInformation);
             this.splitContainer1.Size = new System.Drawing.Size(750, 550);
             this.splitContainer1.SplitterDistance = 247;
             this.splitContainer1.TabIndex = 0;
             // 
-            // textBox1
+            // tb_bejson_Xml2Json
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(236, 174);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(260, 14);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Text = "在线转换 https://www.bejson.com/xml2json/";
+            this.tb_bejson_Xml2Json.BackColor = System.Drawing.SystemColors.Control;
+            this.tb_bejson_Xml2Json.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_bejson_Xml2Json.Location = new System.Drawing.Point(236, 174);
+            this.tb_bejson_Xml2Json.Name = "tb_bejson_Xml2Json";
+            this.tb_bejson_Xml2Json.Size = new System.Drawing.Size(260, 14);
+            this.tb_bejson_Xml2Json.TabIndex = 3;
+            this.tb_bejson_Xml2Json.Text = "在线转换 https://www.bejson.com/xml2json/";
             // 
-            // pictureBox5
+            // pb_CanGiveUp
             // 
-            this.pictureBox5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox5.BackgroundImage")));
-            this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox5.Location = new System.Drawing.Point(22, 118);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(167, 126);
-            this.pictureBox5.TabIndex = 2;
-            this.pictureBox5.TabStop = false;
+            this.pb_CanGiveUp.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pb_CanGiveUp.BackgroundImage")));
+            this.pb_CanGiveUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pb_CanGiveUp.Location = new System.Drawing.Point(22, 118);
+            this.pb_CanGiveUp.Name = "pb_CanGiveUp";
+            this.pb_CanGiveUp.Size = new System.Drawing.Size(167, 126);
+            this.pb_CanGiveUp.TabIndex = 2;
+            this.pb_CanGiveUp.TabStop = false;
             // 
-            // pictureBox3
+            // pb_RedFace
             // 
-            this.pictureBox3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox3.BackgroundImage")));
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox3.Location = new System.Drawing.Point(592, 105);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(109, 116);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
+            this.pb_RedFace.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pb_RedFace.BackgroundImage")));
+            this.pb_RedFace.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pb_RedFace.Location = new System.Drawing.Point(629, 128);
+            this.pb_RedFace.Name = "pb_RedFace";
+            this.pb_RedFace.Size = new System.Drawing.Size(109, 116);
+            this.pb_RedFace.TabIndex = 2;
+            this.pb_RedFace.TabStop = false;
             // 
-            // pictureBox2
+            // pb_Praise
             // 
-            this.pictureBox2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.BackgroundImage")));
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(465, 34);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(96, 84);
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
+            this.pb_Praise.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pb_Praise.BackgroundImage")));
+            this.pb_Praise.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pb_Praise.Location = new System.Drawing.Point(479, 12);
+            this.pb_Praise.Name = "pb_Praise";
+            this.pb_Praise.Size = new System.Drawing.Size(121, 106);
+            this.pb_Praise.TabIndex = 2;
+            this.pb_Praise.TabStop = false;
             // 
-            // label6
+            // lb_TellMeSomeThing
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(413, 209);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(173, 12);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "如果有什么想法，可以告诉我。";
+            this.lb_TellMeSomeThing.AutoSize = true;
+            this.lb_TellMeSomeThing.Location = new System.Drawing.Point(413, 209);
+            this.lb_TellMeSomeThing.Name = "lb_TellMeSomeThing";
+            this.lb_TellMeSomeThing.Size = new System.Drawing.Size(173, 12);
+            this.lb_TellMeSomeThing.TabIndex = 1;
+            this.lb_TellMeSomeThing.Text = "如果有什么想法，可以告诉我。";
             // 
-            // label9
+            // lb_TestCaseHotWrite
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(207, 134);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(229, 15);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "测试Case怎么写？百度啊，23333";
+            this.lb_TestCaseHotWrite.AutoSize = true;
+            this.lb_TestCaseHotWrite.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_TestCaseHotWrite.Location = new System.Drawing.Point(207, 134);
+            this.lb_TestCaseHotWrite.Name = "lb_TestCaseHotWrite";
+            this.lb_TestCaseHotWrite.Size = new System.Drawing.Size(229, 15);
+            this.lb_TestCaseHotWrite.TabIndex = 1;
+            this.lb_TestCaseHotWrite.Text = "测试Case怎么写？百度啊，23333";
             // 
-            // label5
+            // lb_SoftwareSoBad
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(212, 90);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(247, 15);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "软件写得这么烂，需要你来点个赞。";
+            this.lb_SoftwareSoBad.AutoSize = true;
+            this.lb_SoftwareSoBad.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_SoftwareSoBad.Location = new System.Drawing.Point(215, 90);
+            this.lb_SoftwareSoBad.Name = "lb_SoftwareSoBad";
+            this.lb_SoftwareSoBad.Size = new System.Drawing.Size(247, 15);
+            this.lb_SoftwareSoBad.TabIndex = 1;
+            this.lb_SoftwareSoBad.Text = "软件写得这么烂，需要你来点个赞。";
             // 
-            // label4
+            // lb_Yo
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(109, 34);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(328, 16);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "哟，不好好测试，居然点到这个界面上来了！";
+            this.lb_Yo.AutoSize = true;
+            this.lb_Yo.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_Yo.Location = new System.Drawing.Point(109, 34);
+            this.lb_Yo.Name = "lb_Yo";
+            this.lb_Yo.Size = new System.Drawing.Size(328, 16);
+            this.lb_Yo.TabIndex = 1;
+            this.lb_Yo.Text = "哟，不好好测试，居然点到这个界面上来了！";
             // 
-            // pictureBox1
+            // pb_Look
             // 
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(22, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(81, 84);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pb_Look.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pb_Look.BackgroundImage")));
+            this.pb_Look.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pb_Look.Location = new System.Drawing.Point(22, 12);
+            this.pb_Look.Name = "pb_Look";
+            this.pb_Look.Size = new System.Drawing.Size(81, 84);
+            this.pb_Look.TabIndex = 0;
+            this.pb_Look.TabStop = false;
             // 
-            // groupBox1
+            // gb_SoftwareInformation
             // 
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.linkLabel2);
-            this.groupBox1.Controls.Add(this.linkLabel1);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox1.Location = new System.Drawing.Point(93, 40);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(574, 218);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
+            this.gb_SoftwareInformation.Controls.Add(this.tb_CompanyUrl);
+            this.gb_SoftwareInformation.Controls.Add(this.tb_Email);
+            this.gb_SoftwareInformation.Controls.Add(this.tb_Github);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_SoftwareName);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_CompanyUrl);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_Github);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_Author);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_Email);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_Copyright);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_Anthony);
+            this.gb_SoftwareInformation.Controls.Add(this.lb_Version);
+            this.gb_SoftwareInformation.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.gb_SoftwareInformation.Location = new System.Drawing.Point(80, 36);
+            this.gb_SoftwareInformation.Name = "gb_SoftwareInformation";
+            this.gb_SoftwareInformation.Size = new System.Drawing.Size(574, 251);
+            this.gb_SoftwareInformation.TabIndex = 4;
+            this.gb_SoftwareInformation.TabStop = false;
             // 
-            // label1
+            // tb_CompanyUrl
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(108, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(360, 52);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Json 接口测试工具";
+            this.tb_CompanyUrl.BackColor = System.Drawing.SystemColors.Control;
+            this.tb_CompanyUrl.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_CompanyUrl.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb_CompanyUrl.ForeColor = System.Drawing.Color.Blue;
+            this.tb_CompanyUrl.Location = new System.Drawing.Point(245, 195);
+            this.tb_CompanyUrl.Name = "tb_CompanyUrl";
+            this.tb_CompanyUrl.Size = new System.Drawing.Size(260, 14);
+            this.tb_CompanyUrl.TabIndex = 4;
+            this.tb_CompanyUrl.Text = "http://www.hedait.cn";
             // 
-            // label8
+            // tb_Email
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(169, 197);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 12);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "公司网址：";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.tb_Email.BackColor = System.Drawing.SystemColors.Control;
+            this.tb_Email.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_Email.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb_Email.ForeColor = System.Drawing.Color.Blue;
+            this.tb_Email.Location = new System.Drawing.Point(245, 171);
+            this.tb_Email.Name = "tb_Email";
+            this.tb_Email.Size = new System.Drawing.Size(260, 14);
+            this.tb_Email.TabIndex = 4;
+            this.tb_Email.Text = "liang.li@hedait.cn";
             // 
-            // label10
+            // tb_Github
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(181, 135);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 12);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "Author：";
+            this.tb_Github.BackColor = System.Drawing.SystemColors.Control;
+            this.tb_Github.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tb_Github.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb_Github.ForeColor = System.Drawing.Color.Blue;
+            this.tb_Github.Location = new System.Drawing.Point(200, 221);
+            this.tb_Github.Name = "tb_Github";
+            this.tb_Github.Size = new System.Drawing.Size(260, 14);
+            this.tb_Github.TabIndex = 4;
+            this.tb_Github.Text = "http://github.com/anthony6li/JsonTestTool";
             // 
-            // label3
+            // lb_SoftwareName
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(187, 169);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 12);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Email：";
+            this.lb_SoftwareName.AutoSize = true;
+            this.lb_SoftwareName.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_SoftwareName.Location = new System.Drawing.Point(108, 17);
+            this.lb_SoftwareName.Name = "lb_SoftwareName";
+            this.lb_SoftwareName.Size = new System.Drawing.Size(360, 52);
+            this.lb_SoftwareName.TabIndex = 1;
+            this.lb_SoftwareName.Text = "Json 接口测试工具";
             // 
-            // label7
+            // lb_CompanyUrl
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(170, 87);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(233, 12);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Copyright(C) 2017, Json Test Tool Soft";
+            this.lb_CompanyUrl.AutoSize = true;
+            this.lb_CompanyUrl.Location = new System.Drawing.Point(169, 197);
+            this.lb_CompanyUrl.Name = "lb_CompanyUrl";
+            this.lb_CompanyUrl.Size = new System.Drawing.Size(65, 12);
+            this.lb_CompanyUrl.TabIndex = 3;
+            this.lb_CompanyUrl.Text = "公司网址：";
+            this.lb_CompanyUrl.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
-            // label2
+            // lb_Github
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(223, 109);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "版本: 0.0.0.1";
+            this.lb_Github.AutoSize = true;
+            this.lb_Github.Location = new System.Drawing.Point(141, 221);
+            this.lb_Github.Name = "lb_Github";
+            this.lb_Github.Size = new System.Drawing.Size(53, 12);
+            this.lb_Github.TabIndex = 3;
+            this.lb_Github.Text = "Github：";
             // 
-            // linkLabel2
+            // lb_Author
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(243, 197);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(125, 12);
-            this.linkLabel2.TabIndex = 0;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "http://www.hedait.cn";
-            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.lb_Author.AutoSize = true;
+            this.lb_Author.Location = new System.Drawing.Point(181, 152);
+            this.lb_Author.Name = "lb_Author";
+            this.lb_Author.Size = new System.Drawing.Size(53, 12);
+            this.lb_Author.TabIndex = 3;
+            this.lb_Author.Text = "Author：";
             // 
-            // linkLabel1
+            // lb_Email
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(243, 169);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(113, 12);
-            this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "liang.li@hedait.cn";
+            this.lb_Email.AutoSize = true;
+            this.lb_Email.Location = new System.Drawing.Point(187, 173);
+            this.lb_Email.Name = "lb_Email";
+            this.lb_Email.Size = new System.Drawing.Size(47, 12);
+            this.lb_Email.TabIndex = 3;
+            this.lb_Email.Text = "Email：";
             // 
-            // groupBox2
+            // lb_Copyright
             // 
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.linkLabel3);
-            this.groupBox2.Controls.Add(this.linkLabel4);
-            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox2.Location = new System.Drawing.Point(99, 24);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(574, 251);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
+            this.lb_Copyright.AutoSize = true;
+            this.lb_Copyright.Location = new System.Drawing.Point(161, 100);
+            this.lb_Copyright.Name = "lb_Copyright";
+            this.lb_Copyright.Size = new System.Drawing.Size(233, 12);
+            this.lb_Copyright.TabIndex = 2;
+            this.lb_Copyright.Text = "Copyright(C) 2017, Json Test Tool Soft";
             // 
-            // label11
+            // lb_Anthony
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft YaHei UI", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(108, 17);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(360, 52);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Json 接口测试工具";
+            this.lb_Anthony.AutoSize = true;
+            this.lb_Anthony.Location = new System.Drawing.Point(256, 152);
+            this.lb_Anthony.Name = "lb_Anthony";
+            this.lb_Anthony.Size = new System.Drawing.Size(71, 12);
+            this.lb_Anthony.TabIndex = 2;
+            this.lb_Anthony.Text = "Anthony Lee";
             // 
-            // label12
+            // lb_Version
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(169, 214);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(65, 12);
-            this.label12.TabIndex = 3;
-            this.label12.Text = "公司网址：";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(181, 155);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(53, 12);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Author：";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(187, 186);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(47, 12);
-            this.label14.TabIndex = 3;
-            this.label14.Text = "Email：";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(170, 102);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(233, 12);
-            this.label15.TabIndex = 2;
-            this.label15.Text = "Copyright(C) 2017, Json Test Tool Soft";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(223, 127);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(83, 12);
-            this.label16.TabIndex = 2;
-            this.label16.Text = "版本: 0.0.0.1";
-            // 
-            // linkLabel3
-            // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(243, 214);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(125, 12);
-            this.linkLabel3.TabIndex = 0;
-            this.linkLabel3.TabStop = true;
-            this.linkLabel3.Text = "http://www.hedait.cn";
-            this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // linkLabel4
-            // 
-            this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(243, 186);
-            this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(113, 12);
-            this.linkLabel4.TabIndex = 0;
-            this.linkLabel4.TabStop = true;
-            this.linkLabel4.Text = "liang.li@hedait.cn";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(243, 155);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(71, 12);
-            this.label17.TabIndex = 2;
-            this.label17.Text = "Anthony Lee";
+            this.lb_Version.AutoSize = true;
+            this.lb_Version.Location = new System.Drawing.Point(224, 127);
+            this.lb_Version.Name = "lb_Version";
+            this.lb_Version.Size = new System.Drawing.Size(83, 12);
+            this.lb_Version.TabIndex = 2;
+            this.lb_Version.Text = "版本: 0.0.0.1";
             // 
             // InfoForm
             // 
@@ -399,14 +322,12 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_CanGiveUp)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_RedFace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Praise)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Look)).EndInit();
+            this.gb_SoftwareInformation.ResumeLayout(false);
+            this.gb_SoftwareInformation.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -414,33 +335,26 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.LinkLabel linkLabel3;
-        private System.Windows.Forms.LinkLabel linkLabel4;
+        private System.Windows.Forms.PictureBox pb_Praise;
+        private System.Windows.Forms.Label lb_SoftwareSoBad;
+        private System.Windows.Forms.Label lb_Yo;
+        private System.Windows.Forms.PictureBox pb_Look;
+        private System.Windows.Forms.PictureBox pb_CanGiveUp;
+        private System.Windows.Forms.PictureBox pb_RedFace;
+        private System.Windows.Forms.Label lb_TellMeSomeThing;
+        private System.Windows.Forms.Label lb_TestCaseHotWrite;
+        private System.Windows.Forms.TextBox tb_bejson_Xml2Json;
+        private System.Windows.Forms.GroupBox gb_SoftwareInformation;
+        private System.Windows.Forms.Label lb_SoftwareName;
+        private System.Windows.Forms.Label lb_CompanyUrl;
+        private System.Windows.Forms.Label lb_Author;
+        private System.Windows.Forms.Label lb_Email;
+        private System.Windows.Forms.Label lb_Copyright;
+        private System.Windows.Forms.Label lb_Anthony;
+        private System.Windows.Forms.Label lb_Version;
+        private System.Windows.Forms.Label lb_Github;
+        private System.Windows.Forms.TextBox tb_Github;
+        private System.Windows.Forms.TextBox tb_CompanyUrl;
+        private System.Windows.Forms.TextBox tb_Email;
     }
 }

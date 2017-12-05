@@ -28,30 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuStripInForm = new System.Windows.Forms.MenuStrip();
             this.tsMenu_Normal = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Performance = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
             this.pl_Main = new System.Windows.Forms.Panel();
-            this.menuStrip1.SuspendLayout();
+            this.menuStripInForm.SuspendLayout();
             this.SuspendLayout();
             // 
-            // menuStrip1
+            // menuStripInForm
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuStripInForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMenu_Normal,
             this.tsMenu_Performance,
             this.tsMenu_Help,
             this.tsMenu_About});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(798, 25);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
+            this.menuStripInForm.Location = new System.Drawing.Point(0, 0);
+            this.menuStripInForm.Name = "menuStripInForm";
+            this.menuStripInForm.Size = new System.Drawing.Size(750, 25);
+            this.menuStripInForm.TabIndex = 0;
+            this.menuStripInForm.Text = "menuStrip1";
             // 
             // tsMenu_Normal
             // 
+            this.tsMenu_Normal.BackColor = System.Drawing.SystemColors.Control;
             this.tsMenu_Normal.Name = "tsMenu_Normal";
             this.tsMenu_Normal.Size = new System.Drawing.Size(68, 21);
             this.tsMenu_Normal.Text = "常规测试";
@@ -80,28 +81,29 @@
             // 
             // pl_Main
             // 
-            this.pl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.pl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pl_Main.Location = new System.Drawing.Point(0, 28);
+            this.pl_Main.Location = new System.Drawing.Point(0, 21);
             this.pl_Main.Name = "pl_Main";
-            this.pl_Main.Size = new System.Drawing.Size(798, 614);
+            this.pl_Main.Size = new System.Drawing.Size(750, 550);
             this.pl_Main.TabIndex = 1;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(798, 642);
+            this.ClientSize = new System.Drawing.Size(750, 569);
             this.Controls.Add(this.pl_Main);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.menuStripInForm);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.menuStripInForm;
             this.Name = "MainForm";
             this.Text = "Json Test Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.menuStripInForm.ResumeLayout(false);
+            this.menuStripInForm.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,7 +111,7 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip menuStripInForm;
         private System.Windows.Forms.ToolStripMenuItem tsMenu_Normal;
         private System.Windows.Forms.ToolStripMenuItem tsMenu_Performance;
         private System.Windows.Forms.ToolStripMenuItem tsMenu_Help;

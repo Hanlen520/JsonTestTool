@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using Util;
 using System.Threading;
 using JsonTestClient.Util;
+using System.IO;
 
 namespace JsonTestTool.Frame
 {
@@ -19,16 +17,17 @@ namespace JsonTestTool.Frame
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
         private BackgroundWorker processBGWorker = new BackgroundWorker();
+        private BtnRequestType requestType = BtnRequestType.POST;
+
+        private string logName = string.Empty;
+        private delegate string GetUrlOrData();
+        private delegate int GetInterval();
         private enum BtnRequestType
         {
             POST,
             POSTUTF8,
             GET,
         }
-
-        private BtnRequestType requestType = BtnRequestType.POST;
-        private delegate string GetUrl();
-        private delegate string GetData();
 
         public FrmPerformentTest()
         {
@@ -41,7 +40,16 @@ namespace JsonTestTool.Frame
             {
                 //默认为不可操作，需要先选择请求文本之后，才可用
                 EnableRequestButton(false);
+                string caseUrl = Path.Combine(Application.StartupPath,"Logs");
+                //显示Cases目录
+                this.tb_LogPath.Text = caseUrl;
+
+                //不能省略，默认加载之后为了确保必选项选中，界面会有控件灰显逻辑，
+                //这部分在首次加载时不能灰显
                 this.tv_Method.Enabled = true;
+                this.gb_TargetServer.Enabled = true;
+                this.gb_RequestType.Enabled = true;
+                this.gb_TestRequirements.Enabled = true;
                 //后台更新进程
                 processBGWorker.DoWork += ProcessBGWorker_DoWork;
                 processBGWorker.WorkerReportsProgress = true;
@@ -76,6 +84,8 @@ namespace JsonTestTool.Frame
                 MessageBox.Show("Done.");
 
             }
+            //测试结束后，把LogName置为空。
+            logName = string.Empty;
             EnableRequestButton(true);
         }
 
@@ -87,8 +97,18 @@ namespace JsonTestTool.Frame
             {
                 message = e.UserState.ToString();
             }
-            this.rtb_ACK.Text += string.Format("测试进度:({0}/{1})\r\n{2}\r\n", e.ProgressPercentage, this.pbar_TestProcess.Maximum, message);
-            this.lb_Process.Text = string.Format("测试进度:({0}/{1})  {2}", e.ProgressPercentage, this.pbar_TestProcess.Maximum, message);
+            string log = logStringCreator(e.ProgressPercentage,message);
+            this.rtb_ACK.Text += log;
+            this.lb_Process.Text = string.Format("测试进度:({0}/{1})", e.ProgressPercentage, this.pbar_TestProcess.Maximum);
+            if (File.Exists(Path.Combine(this.tb_LogPath.Text, logName)))
+            {
+                using (StreamWriter writer = File.AppendText(Path.Combine(this.tb_LogPath.Text, logName)))
+                {
+                    writer.WriteAsync(log);
+                    writer.Flush();
+                    writer.Close();
+                }
+            }
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -108,9 +128,8 @@ namespace JsonTestTool.Frame
                         BtnRequestType type = tempDic[key];
                         endNumber = Convert.ToInt32(key);
                     }
-                    //temp = Convert.ToString(tempDic.Values.First<object>());
                 }
-                for (int i = 1; i < endNumber; i++)
+                for (int i = 1; i <= endNumber; i++)
                 {
                     if (bgWorker.CancellationPending == true)
                     {
@@ -119,8 +138,9 @@ namespace JsonTestTool.Frame
                     }
                     try
                     {
-                        string strUrl = GetUrlFormForm();
-                        string postdata = GetDataFormForm();
+                        string strUrl = GetUrlFromForm();
+                        string postdata = GetDataFromForm();
+                        int interval = GetIntervalFromForm();
                         switch (requestType)
                         {
                             case BtnRequestType.POST:
@@ -135,15 +155,13 @@ namespace JsonTestTool.Frame
                             default:
                                 break;
                         }
-                        bgWorker.ReportProgress(i, temp);
-                        //temp = htmlUtil.HttpPost();
-                        //this.rtb_ACK.Text += i+temp;
+                        bgWorker.ReportProgress(i, logStringCreator(i,temp));
+                        Thread.Sleep(interval);
                     }
                     catch (System.Exception ex)
                     {
                         bgWorker.ReportProgress(i, ex.ToString());
                     }
-                    Thread.Sleep(100);
                 }
                 temp = "Completed！！！";
                 bgWorker.ReportProgress(endNumber,temp);
@@ -153,22 +171,6 @@ namespace JsonTestTool.Frame
             {
                 bgWorker.ReportProgress(0,ex.ToString());
             }
-        }
-        
-        private string GetUrlString()
-        {
-            string strUrl = string.Empty;
-            try
-            {
-                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + ":" + this.Tb_Port.Text + "/"), this.cb_Request.SelectedItem.ToString());
-                strUrl = uri.OriginalString;
-            }
-            catch (System.Exception ex)
-            {
-                throw;
-                //MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
-            }
-            return strUrl;
         }
 
         private void tv_Method_AfterExpand(object sender, TreeViewEventArgs e)
@@ -223,15 +225,6 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void updateLogToRTB(string message)
-        {
-            if (!string.IsNullOrEmpty(message))
-            {
-                string temp = message;
-                this.rtb_ACK.Text = temp;
-            }
-        }
-
         /// <summary>
         /// RecursionTreeControl:表示将XML文件的内容显示在TreeView控件中
         /// </summary>
@@ -249,40 +242,12 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tv_Method_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-
-        }
-
         private void btn_LogPathChoose_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog path = new FolderBrowserDialog();
             path.SelectedPath = this.tb_LogPath.Text;
             path.ShowDialog();
             this.tb_LogPath.Text = path.SelectedPath;
-        }
-
-        private void EnableRequestButton(bool isEnable)
-        {
-            if (isEnable)
-            {
-                this.btn_Begin.Enabled = true;
-                this.btn_LogPathChoose.Enabled = true;
-                this.btn_Cancel.Enabled = false;
-                this.tv_Method.Enabled = true;
-            }
-            else
-            {
-                this.btn_Begin.Enabled = false;
-                this.btn_LogPathChoose.Enabled = false;
-                this.btn_Cancel.Enabled = true;
-                this.tv_Method.Enabled = false;
-            }
         }
 
         private void rtb_Data_TextChanged(object sender, EventArgs e)
@@ -306,26 +271,32 @@ namespace JsonTestTool.Frame
 
         private void btn_Begin_Click(object sender, EventArgs e)
         {
+            //
             EnableRequestButton(false);
+            logName = string.Format("Log({0}).txt",DateTime.Now.ToString("[MM-dd-HH]#[mm-ss-fff]"));
+            if (!Directory.Exists(this.tb_LogPath.Text))
+            {
+                Directory.CreateDirectory(this.tb_LogPath.Text);
+            }
+            if (!File.Exists(Path.Combine(this.tb_LogPath.Text,logName)))
+            {
+                File.Create(Path.Combine(this.tb_LogPath.Text,logName)).Close();
+            }
             try
             {
                 this.rtb_ACK.Text = string.Empty;
                 this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
-                this.lb_Process.Text = string.Empty;
                 Dictionary<decimal, BtnRequestType> ee = new Dictionary<decimal, BtnRequestType>();
                 switch (requestType)
                 {
                     case BtnRequestType.POST:
                         ee.Add(this.nud_Count.Value, BtnRequestType.POST);
-                        //this.rtb_ACK.Text = htmlUtil.HttpPost(strUrl,postdata);
                         break;
                     case BtnRequestType.POSTUTF8:
                         ee.Add(this.nud_Count.Value, BtnRequestType.POSTUTF8);
-                        //this.rtb_ACK.Text = htmlUtil.HttpPostUTF8(strUrl, postdata);
                         break;
                     case BtnRequestType.GET:
                         ee.Add(this.nud_Count.Value, BtnRequestType.GET);
-                        //this.rtb_ACK.Text = htmlUtil.HttpGet(strUrl, postdata);
                         break;
                     default:
                         break;
@@ -353,12 +324,12 @@ namespace JsonTestTool.Frame
             requestType = BtnRequestType.GET;
         }
 
-        private string GetUrlFormForm()
+        private string GetUrlFromForm()
         {
             string temp = string.Empty;
             if (this.InvokeRequired)
             {
-                GetUrl setpos = new GetUrl(GetUrlFormForm);
+                GetUrlOrData setpos = new GetUrlOrData(GetUrlFromForm);
                 return this.Invoke(setpos).ToString();
             }
             else
@@ -366,18 +337,87 @@ namespace JsonTestTool.Frame
                 return this.GetUrlString();
             }
         }
-        private string GetDataFormForm()
+
+        private string GetDataFromForm()
         {
             string temp = string.Empty;
             if (this.InvokeRequired)
             {
-                GetUrl setpos = new GetUrl(GetDataFormForm);
+                GetUrlOrData setpos = new GetUrlOrData(GetDataFromForm);
                 return this.Invoke(setpos).ToString();
             }
             else
             {
                 return this.rtb_Data.Text;
             }
+        }
+
+        private int GetIntervalFromForm()
+        {
+            if (this.InvokeRequired)
+            {
+                GetInterval setpos = new GetInterval(GetIntervalFromForm);
+                return Convert.ToInt32(this.Invoke(setpos));
+            }
+            else
+            {
+                return Convert.ToInt32(this.tb_TestInterval.Text);
+            }
+        }
+
+        private void EnableRequestButton(bool isEnable)
+        {
+            if (isEnable)
+            {
+                this.gb_TargetServer.Enabled = true;
+                this.gb_RequestType.Enabled = true;
+                this.gb_TestRequirements.Enabled = true;
+                this.btn_Begin.Enabled = true;
+                this.btn_Cancel.Enabled = false;
+                this.tv_Method.Enabled = true;
+            }
+            else
+            {
+                this.gb_TargetServer.Enabled = false;
+                this.gb_RequestType.Enabled = false;
+                this.gb_TestRequirements.Enabled = false;
+                this.btn_Begin.Enabled = false;
+                this.btn_Cancel.Enabled = true;
+                this.tv_Method.Enabled = false;
+            }
+        }
+
+        private string logStringCreator(int time, string msg)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine(string.Format(">>>{0}<<< 测试进度:({1}/{2})", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), time, this.pbar_TestProcess.Maximum));
+                sb.AppendLine(string.Format("请求路径为：{0}", GetUrlFromForm()));
+                sb.AppendLine(string.Format("测试间隔为：{0}", GetIntervalFromForm()));
+                sb.AppendLine(string.Format("Json请求为：{0}", requestType.ToString()));
+                sb.AppendLine(msg);
+                return sb.ToString();
+            }
+            catch (Exception e)
+            {
+                return string.Format("日志生成出错。异常为{0}",e);
+            }
+        }
+
+        private string GetUrlString()
+        {
+            string strUrl = string.Empty;
+            try
+            {
+                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + ":" + this.Tb_Port.Text + "/"), this.cb_Request.SelectedItem.ToString());
+                strUrl = uri.OriginalString;
+            }
+            catch
+            {
+                throw;
+            }
+            return strUrl;
         }
     }
 }

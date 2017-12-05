@@ -32,7 +32,7 @@ namespace Util
                 myRequestStream.Write(postDataByte, 0, postDataByte.Length);
                 myRequestStream.Close();
 
-                request.Timeout = 10000;
+                request.Timeout = 5000;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 Stream myResponseStream = response.GetResponseStream();
@@ -78,7 +78,7 @@ namespace Util
                 myRequestStream.Write(postDataByte, 0, postDataByte.Length);
                 myRequestStream.Close();
 
-                request.Timeout = 10000;
+                request.Timeout = 5000;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
                 Stream myResponseStream = response.GetResponseStream();
@@ -113,7 +113,7 @@ namespace Util
                 request.Method = "GET";
                 request.ContentType = "text/html;charset=UTF-8";
 
-                request.Timeout = 10000;
+                request.Timeout = 5000;
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 Stream myResponseStream = response.GetResponseStream();
                 //StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.GetEncoding("utf-8"));

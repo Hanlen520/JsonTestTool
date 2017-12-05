@@ -228,6 +228,7 @@ namespace JsonTestTool.Frame
         private void btn_LoadTree_Click(object sender, EventArgs e)
         {
             this.tv_Method.Nodes.Clear();
+            this.btn_Expand.Text = EXPAND;
             try
             {
                 LoadFilesAndDirectoriesToTree(this.tb_CaseFolder.Text, this.tv_Method.Nodes);
