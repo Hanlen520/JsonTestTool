@@ -1,0 +1,5 @@
+<case>	
+	<method>AddGroup</method>
+	<groupname>组名当前系统唯一</groupname>
+	<parentgroupid>上级组ID，没有上级组此属性为空或不填写此属性</parentgroupid>
+</case>

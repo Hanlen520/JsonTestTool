@@ -1,0 +1,6 @@
+<case>	
+	<method>UpdatePlat</method>
+	<ip>新IP地址</ip>
+	<port>新端口</port>
+	<platid>子平台ID</platid>
+</case>

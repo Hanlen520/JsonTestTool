@@ -1,0 +1,6 @@
+<case>	
+	<method>GetRelayRtsp</method>
+	<audio>是否带有音频，0-查询没有音频的视频流、1-查询有音频的视频流，此属性为1时检查有音频和无音频两种视频流，查到有音频的流直接返回，如果没有带有音频的流而有无音频视频流返回无音频视频流地址</audio>
+	<deviceid>设备ID</deviceid>
+	<flag>主辅流标记0-主流、1-辅流</flag>
+</case>

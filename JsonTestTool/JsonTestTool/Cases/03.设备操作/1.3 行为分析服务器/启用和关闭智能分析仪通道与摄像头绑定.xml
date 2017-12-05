@@ -1,0 +1,7 @@
+<case>	
+	<method>OpenBACamera</method>
+	<state>设置状态1-启用，0-关闭</state>
+	<channel>通道号</channel>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>分析仪设备ID</deviceid>
+</case>

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace JsonTestTool
 {
@@ -80,10 +81,18 @@ namespace JsonTestTool
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult result;
-            result = MessageBox.Show("Yes：关闭。No：取消", "是否关闭本程序", MessageBoxButtons.YesNo);
+            result = MessageBox.Show("Yes：关闭。No：取消", "是否关闭本程序?", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                Environment.Exit(0);
+                try
+                {
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
+                catch (Exception ex)
+                {
+                    Environment.Exit(0);
+                    this.Close();
+                }
             }
             else if (result == DialogResult.No)
             {
@@ -91,6 +100,23 @@ namespace JsonTestTool
             }
         }
 
-        
+        private void tsMenu_About_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.pl_Main.Controls.Clear();
+                InfoForm infoForm = new InfoForm();
+                infoForm.FormBorderStyle = FormBorderStyle.None;
+                infoForm.Dock = System.Windows.Forms.DockStyle.Fill;
+                infoForm.TopLevel = false;
+                this.pl_Main.Controls.Add(infoForm);
+                infoForm.Show();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show("Can't Open Form Page.");
+            }
+
+        }
     }
 }

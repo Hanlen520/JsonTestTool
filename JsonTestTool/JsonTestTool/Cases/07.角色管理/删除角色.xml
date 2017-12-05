@@ -1,0 +1,5 @@
+<case>	
+	<method>DeleteRole</method>
+	<rolename>角色名</rolename>
+	<roleid>角色ID</roleid>
+</case>

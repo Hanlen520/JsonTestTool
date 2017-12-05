@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Xml;
 using Util;
 using System.Threading;
+using JsonTestClient.Util;
 
 namespace JsonTestTool.Frame
 {
@@ -25,18 +26,9 @@ namespace JsonTestTool.Frame
             GET,
         }
 
-        public enum requestStyle
-        {
-            detail,
-            sample
-        };
-        public enum ackStyle
-        {
-            expected,
-            actual,
-        };
-
-        public requestStyle reqStyle = requestStyle.detail;
+        private BtnRequestType requestType = BtnRequestType.POST;
+        private delegate string GetUrl();
+        private delegate string GetData();
 
         public FrmPerformentTest()
         {
@@ -47,7 +39,9 @@ namespace JsonTestTool.Frame
         {
             try
             {
+                //默认为不可操作，需要先选择请求文本之后，才可用
                 EnableRequestButton(false);
+                this.tv_Method.Enabled = true;
                 //后台更新进程
                 processBGWorker.DoWork += ProcessBGWorker_DoWork;
                 processBGWorker.WorkerReportsProgress = true;
@@ -55,7 +49,7 @@ namespace JsonTestTool.Frame
                 processBGWorker.RunWorkerCompleted += ProcessBGWorker_RunWorkerCompleted;
                 //加载目录树
                 this.tv_Method.ExpandAll();
-                doc.Load("Resource\\PerformanceTreeXml.xml");
+                doc.Load("PerformanceTreeXml.xml");
                 //doc.Load(Properties.Resources.TreeXml); 
                 RecursionTreeControl(doc.DocumentElement, tv_Method.Nodes);//将加载完成的XML文件显示在TreeView控件
                 tv_Method.ExpandAll();
@@ -93,7 +87,7 @@ namespace JsonTestTool.Frame
             {
                 message = e.UserState.ToString();
             }
-            this.rtb_ACK.Text += string.Format("测试进度:({0}/{1})  {2}\r\n", e.ProgressPercentage, this.pbar_TestProcess.Maximum, message);
+            this.rtb_ACK.Text += string.Format("测试进度:({0}/{1})\r\n{2}\r\n", e.ProgressPercentage, this.pbar_TestProcess.Maximum, message);
             this.lb_Process.Text = string.Format("测试进度:({0}/{1})  {2}", e.ProgressPercentage, this.pbar_TestProcess.Maximum, message);
         }
 
@@ -125,16 +119,29 @@ namespace JsonTestTool.Frame
                     }
                     try
                     {
-                        
+                        string strUrl = GetUrlFormForm();
+                        string postdata = GetDataFormForm();
+                        switch (requestType)
+                        {
+                            case BtnRequestType.POST:
+                                temp = htmlUtil.HttpPost(strUrl, postdata);
+                                break;
+                            case BtnRequestType.POSTUTF8:
+                                temp = htmlUtil.HttpPostUTF8(strUrl, postdata);
+                                break;
+                            case BtnRequestType.GET:
+                                temp = htmlUtil.HttpGet(strUrl, postdata);
+                                break;
+                            default:
+                                break;
+                        }
+                        bgWorker.ReportProgress(i, temp);
+                        //temp = htmlUtil.HttpPost();
                         //this.rtb_ACK.Text += i+temp;
                     }
                     catch (System.Exception ex)
                     {
                         bgWorker.ReportProgress(i, ex.ToString());
-                    }
-                    finally
-                    {
-                        bgWorker.ReportProgress(i);
                     }
                     Thread.Sleep(100);
                 }
@@ -147,58 +154,7 @@ namespace JsonTestTool.Frame
                 bgWorker.ReportProgress(0,ex.ToString());
             }
         }
-
-        private void btn_POST_Click(object sender, EventArgs e)
-        {
-            EnableRequestButton(false);
-            string strUrl = GetUrlString();
-            string postdata = this.rtb_Data.Text;
-            try
-            {
-                this.rtb_ACK.Text = string.Empty;
-                this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
-                this.lb_Process.Text = string.Empty;
-                Dictionary<decimal, BtnRequestType> ee = new Dictionary<decimal, BtnRequestType>();
-                ee.Add(this.nud_Count.Value,BtnRequestType.POST);
-                this.processBGWorker.RunWorkerAsync(ee);
-                //this.rtb_ACK.Text = htmlUtil.HttpPost(strUrl, postdata);
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
-        }
-
-        private void btn_POST8_Click(object sender, EventArgs e)
-        {
-            EnableRequestButton(false);
-            string strUrl = GetUrlString();
-            string postdata = this.rtb_Data.Text;
-            try
-            {
-                this.rtb_ACK.Text = htmlUtil.HttpPostUTF8(strUrl, postdata);
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
-        }
-
-        private void btn_GET_Click(object sender, EventArgs e)
-        {
-            EnableRequestButton(false);
-            string strUrl = GetUrlString();
-            string postdata = this.rtb_Data.Text;
-            try
-            {
-                this.rtb_ACK.Text = htmlUtil.HttpGet(strUrl, postdata);
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
-        }
-
+        
         private string GetUrlString()
         {
             string strUrl = string.Empty;
@@ -209,7 +165,8 @@ namespace JsonTestTool.Frame
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
+                throw;
+                //MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
             }
             return strUrl;
         }
@@ -259,6 +216,10 @@ namespace JsonTestTool.Frame
         {
             if (!string.IsNullOrEmpty(type))
             {
+                if (Enum.IsDefined(typeof(JsonMethodType),type))
+                {
+                    this.rtb_Data.Text = htmlUtil.JsonStringCreator(type);
+                }
             }
         }
 
@@ -310,19 +271,17 @@ namespace JsonTestTool.Frame
         {
             if (isEnable)
             {
-                this.btn_POST.Enabled = true;
-                this.btn_POST8.Enabled = true;
-                this.btn_GET.Enabled = true;
+                this.btn_Begin.Enabled = true;
                 this.btn_LogPathChoose.Enabled = true;
                 this.btn_Cancel.Enabled = false;
+                this.tv_Method.Enabled = true;
             }
             else
             {
-                this.btn_POST.Enabled = false;
-                this.btn_POST8.Enabled = false;
-                this.btn_GET.Enabled = false;
+                this.btn_Begin.Enabled = false;
                 this.btn_LogPathChoose.Enabled = false;
                 this.btn_Cancel.Enabled = true;
+                this.tv_Method.Enabled = false;
             }
         }
 
@@ -343,6 +302,82 @@ namespace JsonTestTool.Frame
         {
             processBGWorker.WorkerSupportsCancellation = true;
             processBGWorker.CancelAsync();
+        }
+
+        private void btn_Begin_Click(object sender, EventArgs e)
+        {
+            EnableRequestButton(false);
+            try
+            {
+                this.rtb_ACK.Text = string.Empty;
+                this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
+                this.lb_Process.Text = string.Empty;
+                Dictionary<decimal, BtnRequestType> ee = new Dictionary<decimal, BtnRequestType>();
+                switch (requestType)
+                {
+                    case BtnRequestType.POST:
+                        ee.Add(this.nud_Count.Value, BtnRequestType.POST);
+                        //this.rtb_ACK.Text = htmlUtil.HttpPost(strUrl,postdata);
+                        break;
+                    case BtnRequestType.POSTUTF8:
+                        ee.Add(this.nud_Count.Value, BtnRequestType.POSTUTF8);
+                        //this.rtb_ACK.Text = htmlUtil.HttpPostUTF8(strUrl, postdata);
+                        break;
+                    case BtnRequestType.GET:
+                        ee.Add(this.nud_Count.Value, BtnRequestType.GET);
+                        //this.rtb_ACK.Text = htmlUtil.HttpGet(strUrl, postdata);
+                        break;
+                    default:
+                        break;
+                }
+                this.processBGWorker.RunWorkerAsync(ee);                       
+            }
+            catch (System.Exception ex)
+            {
+                updateDateToRTB(ex.Message);
+            }
+        }
+
+        private void rb_POST_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = BtnRequestType.POST;
+        }
+
+        private void rb_POST_UTF8_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = BtnRequestType.POSTUTF8;
+        }
+
+        private void rb_GET_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = BtnRequestType.GET;
+        }
+
+        private string GetUrlFormForm()
+        {
+            string temp = string.Empty;
+            if (this.InvokeRequired)
+            {
+                GetUrl setpos = new GetUrl(GetUrlFormForm);
+                return this.Invoke(setpos).ToString();
+            }
+            else
+            {
+                return this.GetUrlString();
+            }
+        }
+        private string GetDataFormForm()
+        {
+            string temp = string.Empty;
+            if (this.InvokeRequired)
+            {
+                GetUrl setpos = new GetUrl(GetDataFormForm);
+                return this.Invoke(setpos).ToString();
+            }
+            else
+            {
+                return this.rtb_Data.Text;
+            }
         }
     }
 }

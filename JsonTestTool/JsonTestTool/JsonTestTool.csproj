@@ -67,6 +67,12 @@
     <Compile Include="Frame\HelpForm.designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frame\InfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frame\InfoForm.Designer.cs">
+      <DependentUpon>InfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +82,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\HttpUtil.cs" />
+    <Compile Include="Util\MethodJsonString.cs" />
     <EmbeddedResource Include="Frame\FrmPerformentTest.resx">
       <DependentUpon>FrmPerformentTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +91,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frame\HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frame\InfoForm.resx">
+      <DependentUpon>InfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -113,6 +123,11 @@
   <ItemGroup>
     <Folder Include="Cases\" />
     <Folder Include="dll\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PerformanceTreeXml.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

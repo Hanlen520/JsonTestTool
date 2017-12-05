@@ -1,0 +1,4 @@
+<case>
+	<method>ReStart</method>
+	<server>重启的服务器，ALL/CMS/HDR/RMS, ALL-重启所有服务、CMS-CMS服务器、HDR-转发服务器、RMS-录像服务器</server>
+</case>

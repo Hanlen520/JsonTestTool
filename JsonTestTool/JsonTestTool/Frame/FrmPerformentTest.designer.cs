@@ -42,9 +42,6 @@
             this.rtb_Data = new System.Windows.Forms.RichTextBox();
             this.lb_ACK = new System.Windows.Forms.Label();
             this.rtb_ACK = new System.Windows.Forms.RichTextBox();
-            this.btn_POST = new System.Windows.Forms.Button();
-            this.btn_POST8 = new System.Windows.Forms.Button();
-            this.btn_GET = new System.Windows.Forms.Button();
             this.lb_TestCount = new System.Windows.Forms.Label();
             this.nud_Count = new System.Windows.Forms.NumericUpDown();
             this.lb_TreeView = new System.Windows.Forms.Label();
@@ -55,8 +52,15 @@
             this.pbar_TestProcess = new System.Windows.Forms.ProgressBar();
             this.lb_Process = new System.Windows.Forms.Label();
             this.btn_Cancel = new System.Windows.Forms.Button();
+            this.gb_RequestType = new System.Windows.Forms.GroupBox();
+            this.rb_GET = new System.Windows.Forms.RadioButton();
+            this.rb_POST_UTF8 = new System.Windows.Forms.RadioButton();
+            this.rb_POST = new System.Windows.Forms.RadioButton();
+            this.btn_Begin = new System.Windows.Forms.Button();
+            this.lb_Interval = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Count)).BeginInit();
             this.gb_TargetServer.SuspendLayout();
+            this.gb_RequestType.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_IP
@@ -71,7 +75,7 @@
             // Lbl_Port
             // 
             this.Lbl_Port.AutoSize = true;
-            this.Lbl_Port.Location = new System.Drawing.Point(6, 72);
+            this.Lbl_Port.Location = new System.Drawing.Point(107, 17);
             this.Lbl_Port.Name = "Lbl_Port";
             this.Lbl_Port.Size = new System.Drawing.Size(41, 12);
             this.Lbl_Port.TabIndex = 2;
@@ -82,14 +86,14 @@
             this.Tb_IP.Location = new System.Drawing.Point(6, 32);
             this.Tb_IP.Multiline = true;
             this.Tb_IP.Name = "Tb_IP";
-            this.Tb_IP.Size = new System.Drawing.Size(181, 20);
+            this.Tb_IP.Size = new System.Drawing.Size(87, 20);
             this.Tb_IP.TabIndex = 3;
             this.Tb_IP.Text = "10.10.1.77";
             this.Tb_IP.MouseEnter += new System.EventHandler(this.Tb_IP_MouseEnter);
             // 
             // Tb_Port
             // 
-            this.Tb_Port.Location = new System.Drawing.Point(6, 89);
+            this.Tb_Port.Location = new System.Drawing.Point(107, 34);
             this.Tb_Port.Multiline = true;
             this.Tb_Port.Name = "Tb_Port";
             this.Tb_Port.Size = new System.Drawing.Size(43, 20);
@@ -101,10 +105,10 @@
             this.tv_Method.FullRowSelect = true;
             this.tv_Method.ImageKey = "folder.png";
             this.tv_Method.ImageList = this.imageList1;
-            this.tv_Method.Location = new System.Drawing.Point(18, 161);
+            this.tv_Method.Location = new System.Drawing.Point(20, 211);
             this.tv_Method.Name = "tv_Method";
             this.tv_Method.SelectedImageIndex = 0;
-            this.tv_Method.Size = new System.Drawing.Size(184, 176);
+            this.tv_Method.Size = new System.Drawing.Size(171, 176);
             this.tv_Method.TabIndex = 8;
             this.tv_Method.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterCollapse);
             this.tv_Method.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterExpand);
@@ -120,7 +124,7 @@
             // lb_RequestType
             // 
             this.lb_RequestType.AutoSize = true;
-            this.lb_RequestType.Location = new System.Drawing.Point(69, 72);
+            this.lb_RequestType.Location = new System.Drawing.Point(155, 17);
             this.lb_RequestType.Name = "lb_RequestType";
             this.lb_RequestType.Size = new System.Drawing.Size(65, 12);
             this.lb_RequestType.TabIndex = 14;
@@ -135,7 +139,7 @@
             "api/hedacmdreq",
             "api/sysinfo",
             "xml/upload"});
-            this.cb_Request.Location = new System.Drawing.Point(71, 89);
+            this.cb_Request.Location = new System.Drawing.Point(157, 33);
             this.cb_Request.Name = "cb_Request";
             this.cb_Request.Size = new System.Drawing.Size(116, 20);
             this.cb_Request.TabIndex = 15;
@@ -143,10 +147,10 @@
             // 
             // lb_Data
             // 
-            this.lb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.lb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lb_Data.AutoSize = true;
-            this.lb_Data.Location = new System.Drawing.Point(18, 359);
+            this.lb_Data.Location = new System.Drawing.Point(18, 410);
             this.lb_Data.Name = "lb_Data";
             this.lb_Data.Size = new System.Drawing.Size(89, 12);
             this.lb_Data.TabIndex = 9;
@@ -154,22 +158,22 @@
             // 
             // rtb_Data
             // 
-            this.rtb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.rtb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.rtb_Data.Location = new System.Drawing.Point(18, 378);
+            this.rtb_Data.Location = new System.Drawing.Point(18, 425);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(183, 208);
+            this.rtb_Data.Size = new System.Drawing.Size(171, 161);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
             this.rtb_Data.TextChanged += new System.EventHandler(this.rtb_Data_TextChanged);
             // 
             // lb_ACK
             // 
-            this.lb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.lb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_ACK.AutoSize = true;
-            this.lb_ACK.Location = new System.Drawing.Point(240, 196);
+            this.lb_ACK.Location = new System.Drawing.Point(206, 196);
             this.lb_ACK.Name = "lb_ACK";
             this.lb_ACK.Size = new System.Drawing.Size(65, 12);
             this.lb_ACK.TabIndex = 11;
@@ -178,52 +182,20 @@
             // 
             // rtb_ACK
             // 
-            this.rtb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.rtb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtb_ACK.Location = new System.Drawing.Point(242, 211);
+            this.rtb_ACK.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtb_ACK.Location = new System.Drawing.Point(197, 211);
             this.rtb_ACK.Name = "rtb_ACK";
-            this.rtb_ACK.Size = new System.Drawing.Size(449, 375);
+            this.rtb_ACK.Size = new System.Drawing.Size(494, 375);
             this.rtb_ACK.TabIndex = 12;
             this.rtb_ACK.Text = "";
-            // 
-            // btn_POST
-            // 
-            this.btn_POST.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_POST.Location = new System.Drawing.Point(389, 99);
-            this.btn_POST.Name = "btn_POST";
-            this.btn_POST.Size = new System.Drawing.Size(55, 23);
-            this.btn_POST.TabIndex = 13;
-            this.btn_POST.Text = "POST";
-            this.btn_POST.UseVisualStyleBackColor = true;
-            this.btn_POST.Click += new System.EventHandler(this.btn_POST_Click);
-            // 
-            // btn_POST8
-            // 
-            this.btn_POST8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_POST8.Location = new System.Drawing.Point(450, 99);
-            this.btn_POST8.Name = "btn_POST8";
-            this.btn_POST8.Size = new System.Drawing.Size(100, 23);
-            this.btn_POST8.TabIndex = 13;
-            this.btn_POST8.Text = "POST(utf8)";
-            this.btn_POST8.UseVisualStyleBackColor = true;
-            this.btn_POST8.Click += new System.EventHandler(this.btn_POST8_Click);
-            // 
-            // btn_GET
-            // 
-            this.btn_GET.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_GET.Location = new System.Drawing.Point(556, 100);
-            this.btn_GET.Name = "btn_GET";
-            this.btn_GET.Size = new System.Drawing.Size(50, 23);
-            this.btn_GET.TabIndex = 13;
-            this.btn_GET.Text = "GET";
-            this.btn_GET.UseVisualStyleBackColor = true;
-            this.btn_GET.Click += new System.EventHandler(this.btn_GET_Click);
             // 
             // lb_TestCount
             // 
             this.lb_TestCount.AutoSize = true;
-            this.lb_TestCount.Location = new System.Drawing.Point(240, 85);
+            this.lb_TestCount.Location = new System.Drawing.Point(302, 22);
             this.lb_TestCount.Name = "lb_TestCount";
             this.lb_TestCount.Size = new System.Drawing.Size(65, 12);
             this.lb_TestCount.TabIndex = 16;
@@ -231,9 +203,9 @@
             // 
             // nud_Count
             // 
-            this.nud_Count.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.nud_Count.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.nud_Count.Location = new System.Drawing.Point(242, 103);
+            this.nud_Count.Location = new System.Drawing.Point(304, 46);
             this.nud_Count.Name = "nud_Count";
             this.nud_Count.Size = new System.Drawing.Size(41, 21);
             this.nud_Count.TabIndex = 17;
@@ -246,7 +218,7 @@
             // lb_TreeView
             // 
             this.lb_TreeView.AutoSize = true;
-            this.lb_TreeView.Location = new System.Drawing.Point(18, 146);
+            this.lb_TreeView.Location = new System.Drawing.Point(18, 196);
             this.lb_TreeView.Name = "lb_TreeView";
             this.lb_TreeView.Size = new System.Drawing.Size(113, 12);
             this.lb_TreeView.TabIndex = 9;
@@ -262,7 +234,7 @@
             this.gb_TargetServer.Controls.Add(this.lb_RequestType);
             this.gb_TargetServer.Location = new System.Drawing.Point(12, 13);
             this.gb_TargetServer.Name = "gb_TargetServer";
-            this.gb_TargetServer.Size = new System.Drawing.Size(200, 115);
+            this.gb_TargetServer.Size = new System.Drawing.Size(284, 66);
             this.gb_TargetServer.TabIndex = 18;
             this.gb_TargetServer.TabStop = false;
             this.gb_TargetServer.Text = "测试服务器信息";
@@ -270,9 +242,9 @@
             // btn_LogPathChoose
             // 
             this.btn_LogPathChoose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_LogPathChoose.Location = new System.Drawing.Point(624, 43);
+            this.btn_LogPathChoose.Location = new System.Drawing.Point(460, 137);
             this.btn_LogPathChoose.Name = "btn_LogPathChoose";
-            this.btn_LogPathChoose.Size = new System.Drawing.Size(67, 21);
+            this.btn_LogPathChoose.Size = new System.Drawing.Size(73, 41);
             this.btn_LogPathChoose.TabIndex = 19;
             this.btn_LogPathChoose.Text = "修改目录";
             this.btn_LogPathChoose.UseVisualStyleBackColor = true;
@@ -280,36 +252,36 @@
             // 
             // tb_LogPath
             // 
-            this.tb_LogPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.tb_LogPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_LogPath.Location = new System.Drawing.Point(242, 44);
+            this.tb_LogPath.Location = new System.Drawing.Point(20, 104);
             this.tb_LogPath.Name = "tb_LogPath";
-            this.tb_LogPath.Size = new System.Drawing.Size(376, 21);
+            this.tb_LogPath.Size = new System.Drawing.Size(442, 21);
             this.tb_LogPath.TabIndex = 20;
             this.tb_LogPath.Text = "C:\\";
             // 
             // lb_LogPath
             // 
             this.lb_LogPath.AutoSize = true;
-            this.lb_LogPath.Location = new System.Drawing.Point(240, 30);
+            this.lb_LogPath.Location = new System.Drawing.Point(18, 85);
             this.lb_LogPath.Name = "lb_LogPath";
             this.lb_LogPath.Size = new System.Drawing.Size(65, 12);
             this.lb_LogPath.TabIndex = 16;
-            this.lb_LogPath.Text = "测试次数：";
+            this.lb_LogPath.Text = "日志路径：";
             // 
             // pbar_TestProcess
             // 
-            this.pbar_TestProcess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.pbar_TestProcess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbar_TestProcess.Location = new System.Drawing.Point(244, 161);
+            this.pbar_TestProcess.Location = new System.Drawing.Point(20, 152);
             this.pbar_TestProcess.Name = "pbar_TestProcess";
-            this.pbar_TestProcess.Size = new System.Drawing.Size(447, 23);
+            this.pbar_TestProcess.Size = new System.Drawing.Size(169, 23);
             this.pbar_TestProcess.TabIndex = 21;
             // 
             // lb_Process
             // 
             this.lb_Process.AutoSize = true;
-            this.lb_Process.Location = new System.Drawing.Point(242, 146);
+            this.lb_Process.Location = new System.Drawing.Point(18, 137);
             this.lb_Process.Name = "lb_Process";
             this.lb_Process.Size = new System.Drawing.Size(77, 12);
             this.lb_Process.TabIndex = 9;
@@ -318,30 +290,97 @@
             // btn_Cancel
             // 
             this.btn_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_Cancel.Location = new System.Drawing.Point(612, 100);
+            this.btn_Cancel.Location = new System.Drawing.Point(618, 137);
             this.btn_Cancel.Name = "btn_Cancel";
-            this.btn_Cancel.Size = new System.Drawing.Size(50, 23);
+            this.btn_Cancel.Size = new System.Drawing.Size(73, 41);
             this.btn_Cancel.TabIndex = 13;
-            this.btn_Cancel.Text = "Cancel";
+            this.btn_Cancel.Text = "停止测试";
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
+            // 
+            // gb_RequestType
+            // 
+            this.gb_RequestType.Controls.Add(this.rb_GET);
+            this.gb_RequestType.Controls.Add(this.rb_POST_UTF8);
+            this.gb_RequestType.Controls.Add(this.rb_POST);
+            this.gb_RequestType.Location = new System.Drawing.Point(482, 22);
+            this.gb_RequestType.Name = "gb_RequestType";
+            this.gb_RequestType.Size = new System.Drawing.Size(209, 43);
+            this.gb_RequestType.TabIndex = 22;
+            this.gb_RequestType.TabStop = false;
+            this.gb_RequestType.Text = "请求格式";
+            // 
+            // rb_GET
+            // 
+            this.rb_GET.AutoSize = true;
+            this.rb_GET.Location = new System.Drawing.Point(150, 17);
+            this.rb_GET.Name = "rb_GET";
+            this.rb_GET.Size = new System.Drawing.Size(41, 16);
+            this.rb_GET.TabIndex = 0;
+            this.rb_GET.Text = "GET";
+            this.rb_GET.UseVisualStyleBackColor = true;
+            this.rb_GET.CheckedChanged += new System.EventHandler(this.rb_GET_CheckedChanged);
+            // 
+            // rb_POST_UTF8
+            // 
+            this.rb_POST_UTF8.AutoSize = true;
+            this.rb_POST_UTF8.Location = new System.Drawing.Point(66, 17);
+            this.rb_POST_UTF8.Name = "rb_POST_UTF8";
+            this.rb_POST_UTF8.Size = new System.Drawing.Size(83, 16);
+            this.rb_POST_UTF8.TabIndex = 0;
+            this.rb_POST_UTF8.Text = "POST(UTF8)";
+            this.rb_POST_UTF8.UseVisualStyleBackColor = true;
+            this.rb_POST_UTF8.CheckedChanged += new System.EventHandler(this.rb_POST_UTF8_CheckedChanged);
+            // 
+            // rb_POST
+            // 
+            this.rb_POST.AutoSize = true;
+            this.rb_POST.Checked = true;
+            this.rb_POST.Location = new System.Drawing.Point(13, 17);
+            this.rb_POST.Name = "rb_POST";
+            this.rb_POST.Size = new System.Drawing.Size(47, 16);
+            this.rb_POST.TabIndex = 0;
+            this.rb_POST.TabStop = true;
+            this.rb_POST.Text = "POST";
+            this.rb_POST.UseVisualStyleBackColor = true;
+            this.rb_POST.CheckedChanged += new System.EventHandler(this.rb_POST_CheckedChanged);
+            // 
+            // btn_Begin
+            // 
+            this.btn_Begin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btn_Begin.Location = new System.Drawing.Point(539, 137);
+            this.btn_Begin.Name = "btn_Begin";
+            this.btn_Begin.Size = new System.Drawing.Size(73, 40);
+            this.btn_Begin.TabIndex = 13;
+            this.btn_Begin.Text = "开始测试";
+            this.btn_Begin.UseVisualStyleBackColor = true;
+            this.btn_Begin.Click += new System.EventHandler(this.btn_Begin_Click);
+            // 
+            // lb_Interval
+            // 
+            this.lb_Interval.AutoSize = true;
+            this.lb_Interval.Location = new System.Drawing.Point(373, 22);
+            this.lb_Interval.Name = "lb_Interval";
+            this.lb_Interval.Size = new System.Drawing.Size(77, 12);
+            this.lb_Interval.TabIndex = 16;
+            this.lb_Interval.Text = "间隔(毫秒)：";
             // 
             // FrmPerformentTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(703, 598);
+            this.Controls.Add(this.gb_RequestType);
             this.Controls.Add(this.pbar_TestProcess);
             this.Controls.Add(this.tb_LogPath);
             this.Controls.Add(this.btn_LogPathChoose);
             this.Controls.Add(this.gb_TargetServer);
             this.Controls.Add(this.nud_Count);
             this.Controls.Add(this.lb_LogPath);
+            this.Controls.Add(this.lb_Interval);
             this.Controls.Add(this.lb_TestCount);
+            this.Controls.Add(this.btn_Begin);
             this.Controls.Add(this.btn_Cancel);
-            this.Controls.Add(this.btn_GET);
-            this.Controls.Add(this.btn_POST8);
-            this.Controls.Add(this.btn_POST);
             this.Controls.Add(this.rtb_ACK);
             this.Controls.Add(this.lb_ACK);
             this.Controls.Add(this.rtb_Data);
@@ -355,6 +394,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_Count)).EndInit();
             this.gb_TargetServer.ResumeLayout(false);
             this.gb_TargetServer.PerformLayout();
+            this.gb_RequestType.ResumeLayout(false);
+            this.gb_RequestType.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -371,9 +412,6 @@
         private System.Windows.Forms.RichTextBox rtb_Data;
         private System.Windows.Forms.Label lb_ACK;
         private System.Windows.Forms.RichTextBox rtb_ACK;
-        private System.Windows.Forms.Button btn_POST;
-        private System.Windows.Forms.Button btn_POST8;
-        private System.Windows.Forms.Button btn_GET;
         private System.Windows.Forms.Label lb_RequestType;
         private System.Windows.Forms.ComboBox cb_Request;
         private System.Windows.Forms.Label lb_TestCount;
@@ -387,5 +425,11 @@
         private System.Windows.Forms.ProgressBar pbar_TestProcess;
         private System.Windows.Forms.Label lb_Process;
         private System.Windows.Forms.Button btn_Cancel;
+        private System.Windows.Forms.GroupBox gb_RequestType;
+        private System.Windows.Forms.RadioButton rb_GET;
+        private System.Windows.Forms.RadioButton rb_POST_UTF8;
+        private System.Windows.Forms.RadioButton rb_POST;
+        private System.Windows.Forms.Button btn_Begin;
+        private System.Windows.Forms.Label lb_Interval;
     }
 }

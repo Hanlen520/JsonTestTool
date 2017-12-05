@@ -1,0 +1,9 @@
+<case>	
+	<method>UpdatePrivilege</method>
+	<privilegeid>权限ID</privilegeid>
+	<privilegename>权限名，权限名可以是现有权限，也可以是当前系统没有的权限，没有时默认按照新加权限处理</privilegename>
+	<array>
+		<deviceid>设备ID</deviceid>
+		<devicename>设备名</devicename>
+	</array>
+</case>

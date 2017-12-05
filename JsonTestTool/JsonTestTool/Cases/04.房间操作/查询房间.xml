@@ -1,0 +1,5 @@
+<case>
+	<method>GetArea</method>
+	<area>房间ID或房间名</area>
+	<isexact>精确查找标记</isexact>
+</case>

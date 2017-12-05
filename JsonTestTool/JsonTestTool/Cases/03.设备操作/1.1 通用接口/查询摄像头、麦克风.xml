@@ -1,0 +1,6 @@
+<case>	
+	<method>CameraSearch</method>
+	<platid>平台ID，搜索指定平台下的设备，当属性为空时查询当前平台下的设备</platid>
+	<devicetype>设备ID或设备名</devicetype>
+	<isexact>1-精确查询，0-模糊查询，精确查询时device必须为设备ID</isexact>
+</case>

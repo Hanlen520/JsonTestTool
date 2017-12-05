@@ -1,0 +1,8 @@
+<case>	
+	<method>AddRole</method>
+	<rolename>角色名</rolename>
+	<array>
+		<privilegeid>权限ID</privilegeid>
+		<privilegename>权限名</privilegename>
+	</array>
+</case>

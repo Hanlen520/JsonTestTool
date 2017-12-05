@@ -1,0 +1,4 @@
+<case>	
+	<method>PlatGroup</method>
+	<platid>平台ID，如果是当前平台不需要此属性</platid>
+</case>

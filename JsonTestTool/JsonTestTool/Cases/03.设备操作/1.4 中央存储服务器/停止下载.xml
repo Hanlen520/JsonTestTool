@@ -1,0 +1,6 @@
+<case>	
+	<method>StopDownload</method>
+	<downhandle>下载标记,通过StartDownloadFile返回</downhandle>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>存储设备 ID，可为空</deviceid>
+</case>

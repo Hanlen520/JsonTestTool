@@ -1,0 +1,14 @@
+<case>
+	<method>BindAreaDevice</method>
+	<areaid>房间ID</areaid>
+	<array>
+		<deviceid>设备ID</deviceid>
+		<devicename>设备名</devicename>
+		<devicetype>设备类型</devicetype>
+	</array>
+	<array>
+		<deviceid>设备ID</deviceid>
+		<devicename>设备名</devicename>
+		<devicetype>设备类型</devicetype>
+	</array>
+</case>

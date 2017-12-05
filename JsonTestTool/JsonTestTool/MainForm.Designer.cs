@@ -76,6 +76,7 @@
             this.tsMenu_About.Name = "tsMenu_About";
             this.tsMenu_About.Size = new System.Drawing.Size(44, 21);
             this.tsMenu_About.Text = "关于";
+            this.tsMenu_About.Click += new System.EventHandler(this.tsMenu_About_Click);
             // 
             // pl_Main
             // 
@@ -83,7 +84,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pl_Main.Location = new System.Drawing.Point(0, 28);
             this.pl_Main.Name = "pl_Main";
-            this.pl_Main.Size = new System.Drawing.Size(798, 678);
+            this.pl_Main.Size = new System.Drawing.Size(798, 614);
             this.pl_Main.TabIndex = 1;
             // 
             // MainForm

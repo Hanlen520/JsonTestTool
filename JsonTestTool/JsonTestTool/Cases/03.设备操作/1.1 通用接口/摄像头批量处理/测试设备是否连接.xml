@@ -1,0 +1,5 @@
+<case>	
+	<method>BatPingDevice</method>
+	<firstIP>开始IP</firstIP>
+	<lastIP>结束IP</lastIP>
+</case>

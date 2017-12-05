@@ -1,0 +1,6 @@
+<case>	
+	<method>GetDownloadPos</method>
+	<downhandle>下载标记</downhandle>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>CVR ID，可为空</deviceid>
+</case>

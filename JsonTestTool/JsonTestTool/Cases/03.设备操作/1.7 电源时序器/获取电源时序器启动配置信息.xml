@@ -1,0 +1,5 @@
+<case>
+	<method>GetSequencerConf</method>
+	<area>房间名或ID,可以为空</area>
+	<sequencer>电源时序器名或ID,可以为空</sequencer>
+</case>

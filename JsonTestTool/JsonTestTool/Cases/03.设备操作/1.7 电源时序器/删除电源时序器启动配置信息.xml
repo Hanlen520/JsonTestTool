@@ -1,0 +1,6 @@
+<case>
+	<method>DeleteSequencerConf</method>
+	<areaid>房间ID</areaid>
+	<sequencerid>电源时序器ID</sequencerid>
+	<bsotype>业务模块类型</bsotype>
+</case>

@@ -1,0 +1,6 @@
+<case>	
+	<method>TSFileSeekPlay</method>
+	<deviceid>(下级平台+)设备ID，如果是本级平台设备，此处是设备ID，如果是下级(可能多级)，规则是：子平台ID/././设备ID</deviceid>
+	<videoname>视频名，TSFileRelay请求返回</videoname>
+	<videopos>播放时间点（进度）</videopos>
+</case>

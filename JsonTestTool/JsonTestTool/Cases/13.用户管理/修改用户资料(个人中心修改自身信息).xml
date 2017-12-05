@@ -1,0 +1,9 @@
+<case>	
+	<method>UpdateUserInfo</method>
+	<pwd>用户登录密码，MD5加密后的</pwd>
+	<userid>用户ID</userid>
+	<username>真实姓名</username>
+	<telephone>办公室电话</telephone>
+	<mobile>移动电话</mobile>
+	<email>电子邮件</email>
+</case>

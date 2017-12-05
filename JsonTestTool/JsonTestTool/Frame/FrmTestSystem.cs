@@ -5,32 +5,18 @@ using System.Text;
 using System.IO;
 using System.Xml;
 using System.Collections;
+using Newtonsoft;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace JsonTestTool.Frame
 {
     public partial class FrmTestSystem : Form
     {
-        const string EXPAND = "Expand Tree";
-        const string COLLAPSE = "Collapse Tree";
+        const string EXPAND = "展开节点";
+        const string COLLAPSE = "收缩节点";
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
-        StringBuilder sb = new StringBuilder();
-        public enum requestStyle
-        {
-            detail,
-            sample
-        };
-        public enum ackStyle
-        {
-            expected,
-            actual,
-        };
-
-        public requestStyle reqStyle = requestStyle.detail;
-        public ackStyle ackSty = ackStyle.actual;
-        //XML每行的内容
-        private string xmlLine = "";
-
 
         public FrmTestSystem()
         {
@@ -39,94 +25,59 @@ namespace JsonTestTool.Frame
 
         private void Form1_Load(object sender, System.EventArgs e)
         {
-            this.lb_Data.Text = string.Format("数据（{0}）：", rbt_Deteil.Text);
-            this.tv_Method.ExpandAll();
             try
             {
-                LoadFilesAndDirectoriesToTree("Cases",tv_Method.Nodes);
-                doc.Load("Resource\\TreeXml.xml");
+                //默认加载程序平级目录Cases下的所有子目录和xml文件
+                string caseUrl = Path.Combine(Application.StartupPath, "cases");
+                //显示Cases目录
+                this.tb_CaseFolder.Text = caseUrl;
+                //遍历并添加TreeView节点
+                LoadFilesAndDirectoriesToTree(caseUrl, tv_Method.Nodes);
+                //默认展开所有节点
+                this.tv_Method.ExpandAll();
+                if (tv_Method.Nodes.Count > 0)
+                {
+                    //首节点置顶
+                    this.tv_Method.SelectedNode = tv_Method.Nodes[0];
+                }
             }
             catch (Exception ee)
             {
-                Console.WriteLine(ee.ToString());
+                this.rtb_Data.Text = ee.Message;
             }
-            //doc.Load(Properties.Resources.TreeXml); 
-            //if (doc.DocumentElement != null)
-            //{
-            //    //将加载完成的XML文件显示在TreeView控件
-            //    RecursionTreeControl(doc.DocumentElement, tv_Method.Nodes);
-            //    tv_Method.ExpandAll();
-            //    if (tv_Method.Nodes[0] != null)
-            //    {
-            //        tv_Method.TopNode = tv_Method.Nodes[0];
-            //    }
-            //}
         }
+
+        /// <summary>
+        /// 遍历指定目录，获取所有下级文件夹和XML文件
+        /// </summary>
+        /// <param name="path">指定目录全路径</param>
+        /// <param name="treeNodeCollection">TreeView节点集合</param>
         private void LoadFilesAndDirectoriesToTree(string path, TreeNodeCollection treeNodeCollection)
         {
             //1.先根据路径获取所有的子文件和子文件夹
-            string[] files = Directory.GetFiles(path);
+            var files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly).Where(s => s.EndsWith(".xml"));
             string[] dirs = Directory.GetDirectories(path);
             //2.把所有的子文件与子目录加到TreeView上。
             foreach (string item in files)
             {
-                //把每一个子文件加到TreeView上
-                treeNodeCollection.Add(Path.GetFileName(item));
+                TreeNode node = new TreeNode(item);
+                //这里存储的是全路径
+                node.Name = item;
+                //存储的是文件名
+                node.Text = Path.GetFileNameWithoutExtension(item);
+                //把文件节点加到TreeView上
+                treeNodeCollection.Add(node);
             }
             //文件夹
             foreach (string item in dirs)
             {
                 TreeNode node = treeNodeCollection.Add(Path.GetFileName(item));
-
                 //由于目录，可能下面还存在子目录，所以这时要对每个目录再次进行获取子目录与子文件的操作
-                //这里进行了递归
                 LoadFilesAndDirectoriesToTree(item, node.Nodes);
             }
 
         }
-
-        private void btn_POST_Click(object sender, EventArgs e)
-        {
-            string strUrl = GetUrlString();
-            string postdata = this.rtb_Data.Text;
-            try
-            {
-                this.rtb_ACK.Text = htmlUtil.HttpPost(strUrl, postdata);
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
-        }
-
-        private void btn_POST8_Click(object sender, EventArgs e)
-        {
-            string strUrl = GetUrlString();
-            string postdata = this.rtb_Data.Text;
-            try
-            {
-                this.rtb_ACK.Text = htmlUtil.HttpPostUTF8(strUrl, postdata);
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
-        }
-
-        private void btn_GET_Click(object sender, EventArgs e)
-        {
-            string strUrl = GetUrlString();
-            string postdata = this.rtb_Data.Text;
-            try
-            {
-                this.rtb_ACK.Text = htmlUtil.HttpGet(strUrl, postdata);
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
-        }
-
+        
         private string GetUrlString()
         {
             string strUrl = string.Empty;
@@ -156,115 +107,34 @@ namespace JsonTestTool.Frame
 
         private void tv_Method_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            //通过判断子节点的方式，来判断是否处理XML
             if (e.Node.Nodes.Count == 0)
             {
-                updateDateToRTB(e.Node.Name);
+                try
+                {
+                    //通过节点获得XML路径
+                    doc.Load(e.Node.Name);
+                    if (doc.DocumentElement != null)
+                    {
+                        this.rtb_Data.Text = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
+                    }
+                }
+                catch (FileNotFoundException fnfe)
+                {
+                    this.rtb_Data.Text = string.Format("加载XML出现异常，请检查路径({0})文件是否存在.{1}",e.Node.Name, fnfe.Message);
+                }
+                catch (XmlException xml)
+                {
+                    this.rtb_Data.Text = string.Format("XML文件不合法。{0}",xml.Message);
+                }
+                catch (Exception exc)
+                {
+                    this.rtb_Data.Text = string.Format("加载XML出现异常", exc.ToString());
+                }
             }
             else
             {
-                this.rtb_Data.Text = string.Format("请选择【{0}】的子节点获取请求Json模板。", e.Node.Text);
-            }
-        }
-
-
-        private void btb_SaveNodesToXml_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string localFilePath = "";
-                string fileNameExt = "";
-                string newFileName = "";
-                string FilePath = "";
-                saveFileDialog1.Filter = "Xml files(*.xml)|*.xml|txt files(*.txt)|*.txt|All files(*.*)|*.*";
-                saveFileDialog1.FileName = "TreeXml";
-                saveFileDialog1.DefaultExt = "xml";
-                saveFileDialog1.AddExtension = true;
-                saveFileDialog1.RestoreDirectory = true;
-                DialogResult result = saveFileDialog1.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    localFilePath = saveFileDialog1.FileName.ToString();
-                    fileNameExt = localFilePath.Substring(localFilePath.LastIndexOf("\\") + 1);
-                    FilePath = localFilePath.Substring(0, localFilePath.LastIndexOf("\\"));
-                    StringBuilder sb = new StringBuilder();
-                    //写文件头部内容
-                    //下面是生成RSS的OPML文件
-                    sb.Append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                    sb.Append("<Tree>");
-                    //遍历根节点
-                    foreach (TreeNode node in tv_Method.Nodes)
-                    {
-                        xmlLine = GetRSSText(node);
-                        sb.Append(xmlLine);
-                        //递归遍历节点
-                        parseNode(node, sb);
-                        sb.Append("</Node>");
-                    }
-                    sb.Append("</Tree>");
-
-                    Stream fs = saveFileDialog1.OpenFile();
-                    StreamWriter sr = new StreamWriter(fs, System.Text.Encoding.UTF8);
-                    sr.Write(sb.ToString());
-                    sr.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                this.rtb_ACK.Text = "Save Tree Failed.";
-                this.rtb_ACK.Text += ex.ToString();
-            }
-        }
-
-        /// <summary>
-        /// 递归遍历节点内容,最关键的函数
-        /// </summary>
-        /// <param name="tn"></param>
-        /// <param name="sb"></param>
-        private void parseNode(TreeNode tn, StringBuilder sb)
-        {
-            IEnumerator ie = tn.Nodes.GetEnumerator();
-
-            while (ie.MoveNext())
-            {
-                TreeNode ctn = (TreeNode)ie.Current;
-                xmlLine = GetRSSText(ctn);
-                sb.Append(xmlLine);
-                //如果还有子节点则继续遍历
-                if (ctn.Nodes.Count > 0)
-                {
-                    parseNode(ctn, sb);
-                }
-                sb.Append("</Node>");
-            }
-        }
-
-        /// <summary>
-        /// 成生XML文本行
-        /// </summary>
-        /// <param name="node"></param>
-        /// <returns></returns>
-        private string GetRSSText(TreeNode node)
-        {
-            //根据Node属性生成XML文本
-            string tempText = "<Node Name=\"" + node.Name + "\" Text=\"" + node.Text + "\" >";
-
-            return tempText;
-        }
-
-        /// <summary>
-        /// RecursionTreeControl:表示将XML文件的内容显示在TreeView控件中
-        /// </summary>
-        /// <param name="xmlNode">将要加载的XML文件中的节点元素</param>
-        /// <param name="nodes">将要加载的XML文件中的节点集合</param>
-        private void RecursionTreeControl(XmlNode xmlNode, TreeNodeCollection nodes)
-        {
-            foreach (XmlNode node in xmlNode.ChildNodes)//循环遍历当前元素的子元素集合
-            {
-                TreeNode new_child = new TreeNode();//定义一个TreeNode节点对象
-                new_child.Name = node.Attributes["Name"].Value;
-                new_child.Text = node.Attributes["Text"].Value;
-                nodes.Add(new_child);//向当前TreeNodeCollection集合中添加当前节点
-                RecursionTreeControl(node, new_child.Nodes);//调用本方法进行递归
+                this.rtb_Data.Text = string.Format("【{0}】为父节点，请选择子节点获取Json请求模板。", e.Node.Text);
             }
         }
 
@@ -296,61 +166,6 @@ namespace JsonTestTool.Frame
         }
 
         /// <summary>
-        /// 修改Json请求格式为Details
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void rbt_JsonDeteil_CheckedChanged(object sender, EventArgs e)
-        {
-            reqStyle = requestStyle.detail;
-            if (this.tv_Method.SelectedNode != null)
-            {
-                updateDateToRTB(this.tv_Method.SelectedNode.Name);
-            }
-            lb_Data.Text = string.Format("数据（{0}）：", rbt_Deteil.Text);
-        }
-
-        /// <summary>
-        /// 修改Json请求格式为Sample
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void rbt_JsonSample_CheckedChanged(object sender, EventArgs e)
-        {
-            reqStyle = requestStyle.sample;
-            if (this.tv_Method.SelectedNode != null)
-            {
-                updateDateToRTB(this.tv_Method.SelectedNode.Name);
-            }
-            lb_Data.Text = string.Format("数据（{0}）：", rbt_JsonSample.Text);
-        }
-
-        string temp = string.Empty;
-        private void rbtn_ActualACK_CheckedChanged(object sender, EventArgs e)
-        {
-            ackSty = ackStyle.actual;
-            if (!string.IsNullOrEmpty(temp))
-            {
-                rtb_ACK.Text = temp;
-            }
-            else
-            {
-                rtb_ACK.Text = "请发起请求（POST/POST-UTF8/GET）";
-            }
-        }
-
-        private void rbtn_ExpectedACK_CheckedChanged(object sender, EventArgs e)
-        {
-            ackSty = ackStyle.expected;
-            if (!string.IsNullOrEmpty(this.rtb_ACK.Text))
-            {
-                temp = this.rtb_ACK.Text;
-            }
-            //提供期待结果
-            updateACKToRTB();
-        }
-
-        /// <summary>
         /// 显示数据RichTextBox的文本
         /// </summary>
         /// <param name="type">JsonMethodType</param>
@@ -359,14 +174,6 @@ namespace JsonTestTool.Frame
             if (!string.IsNullOrEmpty(type))
             {
             }
-        }
-
-        /// <summary>
-        /// 显示应答RichTextBox的文本
-        /// </summary>
-        /// <param name="type"></param>
-        private void updateACKToRTB()
-        {
         }
 
         /// <summary>
@@ -396,14 +203,39 @@ namespace JsonTestTool.Frame
             ShowToolTipMouseEnter(sender, "测试服务器的IP地址");
         }
 
-        private void gb_RequestDetailOrSample_MouseHover(object sender, EventArgs e)
+        private void btn_Choose_Click(object sender, EventArgs e)
         {
-            ShowToolTipMouseEnter(sender, "切换请求数据窗口内的的文本格式\r\n（请求的详细说明或者请求的实例样例）");
+            try
+            {
+                //folderBrowserDialog1.RootFolder = Environment.SpecialFolder.DesktopDirectory;
+                folderBrowserDialog1.Description = "请选择保存Case XML文件的目录";
+                folderBrowserDialog1.ShowNewFolderButton = true;
+                folderBrowserDialog1.SelectedPath = string.IsNullOrEmpty(this.tb_CaseFolder.Text) ? "请选择目录" : this.tb_CaseFolder.Text;
+                DialogResult result = folderBrowserDialog1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    this.tb_CaseFolder.Text = folderBrowserDialog1.SelectedPath;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.rtb_ACK.Text = "展开Folder失败。";
+                this.rtb_ACK.Text += ex.ToString();
+            }
+
         }
 
-        private void gb_ACK_Expected_MouseHover(object sender, EventArgs e)
+        private void btn_LoadTree_Click(object sender, EventArgs e)
         {
-            ShowToolTipMouseEnter(sender, "切换返回的数据窗口内的文本格式\r\n（期待结果还是实际结果）");
+            this.tv_Method.Nodes.Clear();
+            try
+            {
+                LoadFilesAndDirectoriesToTree(this.tb_CaseFolder.Text, this.tv_Method.Nodes);
+            }
+            catch (Exception es)
+            {
+                this.rtb_Data.Text = es.Message;
+            }
         }
     }
 }

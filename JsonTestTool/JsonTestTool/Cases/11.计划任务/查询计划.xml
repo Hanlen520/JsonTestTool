@@ -1,0 +1,4 @@
+<case>	
+	<method>PlanSearch</method>
+	<plan>查询条件，可以是计划名、设备名、设备ID</plan>
+</case>

@@ -1,0 +1,7 @@
+<case>
+	<method>UpdateArea</method>
+	<areaid>房间ID</areaid>
+	<areaname>房间名</areaname>
+	<areatype>房间类型</areatype>
+	<note>备注</note>
+</case>

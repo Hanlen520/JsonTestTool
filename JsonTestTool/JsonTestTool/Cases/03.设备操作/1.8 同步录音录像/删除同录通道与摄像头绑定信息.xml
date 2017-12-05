@@ -1,0 +1,5 @@
+<case>
+	<method>DeleteSyncRecordCamera</method>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>同录设备ID</deviceid>
+</case>

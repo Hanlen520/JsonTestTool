@@ -1,0 +1,15 @@
+<case>	
+	<method>AddUser</method>
+	<pwd>用户登录密码，MD5加密后的</pwd>
+	<userid>用户ID唯一，如果当期系统没有该用户，默认按照添加处理</userid>
+	<username>真实姓名</username>
+	<telephone>办公室电话</telephone>
+	<mobile>移动电话</mobile>
+	<email>电子邮件</email>
+	<array>
+		<roleid>角色ID</roleid>
+	</array>
+	<array>
+		<roleid>角色ID</roleid>
+	</array>
+</case>

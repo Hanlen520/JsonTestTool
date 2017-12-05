@@ -1,0 +1,6 @@
+<case>	
+	<method>DeviceSearch</method>
+	<device>设备ID或设备名，为空时查询所有有效的设备</device>
+	<devicetype>设备类型</devicetype>
+	<isexact>为1时精确查找，0-模糊查找，精确查询时device必须为设备ID</isexact>
+</case>

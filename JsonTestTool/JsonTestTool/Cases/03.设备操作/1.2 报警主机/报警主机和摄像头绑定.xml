@@ -1,0 +1,8 @@
+<case>	
+	<method>BindAlarmCamera</method>
+	<alarmid>报警主机ID</alarmid>
+	<areaid>房间ID</areaid>
+	<cameraid>摄像头ID</cameraid>
+	<alarm_in_channel>报警主机输入口</alarm_in_channel>
+	<alarm_out_channel>报警主机输出口</alarm_out_channel>
+</case>

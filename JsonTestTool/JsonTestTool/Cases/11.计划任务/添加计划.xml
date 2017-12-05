@@ -1,0 +1,14 @@
+<case>	
+	<method>AddPlan</method>
+	<planname>计划名</planname>
+	<deviceid>设备ID</deviceid>
+	<begdate>开始日期，格式：YYYY-MM-DD</begdate>
+	<enddate>结束日期，格式：YYYY-MM-DD</enddate>
+	<begloop>开始循环标记</begloop>
+	<endloop>结束循环标记</endloop>
+	<begtime>开始时间，格式：hh:mm:ss</begtime>
+	<endtime>结束时间，格式：hh:mm:ss</endtime>
+	<loopflag>循环标志 0-按天、1-按周、2-按月</loopflag>
+	<tasktype>任务类型，0-录像，现在有录像</tasktype>
+	<userid>创建者ID</userid>
+</case>

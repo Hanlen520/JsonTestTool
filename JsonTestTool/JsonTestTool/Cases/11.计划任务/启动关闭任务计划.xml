@@ -1,0 +1,6 @@
+<case>	
+	<method>ClosePlan</method>
+	<state>状态，0-停用、1-启用</state>
+	<deviceid>设备ID</deviceid>
+	<planname>计划名</planname>
+</case>

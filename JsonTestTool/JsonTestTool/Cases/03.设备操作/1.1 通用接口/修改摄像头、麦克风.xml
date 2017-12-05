@@ -1,0 +1,19 @@
+<case>	
+	<method>UpdateCamera</method>
+	<deviceid>设备ID</deviceid>
+	<devicetype>设备类型</devicetype>
+	<devicename>设备名</devicename>
+	<bindid>绑定设备ID</bindid>
+	<groupid>上级组ID</groupid>
+	<loginid>设备登录ID</loginid>
+	<loginpwd>设备登录密码</loginpwd>
+	<ip>设备IP</ip>
+	<port>设备端口</port>
+	<mainrtsp>主流地址</mainrtsp>
+	<auxrtsp>辅流地址</auxrtsp>
+	<flag>使用主辅流标记</flag>
+	<devicestate>设备状态</devicestate>
+	<note>备注</note>
+	<mic>是否连接拾音器1-连接、0-未连接</mic>
+	<radio>是否连接扬声器1-连接、0-未连接</radio>
+</case>

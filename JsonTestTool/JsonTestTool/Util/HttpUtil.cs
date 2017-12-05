@@ -4,6 +4,8 @@ using System.Net;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
+using JsonTestClient.Util;
+using Newtonsoft.Json.Serialization;
 
 namespace Util
 {
@@ -162,6 +164,53 @@ namespace Util
                 return str;
             }
         }
-    }
 
+
+        /// <summary>
+        /// 通过对应的Json对象返回对应的Json String,内容为Request说明
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        protected internal string JsonStringCreator(string type)
+        {
+            string temp = string.Empty;
+            try
+            {
+                //通过TreeView节点的Name，获取对应的枚举值
+                JsonMethodType jsonMethodType = (JsonMethodType)Enum.Parse(typeof(JsonMethodType), type);
+                JsonSerializerSettings jsonSetting = new JsonSerializerSettings();
+                //解析时忽略Null Value的属性
+                jsonSetting.NullValueHandling = NullValueHandling.Ignore;
+                //可以解析继承类
+                jsonSetting.TypeNameHandling = TypeNameHandling.Auto;
+                jsonSetting.ConstructorHandling = ConstructorHandling.Default;
+                jsonSetting.Formatting = Formatting.None;
+                jsonSetting.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                //object tempObj= null;
+                string tempJsonStr = string.Empty;
+                switch (jsonMethodType)
+                {
+                    case JsonMethodType.Version:
+                    case JsonMethodType.RunStatus:
+                    case JsonMethodType.PlatList:
+                    case JsonMethodType.PlatInfo:
+                    case JsonMethodType.RmsFtpInfo:
+                    case JsonMethodType.AllPlanSearch:
+                    case JsonMethodType.StopPreview:
+                        JsonObjVersion joV = new JsonObjVersion();
+                        joV.method = type;
+                        tempJsonStr = JsonConvert.SerializeObject(joV, jsonSetting);
+                        break;
+                    default:
+                        break;
+                }
+                temp = ConvertJsonString(tempJsonStr);
+                return temp;
+            }
+            catch(Exception ex)
+            {
+                return string.Format("An error occurred ", ex.Message);
+            }
+        }
+    }
 }

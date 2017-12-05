@@ -1,0 +1,4 @@
+<case>	
+	<method>DelDevice</method>
+	<deviceid>设备唯一标识，批量删除时ID之间|分割</deviceid>
+</case>

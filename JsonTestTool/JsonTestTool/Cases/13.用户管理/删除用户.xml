@@ -1,0 +1,4 @@
+<case>	
+	<method>DeleteUser</method>
+	<userid>用户ID唯一，如果当期系统没有该用户，默认按照添加处理</userid>
+</case>

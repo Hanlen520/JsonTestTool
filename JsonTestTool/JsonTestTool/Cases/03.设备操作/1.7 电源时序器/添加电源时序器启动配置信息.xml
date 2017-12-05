@@ -1,0 +1,8 @@
+<case>
+	<method>SequencerConf</method>
+	<areaid>房间ID</areaid>
+	<sequencerid>电源时序器ID</sequencerid>
+	<bsotype>时序器业务模块类型</bsotype>
+	<openorder>启动顺序，00000001，字符串长度和电源时序器的插口数量一致，1-开启，0-不开启</openorder>
+	<closeorder>关闭顺序，00000001，字符串长度和电源时序器的插口数量一致，1-关闭，0-不关闭</closeorder>
+</case>

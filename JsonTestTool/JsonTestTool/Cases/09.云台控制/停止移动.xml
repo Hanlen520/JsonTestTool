@@ -1,0 +1,5 @@
+<case>	
+	<method>StopMove</method>
+	<xyz>值是z时停止调焦，值是x,y时停止移动。</xyz>
+	<deviceid>设备ID</deviceid>
+</case>

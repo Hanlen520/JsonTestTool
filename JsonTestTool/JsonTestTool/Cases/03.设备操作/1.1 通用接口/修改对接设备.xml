@@ -1,0 +1,14 @@
+<case>	
+	<method>UpdateDevice</method>
+	<deviceid>设备ID</deviceid>
+	<devicetype>设备类型</devicetype>
+	<name>设备名</name>
+	<ip>设备IP</ip>
+	<port>设备端口</port>
+	<user>设备登录用户</user>
+	<pwd>设备登录密码</pwd>
+	<in_channel>报警主机输入端口数量</in_channel>
+	<out_channel>报警主机输出端口数量</out_channel>
+	<chipin_count>电源时序器插口数量</chipin_count>
+	<channel_count>同录或CVR或智能分析仪通道数量</channel_count>
+</case>

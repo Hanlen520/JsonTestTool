@@ -1,0 +1,6 @@
+<case>	
+	<method>UserLogin</method>
+	<userid>用户ID唯一，如果当期系统没有该用户，默认按照添加处理</userid>
+	<pwd>用户登录密码，MD5加密后的</pwd>
+	<flag>0-默认登录查询所有权限，1-winform客户端登录</flag>
+</case>
