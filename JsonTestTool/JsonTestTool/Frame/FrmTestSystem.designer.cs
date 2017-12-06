@@ -167,6 +167,7 @@
             this.btn_POST.TabIndex = 13;
             this.btn_POST.Text = "POST";
             this.btn_POST.UseVisualStyleBackColor = true;
+            this.btn_POST.Click += new System.EventHandler(this.btn_POST_Click);
             // 
             // btn_POST8
             // 
@@ -177,6 +178,7 @@
             this.btn_POST8.TabIndex = 13;
             this.btn_POST8.Text = "POST(utf8)";
             this.btn_POST8.UseVisualStyleBackColor = true;
+            this.btn_POST8.Click += new System.EventHandler(this.btn_POST8_Click);
             // 
             // btn_GET
             // 
@@ -187,6 +189,7 @@
             this.btn_GET.TabIndex = 13;
             this.btn_GET.Text = "GET";
             this.btn_GET.UseVisualStyleBackColor = true;
+            this.btn_GET.Click += new System.EventHandler(this.btn_GET_Click);
             // 
             // lb_RequestType
             // 

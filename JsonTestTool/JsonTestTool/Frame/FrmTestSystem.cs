@@ -238,5 +238,47 @@ namespace JsonTestTool.Frame
                 this.rtb_Data.Text = es.Message;
             }
         }
+
+        private void btn_POST_Click(object sender, EventArgs e)
+        {
+            string url = GetUrlString();
+            try
+            {
+                string temp = htmlUtil.HttpPost(url, this.rtb_Data.Text);
+                this.rtb_ACK.Text = temp;
+            }
+            catch (Exception ex)
+            {
+                this.rtb_ACK.Text = ex.Message;
+            }
+        }
+
+        private void btn_POST8_Click(object sender, EventArgs e)
+        {
+            string url = GetUrlString();
+            try
+            {
+                string temp = htmlUtil.HttpPostUTF8(url, this.rtb_Data.Text);
+                this.rtb_ACK.Text = temp;
+            }
+            catch (Exception ex)
+            {
+                this.rtb_ACK.Text = ex.Message;
+            }
+        }
+
+        private void btn_GET_Click(object sender, EventArgs e)
+        {
+            string url = GetUrlString();
+            try
+            {
+                string temp = htmlUtil.HttpGet(url, this.rtb_Data.Text);
+                this.rtb_ACK.Text = temp;
+            }
+            catch (Exception ex)
+            {
+                this.rtb_ACK.Text = ex.Message;
+            }
+        }
     }
 }
