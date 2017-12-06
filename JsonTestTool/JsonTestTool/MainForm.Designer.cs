@@ -34,6 +34,7 @@
             this.tsMenu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
             this.pl_Main = new System.Windows.Forms.Panel();
+            this.tsMenu_Polling = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripInForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,6 +42,7 @@
             // 
             this.menuStripInForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMenu_Normal,
+            this.tsMenu_Polling,
             this.tsMenu_Performance,
             this.tsMenu_Help,
             this.tsMenu_About});
@@ -89,6 +91,13 @@
             this.pl_Main.Size = new System.Drawing.Size(750, 550);
             this.pl_Main.TabIndex = 1;
             // 
+            // tsMenu_Polling
+            // 
+            this.tsMenu_Polling.Name = "tsMenu_Polling";
+            this.tsMenu_Polling.Size = new System.Drawing.Size(68, 21);
+            this.tsMenu_Polling.Text = "批量测试";
+            this.tsMenu_Polling.Click += new System.EventHandler(this.tsMenu_Polling_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -117,6 +126,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsMenu_Help;
         private System.Windows.Forms.ToolStripMenuItem tsMenu_About;
         private System.Windows.Forms.Panel pl_Main;
+        private System.Windows.Forms.ToolStripMenuItem tsMenu_Polling;
     }
 }
 

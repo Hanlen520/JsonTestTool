@@ -19,6 +19,7 @@ namespace JsonTestTool
         {
             Normal,
             Performance,
+            Polling,
             Help,
             About
         }
@@ -144,6 +145,24 @@ namespace JsonTestTool
                 MessageBox.Show(string.Format("未能正确加载关于页面。{0}", ex.Message));
             }
         }
+        private void tsMenu_Polling_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                highLightMenuStrip(menuStripType.Polling);
+                this.pl_Main.Controls.Clear();
+                FrmPollingTest pollingTestForm = new FrmPollingTest();
+                pollingTestForm.FormBorderStyle = FormBorderStyle.None;
+                pollingTestForm.Dock = System.Windows.Forms.DockStyle.Fill;
+                pollingTestForm.TopLevel = false;
+                this.pl_Main.Controls.Add(pollingTestForm);
+                pollingTestForm.Show();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(string.Format("未能正常加载批量测试模块。{0}", ex.Message));
+            }
+        }
 
         private void highLightMenuStrip(menuStripType mst)
         {
@@ -159,6 +178,9 @@ namespace JsonTestTool
                 case menuStripType.Performance:
                     tsMenu_Performance.BackColor = Color.LightSkyBlue;
                     break;
+                case menuStripType.Polling:
+                    tsMenu_Polling.BackColor = Color.LightSkyBlue;
+                    break;
                 case menuStripType.Help:
                     tsMenu_Help.BackColor = Color.LightSkyBlue;
                     break;
@@ -169,5 +191,6 @@ namespace JsonTestTool
                     break;
             }
         }
+
     }
 }

@@ -18,7 +18,6 @@ namespace JsonTestTool.Frame
         XmlDocument doc = new XmlDocument();
         private BackgroundWorker processBGWorker = new BackgroundWorker();
         private BtnRequestType requestType = BtnRequestType.POST;
-
         private string logName = string.Empty;
         private delegate string GetUrlOrData();
         private delegate int GetInterval();
@@ -97,14 +96,13 @@ namespace JsonTestTool.Frame
             {
                 message = e.UserState.ToString();
             }
-            string log = logStringCreator(e.ProgressPercentage,message);
-            this.rtb_ACK.Text += log;
+            this.rtb_ACK.Text += message;
             this.lb_Process.Text = string.Format("测试进度:({0}/{1})", e.ProgressPercentage, this.pbar_TestProcess.Maximum);
             if (File.Exists(Path.Combine(this.tb_LogPath.Text, logName)))
             {
                 using (StreamWriter writer = File.AppendText(Path.Combine(this.tb_LogPath.Text, logName)))
                 {
-                    writer.WriteAsync(log);
+                    writer.WriteAsync(message);
                     writer.Flush();
                     writer.Close();
                 }
@@ -396,7 +394,7 @@ namespace JsonTestTool.Frame
                 sb.AppendLine(string.Format("请求路径为：{0}", GetUrlFromForm()));
                 sb.AppendLine(string.Format("测试间隔为：{0}", GetIntervalFromForm()));
                 sb.AppendLine(string.Format("Json请求为：{0}", requestType.ToString()));
-                sb.AppendLine(msg);
+                sb.AppendLine(string.Format("返回结果：{0}", msg));
                 return sb.ToString();
             }
             catch (Exception e)
