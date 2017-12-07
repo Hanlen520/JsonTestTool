@@ -350,6 +350,8 @@
             // 
             // gb_LogControl
             // 
+            this.gb_LogControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_LogControl.Controls.Add(this.btn_LogPathOpen);
             this.gb_LogControl.Controls.Add(this.lb_LogPath);
             this.gb_LogControl.Controls.Add(this.tb_LogPath);
@@ -394,6 +396,8 @@
             // 
             // gb_TestManage
             // 
+            this.gb_TestManage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_TestManage.Controls.Add(this.btn_Begin);
             this.gb_TestManage.Controls.Add(this.btn_Cancel);
             this.gb_TestManage.Controls.Add(this.lb_Process);
@@ -407,6 +411,9 @@
             // 
             // gb_Log
             // 
+            this.gb_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_Log.Controls.Add(this.rtb_ACK);
             this.gb_Log.Location = new System.Drawing.Point(262, 155);
             this.gb_Log.Name = "gb_Log";
@@ -417,6 +424,8 @@
             // 
             // gb_TreeView
             // 
+            this.gb_TreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_TreeView.Controls.Add(this.tv_Method);
             this.gb_TreeView.Location = new System.Drawing.Point(12, 155);
             this.gb_TreeView.Name = "gb_TreeView";
@@ -427,6 +436,7 @@
             // 
             // gb_Data
             // 
+            this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
             this.gb_Data.Location = new System.Drawing.Point(12, 348);
             this.gb_Data.Name = "gb_Data";

@@ -52,9 +52,9 @@
             this.gb_TargeServerInfomation = new System.Windows.Forms.GroupBox();
             this.gb_CaseManager = new System.Windows.Forms.GroupBox();
             this.gb_TestManager = new System.Windows.Forms.GroupBox();
+            this.btn_Clear = new System.Windows.Forms.Button();
             this.gb_Data = new System.Windows.Forms.GroupBox();
             this.gb_ACK = new System.Windows.Forms.GroupBox();
-            this.btn_Clear = new System.Windows.Forms.Button();
             this.gb_TargeServerInfomation.SuspendLayout();
             this.gb_CaseManager.SuspendLayout();
             this.gb_TestManager.SuspendLayout();
@@ -133,12 +133,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Data.Location = new System.Drawing.Point(6, 17);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(465, 139);
+            this.rtb_Data.Size = new System.Drawing.Size(465, 134);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "请选择一个测试节点。";
             // 
             // rtb_ACK
             // 
+            this.rtb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_ACK.Location = new System.Drawing.Point(6, 20);
             this.rtb_ACK.Name = "rtb_ACK";
             this.rtb_ACK.Size = new System.Drawing.Size(465, 273);
@@ -147,7 +150,6 @@
             // 
             // btn_POST
             // 
-            this.btn_POST.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_POST.Location = new System.Drawing.Point(13, 20);
             this.btn_POST.Name = "btn_POST";
             this.btn_POST.Size = new System.Drawing.Size(73, 32);
@@ -158,7 +160,6 @@
             // 
             // btn_POST8
             // 
-            this.btn_POST8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_POST8.Location = new System.Drawing.Point(92, 20);
             this.btn_POST8.Name = "btn_POST8";
             this.btn_POST8.Size = new System.Drawing.Size(73, 32);
@@ -169,7 +170,6 @@
             // 
             // btn_GET
             // 
-            this.btn_GET.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_GET.Location = new System.Drawing.Point(171, 20);
             this.btn_GET.Name = "btn_GET";
             this.btn_GET.Size = new System.Drawing.Size(73, 32);
@@ -260,15 +260,17 @@
             this.gb_TargeServerInfomation.Controls.Add(this.Tb_Port);
             this.gb_TargeServerInfomation.Controls.Add(this.cb_Request);
             this.gb_TargeServerInfomation.Controls.Add(this.lb_RequestType);
-            this.gb_TargeServerInfomation.Location = new System.Drawing.Point(12, 12);
+            this.gb_TargeServerInfomation.Location = new System.Drawing.Point(12, 9);
             this.gb_TargeServerInfomation.Name = "gb_TargeServerInfomation";
-            this.gb_TargeServerInfomation.Size = new System.Drawing.Size(244, 59);
+            this.gb_TargeServerInfomation.Size = new System.Drawing.Size(244, 62);
             this.gb_TargeServerInfomation.TabIndex = 18;
             this.gb_TargeServerInfomation.TabStop = false;
             this.gb_TargeServerInfomation.Text = "测试服务器信息";
             // 
             // gb_CaseManager
             // 
+            this.gb_CaseManager.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_CaseManager.Controls.Add(this.tv_Method);
             this.gb_CaseManager.Controls.Add(this.lb_CaseFolder);
             this.gb_CaseManager.Controls.Add(this.tb_CaseFolder);
@@ -284,6 +286,8 @@
             // 
             // gb_TestManager
             // 
+            this.gb_TestManager.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_TestManager.Controls.Add(this.btn_Clear);
             this.gb_TestManager.Controls.Add(this.btn_POST);
             this.gb_TestManager.Controls.Add(this.btn_POST8);
@@ -295,18 +299,33 @@
             this.gb_TestManager.TabStop = false;
             this.gb_TestManager.Text = "测试管理";
             // 
+            // btn_Clear
+            // 
+            this.btn_Clear.Location = new System.Drawing.Point(293, 20);
+            this.btn_Clear.Name = "btn_Clear";
+            this.btn_Clear.Size = new System.Drawing.Size(73, 32);
+            this.btn_Clear.TabIndex = 14;
+            this.btn_Clear.Text = "重置";
+            this.btn_Clear.UseVisualStyleBackColor = true;
+            this.btn_Clear.Click += new System.EventHandler(this.btn_Clear_Click);
+            // 
             // gb_Data
             // 
+            this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_Data.Controls.Add(this.rtb_Data);
             this.gb_Data.Location = new System.Drawing.Point(262, 9);
             this.gb_Data.Name = "gb_Data";
-            this.gb_Data.Size = new System.Drawing.Size(477, 147);
+            this.gb_Data.Size = new System.Drawing.Size(477, 157);
             this.gb_Data.TabIndex = 21;
             this.gb_Data.TabStop = false;
             this.gb_Data.Text = "Json请求数据：";
             // 
             // gb_ACK
             // 
+            this.gb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_ACK.Controls.Add(this.rtb_ACK);
             this.gb_ACK.Location = new System.Drawing.Point(262, 239);
             this.gb_ACK.Name = "gb_ACK";
@@ -314,16 +333,6 @@
             this.gb_ACK.TabIndex = 23;
             this.gb_ACK.TabStop = false;
             this.gb_ACK.Text = "返回应答：";
-            // 
-            // btn_Clear
-            // 
-            this.btn_Clear.Location = new System.Drawing.Point(398, 20);
-            this.btn_Clear.Name = "btn_Clear";
-            this.btn_Clear.Size = new System.Drawing.Size(73, 32);
-            this.btn_Clear.TabIndex = 14;
-            this.btn_Clear.Text = "重置";
-            this.btn_Clear.UseVisualStyleBackColor = true;
-            this.btn_Clear.Click += new System.EventHandler(this.btn_Clear_Click);
             // 
             // FrmTestSystem
             // 

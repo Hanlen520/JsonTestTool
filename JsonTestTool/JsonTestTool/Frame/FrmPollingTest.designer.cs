@@ -114,9 +114,8 @@
             // 
             // tv_Method
             // 
-            this.tv_Method.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tv_Method.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.tv_Method.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tv_Method.FullRowSelect = true;
             this.tv_Method.ImageKey = "folder.png";
@@ -268,6 +267,8 @@
             // 
             // gb_LogControl
             // 
+            this.gb_LogControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_LogControl.Controls.Add(this.btn_LogPathOpen);
             this.gb_LogControl.Controls.Add(this.btn_LogPathChoose);
             this.gb_LogControl.Controls.Add(this.lb_LogPath);
@@ -310,6 +311,8 @@
             // 
             // tb_LogPath
             // 
+            this.tb_LogPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_LogPath.Location = new System.Drawing.Point(158, 33);
             this.tb_LogPath.Multiline = true;
             this.tb_LogPath.Name = "tb_LogPath";
@@ -319,6 +322,8 @@
             // 
             // gb_TestManager
             // 
+            this.gb_TestManager.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_TestManager.Controls.Add(this.pbar_TestProcess);
             this.gb_TestManager.Controls.Add(this.btn_StopTest);
             this.gb_TestManager.Controls.Add(this.btn_BeginTest);
@@ -332,6 +337,8 @@
             // 
             // pbar_TestProcess
             // 
+            this.pbar_TestProcess.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pbar_TestProcess.Location = new System.Drawing.Point(85, 36);
             this.pbar_TestProcess.Name = "pbar_TestProcess";
             this.pbar_TestProcess.Size = new System.Drawing.Size(291, 53);
@@ -415,6 +422,9 @@
             // 
             // gb_Log
             // 
+            this.gb_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_Log.Controls.Add(this.rtb_Logs);
             this.gb_Log.Location = new System.Drawing.Point(262, 178);
             this.gb_Log.Name = "gb_Log";
@@ -425,6 +435,7 @@
             // 
             // gb_Data
             // 
+            this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
             this.gb_Data.Location = new System.Drawing.Point(12, 358);
             this.gb_Data.Name = "gb_Data";
@@ -435,6 +446,8 @@
             // 
             // gb_Tree
             // 
+            this.gb_Tree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Tree.Controls.Add(this.tv_Method);
             this.gb_Tree.Location = new System.Drawing.Point(12, 178);
             this.gb_Tree.Name = "gb_Tree";
