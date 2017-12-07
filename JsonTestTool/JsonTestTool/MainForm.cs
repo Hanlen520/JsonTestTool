@@ -10,12 +10,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace JsonTestTool
 {
     public partial class MainForm : Form
     {
-         public MainForm()
+
+        #region  user32.dll
+        [DllImport("user32.dll")]
+        static extern IntPtr FindWindow(IntPtr classname, string title);
+        [DllImport("user32.dll")]
+        static extern IntPtr MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeigh, bool rePaint);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetWindowRect(IntPtr hwnd, out Rectangle rect);
+        #endregion
+        private Point m_frmCoordinate = new Point();
+        /// <summary>
+        /// 获取当前窗口的屏幕坐标
+        /// </summary>
+        private Point FrmCoordinate
+        {
+            get { return this.PointToScreen(this.Location); }
+            set { this.m_frmCoordinate = value; }
+        }
+
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -42,6 +62,7 @@ namespace JsonTestTool
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult result;
+            FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "是否关闭本程序？");
             result = MessageBox.Show("Yes：关闭。No：取消", "是否关闭本程序？", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -76,7 +97,8 @@ namespace JsonTestTool
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("未能正常加载常规测试模块。{0}", ex.Message));
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "常规测试");
+                MessageBox.Show(string.Format("未能正常加载常规测试模块。{0}", ex.Message),"常规测试");
             }
         }
 
@@ -95,7 +117,8 @@ namespace JsonTestTool
             }
             catch (Exception ex)
             {
-                MessageBox.Show(string.Format("未能正常加载性能测试模块。{0}", ex.Message));
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "性能测试");
+                MessageBox.Show(string.Format("未能正常加载性能测试模块。{0}", ex.Message), "性能测试");
             }
         }
 
@@ -114,7 +137,8 @@ namespace JsonTestTool
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(string.Format("未能正常加载帮助页面。{0}", ex.Message));
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "帮助");
+                MessageBox.Show(string.Format("未能正常加载帮助页面。{0}", ex.Message), "帮助");
             }
         }
 
@@ -133,7 +157,8 @@ namespace JsonTestTool
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(string.Format("未能正确加载关于页面。{0}", ex.Message));
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "关于");
+                MessageBox.Show(string.Format("未能正确加载关于页面。{0}", ex.Message), "关于");
             }
         }
 
@@ -152,7 +177,8 @@ namespace JsonTestTool
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(string.Format("未能正常加载批量测试模块。{0}", ex.Message));
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "批量测试");
+                MessageBox.Show(string.Format("未能正常加载批量测试模块。{0}", ex.Message), "批量测试");
             }
         }
 
@@ -187,6 +213,28 @@ namespace JsonTestTool
         private void pl_Main_ControlRemoved(object sender, ControlEventArgs e)
         {
             string temp = "";
+        }
+
+        /// <summary>
+        /// 控制MessageBox的弹出位置
+        /// </summary>
+        /// <param name="x">新的x坐标</param>
+        /// <param name="y">新的y坐标</param>
+        /// <param name="rePaint">是否重绘</param>
+        /// <param name="title">MessageBox的Title</param>
+        private void FindAndMoveMsgBox(int x, int y, bool rePaint, string title)
+        {
+            Thread thr = new Thread(() =>
+            {
+                IntPtr msgBox = IntPtr.Zero;
+                while ((msgBox = FindWindow(IntPtr.Zero, title)) == IntPtr.Zero) ;
+                Rectangle r = new Rectangle();
+                GetWindowRect(msgBox, out r);
+                int xx = x + Math.Abs(this.Width - r.Width) / 2;
+                int yy = y + Math.Abs(this.Height - r.Height);
+                MoveWindow(msgBox, xx, yy, r.Width - r.X, r.Height - r.Y, rePaint);
+            });
+            thr.Start();
         }
     }
 }

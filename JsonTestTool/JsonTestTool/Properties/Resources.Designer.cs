@@ -63,36 +63,6 @@ namespace JsonTestTool.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap POWERPNT_2017_12_07_15_36_37 {
-            get {
-                object obj = ResourceManager.GetObject("POWERPNT_2017-12-07_15-36-37", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap POWERPNT_2017_12_07_15_36_48 {
-            get {
-                object obj = ResourceManager.GetObject("POWERPNT_2017-12-07_15-36-48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        internal static System.Drawing.Bitmap POWERPNT_2017_12_07_15_37_04 {
-            get {
-                object obj = ResourceManager.GetObject("POWERPNT_2017-12-07_15-37-04", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
         internal static System.Drawing.Bitmap test1 {
             get {
                 object obj = ResourceManager.GetObject("test1", resourceCulture);
