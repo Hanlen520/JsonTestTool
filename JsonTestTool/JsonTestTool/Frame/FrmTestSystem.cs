@@ -280,5 +280,11 @@ namespace JsonTestTool.Frame
                 this.rtb_ACK.Text = ex.Message;
             }
         }
+
+        private void btn_Clear_Click(object sender, EventArgs e)
+        {
+            this.rtb_ACK.Text = "请选择一个测试节点。";
+            this.rtb_Data.Text = string.Empty;
+        }
     }
 }

@@ -192,7 +192,7 @@
             this.gb_SoftwareInformation.Controls.Add(this.lb_Anthony);
             this.gb_SoftwareInformation.Controls.Add(this.lb_Version);
             this.gb_SoftwareInformation.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.gb_SoftwareInformation.Location = new System.Drawing.Point(80, 36);
+            this.gb_SoftwareInformation.Location = new System.Drawing.Point(70, 3);
             this.gb_SoftwareInformation.Name = "gb_SoftwareInformation";
             this.gb_SoftwareInformation.Size = new System.Drawing.Size(574, 251);
             this.gb_SoftwareInformation.TabIndex = 4;

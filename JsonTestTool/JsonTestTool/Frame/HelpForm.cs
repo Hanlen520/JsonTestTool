@@ -27,7 +27,6 @@ namespace JsonTestTool.Frame
                 temp = this.rtb_DeviceInfo.Lines[0];
                 rtb_DeviceInfo.SelectionStart = 0;
                 rtb_DeviceInfo.SelectionLength = temp.Length;
-                //rtb_DeviceInfo.SelectionColor = Color.Purple;
                 rtb_DeviceInfo.SelectionFont = new System.Drawing.Font("微软雅黑", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
                 this.rtb_DeviceInfo.Lines[0] = temp;
             }
@@ -36,7 +35,6 @@ namespace JsonTestTool.Frame
                 temp = this.rtb_DeviceInfo.Lines[6];
                 rtb_DeviceInfo.SelectionStart = rtb_DeviceInfo.Text.IndexOf(temp);
                 rtb_DeviceInfo.SelectionLength = temp.Length;
-                //rtb_DeviceInfo.SelectionColor = Color.Purple;
                 rtb_DeviceInfo.SelectionFont = new System.Drawing.Font("微软雅黑", 20, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
                 this.rtb_DeviceInfo.Lines[6] = temp;
             }

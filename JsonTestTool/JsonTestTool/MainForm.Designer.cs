@@ -30,11 +30,11 @@
         {
             this.menuStripInForm = new System.Windows.Forms.MenuStrip();
             this.tsMenu_Normal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenu_Polling = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Performance = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
             this.pl_Main = new System.Windows.Forms.Panel();
-            this.tsMenu_Polling = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStripInForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +59,13 @@
             this.tsMenu_Normal.Size = new System.Drawing.Size(68, 21);
             this.tsMenu_Normal.Text = "常规测试";
             this.tsMenu_Normal.Click += new System.EventHandler(this.tsMenu_Normal_Click);
+            // 
+            // tsMenu_Polling
+            // 
+            this.tsMenu_Polling.Name = "tsMenu_Polling";
+            this.tsMenu_Polling.Size = new System.Drawing.Size(68, 21);
+            this.tsMenu_Polling.Text = "批量测试";
+            this.tsMenu_Polling.Click += new System.EventHandler(this.tsMenu_Polling_Click);
             // 
             // tsMenu_Performance
             // 
@@ -90,13 +97,7 @@
             this.pl_Main.Name = "pl_Main";
             this.pl_Main.Size = new System.Drawing.Size(750, 550);
             this.pl_Main.TabIndex = 1;
-            // 
-            // tsMenu_Polling
-            // 
-            this.tsMenu_Polling.Name = "tsMenu_Polling";
-            this.tsMenu_Polling.Size = new System.Drawing.Size(68, 21);
-            this.tsMenu_Polling.Text = "批量测试";
-            this.tsMenu_Polling.Click += new System.EventHandler(this.tsMenu_Polling_Click);
+            this.pl_Main.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.pl_Main_ControlRemoved);
             // 
             // MainForm
             // 

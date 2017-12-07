@@ -15,18 +15,50 @@ namespace JsonTestTool
 {
     public partial class MainForm : Form
     {
-        private enum menuStripType
-        {
-            Normal,
-            Performance,
-            Polling,
-            Help,
-            About
-        }
-
-        public MainForm()
+         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                highLightMenuStrip(menuStripType.Normal);
+                this.pl_Main.Controls.Clear();
+                FrmTestSystem fts = new FrmTestSystem();
+                fts.FormBorderStyle = FormBorderStyle.None;
+                fts.Dock = System.Windows.Forms.DockStyle.Fill;
+                fts.TopLevel = false;
+                this.pl_Main.Controls.Add(fts);
+                fts.Show();
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(string.Format("程序加载出现问题：", ex.Message));
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result;
+            result = MessageBox.Show("Yes：关闭。No：取消", "是否关闭本程序？", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
+                catch (Exception ex)
+                {
+                    Environment.Exit(0);
+                    this.Close();
+                }
+            }
+            else if (result == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void tsMenu_Normal_Click(object sender, EventArgs e)
@@ -86,47 +118,6 @@ namespace JsonTestTool
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                highLightMenuStrip(menuStripType.Normal);
-                this.pl_Main.Controls.Clear();
-                FrmTestSystem fts = new FrmTestSystem();
-                fts.FormBorderStyle = FormBorderStyle.None;
-                fts.Dock = System.Windows.Forms.DockStyle.Fill;
-                fts.TopLevel = false;
-                this.pl_Main.Controls.Add(fts);
-                fts.Show();
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(string.Format("程序加载出现问题：", ex.Message));
-            }
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            DialogResult result;
-            result = MessageBox.Show("Yes：关闭。No：取消", "是否关闭本程序？", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    System.Diagnostics.Process.GetCurrentProcess().Kill();
-                }
-                catch (Exception ex)
-                {
-                    Environment.Exit(0);
-                    this.Close();
-                }
-            }
-            else if (result == DialogResult.No)
-            {
-                e.Cancel = true;
-            }
-        }
-
         private void tsMenu_About_Click(object sender, EventArgs e)
         {
             try
@@ -145,6 +136,7 @@ namespace JsonTestTool
                 MessageBox.Show(string.Format("未能正确加载关于页面。{0}", ex.Message));
             }
         }
+
         private void tsMenu_Polling_Click(object sender, EventArgs e)
         {
             try
@@ -192,5 +184,9 @@ namespace JsonTestTool
             }
         }
 
+        private void pl_Main_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            string temp = "";
+        }
     }
 }

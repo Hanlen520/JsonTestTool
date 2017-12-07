@@ -6,6 +6,22 @@ using System.Windows.Forms;
 
 namespace JsonTestTool
 {
+    public enum RequestType
+    {
+        POST,
+        POSTUTF8,
+        GET,
+    }
+
+    public enum menuStripType
+    {
+        Normal,
+        Performance,
+        Polling,
+        Help,
+        About
+    }
+
     static class Program
     {
         /// <summary>

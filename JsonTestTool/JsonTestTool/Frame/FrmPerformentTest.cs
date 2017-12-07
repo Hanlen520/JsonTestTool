@@ -9,30 +9,50 @@ using Util;
 using System.Threading;
 using JsonTestClient.Util;
 using System.IO;
+using JsonTestTool.Util;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace JsonTestTool.Frame
 {
     public partial class FrmPerformentTest : Form
     {
+        #region  字段属性
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
         private BackgroundWorker processBGWorker = new BackgroundWorker();
-        private BtnRequestType requestType = BtnRequestType.POST;
-        private string logName = string.Empty;
+        private RequestType requestType = RequestType.POST;
+        private string logFullPath = string.Empty;
         private delegate string GetUrlOrData();
         private delegate int GetInterval();
-        private enum BtnRequestType
+
+        private Point m_frmCoordinate = new Point();
+
+        /// <summary>
+        /// 获取当前窗口的屏幕坐标
+        /// </summary>
+        private Point FrmCoordinate
         {
-            POST,
-            POSTUTF8,
-            GET,
+            get { return this.PointToScreen(this.Location); }
+            set { this.m_frmCoordinate = value; }
         }
+        #endregion
+
+        #region  user32.dll
+        [DllImport("user32.dll")]
+        static extern IntPtr FindWindow(IntPtr classname, string title);
+        [DllImport("user32.dll")]
+        static extern IntPtr MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeigh, bool rePaint);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetWindowRect(IntPtr hwnd, out Rectangle rect);
+        #endregion
 
         public FrmPerformentTest()
         {
             InitializeComponent();
         }
 
+        #region 事件
         private void Form1_Load(object sender, System.EventArgs e)
         {
             try
@@ -71,6 +91,81 @@ namespace JsonTestTool.Frame
             }
         }
 
+        private void btn_LogPathChoose_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog path = new FolderBrowserDialog();
+            path.SelectedPath = this.tb_LogPath.Text;
+            path.ShowDialog();
+            this.tb_LogPath.Text = path.SelectedPath;
+        }
+
+        private void rtb_Data_TextChanged(object sender, EventArgs e)
+        {
+            RichTextBox rtBox = sender as RichTextBox;
+            if(!string.IsNullOrEmpty(rtBox.Text))
+            {
+                EnableRequestButton(true);
+            }
+            else
+            {
+                this.btn_Begin.Enabled = false;
+            }
+        }
+
+        private void btn_Cancel_Click(object sender, EventArgs e)
+        {
+            processBGWorker.WorkerSupportsCancellation = true;
+            processBGWorker.CancelAsync();
+        }
+
+        private void btn_Begin_Click(object sender, EventArgs e)
+        {
+            EnableRequestButton(false);
+            logFullPath = Logger.CreateLogFile(this.tb_LogPath.Text);
+            try
+            {
+                this.rtb_ACK.Text = string.Empty;
+                this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
+                Dictionary<decimal, RequestType> ee = new Dictionary<decimal, RequestType>();
+                switch (requestType)
+                {
+                    case RequestType.POST:
+                        ee.Add(this.nud_Count.Value, RequestType.POST);
+                        break;
+                    case RequestType.POSTUTF8:
+                        ee.Add(this.nud_Count.Value, RequestType.POSTUTF8);
+                        break;
+                    case RequestType.GET:
+                        ee.Add(this.nud_Count.Value, RequestType.GET);
+                        break;
+                    default:
+                        break;
+                }
+                this.processBGWorker.RunWorkerAsync(ee);                       
+            }
+            catch (System.Exception ex)
+            {
+                updateDateToRTB(ex.Message);
+            }
+        }
+
+        private void rb_POST_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = RequestType.POST;
+        }
+
+        private void rb_POST_UTF8_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = RequestType.POSTUTF8;
+        }
+
+        private void rb_GET_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = RequestType.GET;
+        }
+        #endregion
+
+        #region ProcessBackgroundWorker 处理逻辑
         private void ProcessBGWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if(e.Cancelled)
@@ -84,7 +179,7 @@ namespace JsonTestTool.Frame
 
             }
             //测试结束后，把LogName置为空。
-            logName = string.Empty;
+            logFullPath = string.Empty;
             EnableRequestButton(true);
         }
 
@@ -98,15 +193,7 @@ namespace JsonTestTool.Frame
             }
             this.rtb_ACK.Text += message;
             this.lb_Process.Text = string.Format("测试进度:({0}/{1})", e.ProgressPercentage, this.pbar_TestProcess.Maximum);
-            if (File.Exists(Path.Combine(this.tb_LogPath.Text, logName)))
-            {
-                using (StreamWriter writer = File.AppendText(Path.Combine(this.tb_LogPath.Text, logName)))
-                {
-                    writer.WriteAsync(message);
-                    writer.Flush();
-                    writer.Close();
-                }
-            }
+            Logger.WriteLog(Path.Combine(this.tb_LogPath.Text, logFullPath),message);
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -114,16 +201,18 @@ namespace JsonTestTool.Frame
             BackgroundWorker bgWorker = sender as BackgroundWorker;
             string temp = string.Empty;
             int endNumber = 0;
+            decimal key = 0;
+            RequestType reqType = RequestType.POST;
             try
             {
                 //耗时
                 if (e.Argument != null)
                 {
-                    Dictionary<decimal, BtnRequestType> tempDic = (Dictionary<decimal, BtnRequestType>)e.Argument;
+                    Dictionary<decimal, RequestType> tempDic = (Dictionary<decimal, RequestType>)e.Argument;
                     if (tempDic.Count > 0)
                     {
-                        decimal key = tempDic.Keys.First<decimal>();
-                        BtnRequestType type = tempDic[key];
+                        key = tempDic.Keys.First<decimal>();
+                        reqType = tempDic[key];
                         endNumber = Convert.ToInt32(key);
                     }
                 }
@@ -141,13 +230,13 @@ namespace JsonTestTool.Frame
                         int interval = GetIntervalFromForm();
                         switch (requestType)
                         {
-                            case BtnRequestType.POST:
+                            case RequestType.POST:
                                 temp = htmlUtil.HttpPost(strUrl, postdata);
                                 break;
-                            case BtnRequestType.POSTUTF8:
+                            case RequestType.POSTUTF8:
                                 temp = htmlUtil.HttpPostUTF8(strUrl, postdata);
                                 break;
-                            case BtnRequestType.GET:
+                            case RequestType.GET:
                                 temp = htmlUtil.HttpGet(strUrl, postdata);
                                 break;
                             default:
@@ -170,7 +259,9 @@ namespace JsonTestTool.Frame
                 bgWorker.ReportProgress(0,ex.ToString());
             }
         }
+        #endregion
 
+        #region 控件逻辑
         private void tv_Method_AfterExpand(object sender, TreeViewEventArgs e)
         {
             e.Node.ImageIndex = 1;
@@ -212,17 +303,6 @@ namespace JsonTestTool.Frame
             tt.SetToolTip((Control)sender, str);
         }
 
-        private void updateDateToRTB(string type)
-        {
-            if (!string.IsNullOrEmpty(type))
-            {
-                if (Enum.IsDefined(typeof(JsonMethodType),type))
-                {
-                    this.rtb_Data.Text = htmlUtil.JsonStringCreator(type);
-                }
-            }
-        }
-
         /// <summary>
         /// RecursionTreeControl:表示将XML文件的内容显示在TreeView控件中
         /// </summary>
@@ -240,87 +320,76 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void btn_LogPathChoose_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 如果传入的是JsonMethodType，生成对应的JsonString
+        /// 否则直接更新文本
+        /// </summary>
+        /// <param name="type"></param>
+        private void updateDateToRTB(string type)
         {
-            FolderBrowserDialog path = new FolderBrowserDialog();
-            path.SelectedPath = this.tb_LogPath.Text;
-            path.ShowDialog();
-            this.tb_LogPath.Text = path.SelectedPath;
+            if (!string.IsNullOrEmpty(type))
+            {
+                if (Enum.IsDefined(typeof(JsonMethodType), type))
+                {
+                    this.rtb_Data.Text = htmlUtil.JsonStringCreator(type);
+                }
+                else
+                {
+                    this.rtb_Data.Text = type;
+                }
+            }
         }
 
-        private void rtb_Data_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 控件Enable控制逻辑，在测试期间Disabled一部分输入控件
+        /// </summary>
+        /// <param name="isEnable"></param>
+        private void EnableRequestButton(bool isEnable)
         {
-            RichTextBox rtBox = sender as RichTextBox;
-            if(!string.IsNullOrEmpty(rtBox.Text))
+            if (isEnable)
             {
-                EnableRequestButton(true);
+                this.gb_TargetServer.Enabled = true;
+                this.gb_RequestType.Enabled = true;
+                this.gb_TestRequirements.Enabled = true;
+                this.btn_Begin.Enabled = true;
+                this.btn_Cancel.Enabled = false;
+                this.tv_Method.Enabled = true;
             }
             else
             {
-                EnableRequestButton(false);
+                this.gb_TargetServer.Enabled = false;
+                this.gb_RequestType.Enabled = false;
+                this.gb_TestRequirements.Enabled = false;
+                this.btn_Begin.Enabled = false;
+                this.btn_Cancel.Enabled = true;
+                this.tv_Method.Enabled = false;
             }
         }
 
-        private void btn_Cancel_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 控制MessageBox的弹出位置
+        /// </summary>
+        /// <param name="x">新的x坐标</param>
+        /// <param name="y">新的y坐标</param>
+        /// <param name="rePaint">是否重绘</param>
+        /// <param name="title">MessageBox的Title</param>
+        private void FindAndMoveMsgBox(int x, int y, bool rePaint, string title)
         {
-            processBGWorker.WorkerSupportsCancellation = true;
-            processBGWorker.CancelAsync();
-        }
-
-        private void btn_Begin_Click(object sender, EventArgs e)
-        {
-            //
-            EnableRequestButton(false);
-            logName = string.Format("Log({0}).txt",DateTime.Now.ToString("[MM-dd-HH]#[mm-ss-fff]"));
-            if (!Directory.Exists(this.tb_LogPath.Text))
+            Thread thr = new Thread(() =>
             {
-                Directory.CreateDirectory(this.tb_LogPath.Text);
-            }
-            if (!File.Exists(Path.Combine(this.tb_LogPath.Text,logName)))
-            {
-                File.Create(Path.Combine(this.tb_LogPath.Text,logName)).Close();
-            }
-            try
-            {
-                this.rtb_ACK.Text = string.Empty;
-                this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
-                Dictionary<decimal, BtnRequestType> ee = new Dictionary<decimal, BtnRequestType>();
-                switch (requestType)
-                {
-                    case BtnRequestType.POST:
-                        ee.Add(this.nud_Count.Value, BtnRequestType.POST);
-                        break;
-                    case BtnRequestType.POSTUTF8:
-                        ee.Add(this.nud_Count.Value, BtnRequestType.POSTUTF8);
-                        break;
-                    case BtnRequestType.GET:
-                        ee.Add(this.nud_Count.Value, BtnRequestType.GET);
-                        break;
-                    default:
-                        break;
-                }
-                this.processBGWorker.RunWorkerAsync(ee);                       
-            }
-            catch (System.Exception ex)
-            {
-                updateDateToRTB(ex.Message);
-            }
+                IntPtr msgBox = IntPtr.Zero;
+                while ((msgBox = FindWindow(IntPtr.Zero, title)) == IntPtr.Zero) ;
+                Rectangle r = new Rectangle();
+                GetWindowRect(msgBox, out r);
+                int xx = x + Math.Abs(this.Width - r.Width) / 2;
+                int yy = y + Math.Abs(this.Height - r.Height);
+                MoveWindow(msgBox, xx, yy, r.Width - r.X, r.Height - r.Y, rePaint);
+            });
+            thr.Start();
         }
+        #endregion
 
-        private void rb_POST_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = BtnRequestType.POST;
-        }
-
-        private void rb_POST_UTF8_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = BtnRequestType.POSTUTF8;
-        }
-
-        private void rb_GET_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = BtnRequestType.GET;
-        }
+        #region 跨线程操作控件
 
         private string GetUrlFromForm()
         {
@@ -363,27 +432,9 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void EnableRequestButton(bool isEnable)
-        {
-            if (isEnable)
-            {
-                this.gb_TargetServer.Enabled = true;
-                this.gb_RequestType.Enabled = true;
-                this.gb_TestRequirements.Enabled = true;
-                this.btn_Begin.Enabled = true;
-                this.btn_Cancel.Enabled = false;
-                this.tv_Method.Enabled = true;
-            }
-            else
-            {
-                this.gb_TargetServer.Enabled = false;
-                this.gb_RequestType.Enabled = false;
-                this.gb_TestRequirements.Enabled = false;
-                this.btn_Begin.Enabled = false;
-                this.btn_Cancel.Enabled = true;
-                this.tv_Method.Enabled = false;
-            }
-        }
+        #endregion
+
+        #region 字符串处理
 
         private string logStringCreator(int time, string msg)
         {
@@ -416,6 +467,34 @@ namespace JsonTestTool.Frame
                 throw;
             }
             return strUrl;
+        }
+        #endregion
+
+        private void btn_LogPathOpen_Click(object sender, EventArgs e)
+        {
+            string path = string.Empty;
+            try
+            {
+                if (string.IsNullOrEmpty(this.tb_LogPath.Text))
+                {
+                    throw new DirectoryNotFoundException("报表目录为空，请选择目录后重试。");
+                }
+                else
+                {
+                    path = this.tb_LogPath.Text;
+                }
+                System.Diagnostics.Process.Start("Explorer.exe", path);
+            }
+            catch (DirectoryNotFoundException dnfEx)
+            {
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "打开目录");
+                MessageBox.Show(dnfEx.Message, "打开目录", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "打开目录");
+                MessageBox.Show(string.Format("打开目录失败。\r\n {0}", ex.Message), "打开目录", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

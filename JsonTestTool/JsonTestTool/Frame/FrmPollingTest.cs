@@ -11,47 +11,73 @@ using System.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading;
+using System.Runtime.InteropServices;
+using System.Drawing;
+using JsonTestTool.Util;
 
 namespace JsonTestTool.Frame
 {
     public partial class FrmPollingTest : Form
     {
+        #region 字段属性
         const string EXPAND = "展开节点";
         const string COLLAPSE = "收缩节点";
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
         private BackgroundWorker processBGWorker = new BackgroundWorker();
-        private BtnRequestType requestType = BtnRequestType.POST;
-        private string reportName = string.Empty;
+        private RequestType requestType = RequestType.POST;
+        private string reportFullPath = string.Empty;
         private int nodesCount = 0;
         private int nodeIndex = 0;
         private delegate string GetUrlOrData();
         private delegate void SetData(string postData);
+        private Point m_frmCoordinate = new Point();
 
-        private enum BtnRequestType
+        /// <summary>
+        /// 获取当前窗口的屏幕坐标
+        /// </summary>
+        private Point FrmCoordinate
         {
-            POST,
-            POSTUTF8,
-            GET,
+            get { return this.PointToScreen(this.Location); }
+            set { this.m_frmCoordinate = value; }
         }
 
+
+        //用于BackgroundWorkers传递测试结果
         public struct TestResult
         {
-            public bool isSucceesul;
-            public string nodeName;
-            public string reqStr;
-            public string result;
+            public bool isSucceesul;    //测试是否成功
+            public string nodeName;     //测试的节点
+            public string reqStr;       //测试的Json请求文本
+            public string result;       //测试返回值(Json返回数据或者返回的异常)
         }
+        #endregion
+
+        #region  user32.dll
+        [DllImport("user32.dll")]
+        static extern IntPtr FindWindow(IntPtr classname, string title);
+        [DllImport("user32.dll")]
+        static extern IntPtr MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeigh, bool rePaint);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetWindowRect(IntPtr hwnd, out Rectangle rect);
+        #endregion
 
         public FrmPollingTest()
         {
             InitializeComponent();
         }
 
+        #region 事件
         private void Form1_Load(object sender, System.EventArgs e)
         {
             try
             {
+                //默认为不可操作，需要先选择请求文本之后，才可用
+                EnableRequestButton(false);
+                this.gb_TargeServerInfo.Enabled = true;
+                this.gb_RequestType.Enabled = true;
+                this.gb_CaseManager.Enabled = true;
+                this.tv_Method.Enabled = true;
                 processBGWorker.DoWork += ProcessBGWorker_DoWork;
                 processBGWorker.WorkerReportsProgress = true;
                 processBGWorker.ProgressChanged += ProcessBGWorker_ProgressChanged;
@@ -80,6 +106,124 @@ namespace JsonTestTool.Frame
             }
         }
 
+        private void btn_Choose_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                folderBrowserDialog1.Description = "请选择保存Case XML文件的目录";
+                folderBrowserDialog1.ShowNewFolderButton = true;
+                folderBrowserDialog1.SelectedPath = string.IsNullOrEmpty(this.tb_CaseFolder.Text) ? "请选择目录" : this.tb_CaseFolder.Text;
+                DialogResult result = folderBrowserDialog1.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    this.tb_CaseFolder.Text = folderBrowserDialog1.SelectedPath;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.rtb_Logs.Text = "展开Folder失败。";
+                this.rtb_Logs.Text += ex.ToString();
+            }
+
+        }
+
+        private void btn_LoadTree_Click(object sender, EventArgs e)
+        {
+            this.tv_Method.Nodes.Clear();
+            this.btn_Expand.Text = EXPAND;
+            try
+            {
+                nodesCount = LoadFilesAndDirectoriesToTree(this.tb_CaseFolder.Text, this.tv_Method.Nodes);
+            }
+            catch (Exception es)
+            {
+                this.rtb_Data.Text = es.Message;
+            }
+        }
+
+        private void rbtn_POST_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = RequestType.POST;
+        }
+
+        private void rbtn_POSTUTF8_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = RequestType.POSTUTF8;
+        }
+
+        private void rbtn_GET_CheckedChanged(object sender, EventArgs e)
+        {
+            requestType = RequestType.GET;
+        }
+
+        private void btn_LogPathChoose_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog path = new FolderBrowserDialog();
+            path.SelectedPath = this.tb_LogPath.Text;
+            path.ShowDialog();
+            this.tb_LogPath.Text = path.SelectedPath;
+        }
+
+        private void btn_BeginTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.rtb_Logs.Text = string.Empty;
+                this.pbar_TestProcess.Maximum = nodesCount;
+                reportFullPath = Logger.CreateReportCSV(this.tb_LogPath.Text);
+                this.processBGWorker.RunWorkerAsync();
+            }
+            catch (ApplicationException aex)
+            {
+                DialogResult result;
+                result = MessageBox.Show("Yes：关闭。No：取消", "Report文件创建失败，是否继续执行测试？", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    this.processBGWorker.RunWorkerAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "测试无法开始");
+                MessageBox.Show(ex.Message, "测试无法开始", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_StopTest_Click(object sender, EventArgs e)
+        {
+            processBGWorker.WorkerSupportsCancellation = true;
+            processBGWorker.CancelAsync();
+        }
+
+        private void btn_LogPathOpen_Click(object sender, EventArgs e)
+        {
+            string path = string.Empty;
+            try
+            {
+                if (string.IsNullOrEmpty(this.tb_LogPath.Text))
+                {
+                    throw new DirectoryNotFoundException("报表目录为空，请选择目录后重试。");
+                }
+                else
+                {
+                    path = this.tb_LogPath.Text;
+                }
+                System.Diagnostics.Process.Start("Explorer.exe", path);
+            }
+            catch (DirectoryNotFoundException dnfEx)
+            {
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "打开目录");
+                MessageBox.Show(dnfEx.Message, "打开目录", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "打开目录");
+                MessageBox.Show(string.Format("打开目录失败。\r\n {0}", ex.Message), "打开目录", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+
+        #region BackgroundWorker 处理
         private void ProcessBGWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled)
@@ -90,7 +234,7 @@ namespace JsonTestTool.Frame
             {
                 MessageBox.Show("测试完成。");
             }
-            reportName = string.Empty;
+            reportFullPath = string.Empty;
             nodeIndex = 0;
             nodesCount = 0;
         }
@@ -107,14 +251,10 @@ namespace JsonTestTool.Frame
             this.lb_Process.Text = string.Format("测试进度：({0}/{1})", e.ProgressPercentage, nodesCount);
 
             string strForRTB = logStringCreator(e.ProgressPercentage, tr.result);
+            this.rtb_Logs.Text += strForRTB;
 
-            string strForReport = reportLineCreator(e.ProgressPercentage, tr.nodeName, tr.isSucceesul,tr.reqStr,tr.result);
-            this.rtb_Logs.Text += strForReport ;
-            FileStream fs = new FileStream(Path.Combine(this.tb_LogPath.Text, reportName), System.IO.FileMode.Append, FileAccess.Write);
-            StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
-            sw.WriteLine(strForReport);
-            sw.Close();
-            fs.Close();
+            string strForReport = reportLineCreator(e.ProgressPercentage, tr.nodeName, tr.isSucceesul, tr.reqStr, tr.result);
+            Logger.WriteReport(reportFullPath,strForReport);
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -158,7 +298,7 @@ namespace JsonTestTool.Frame
                 if (string.IsNullOrEmpty(node.Name))
                 {
                     tr.reqStr = "父节点无请求文本。";
-                    tr.result = "空"; 
+                    tr.result = "空";
                     bgWorker.ReportProgress(nodeIndex, tr);
                     Thread.Sleep(100);
                     TraverseTreeView(node.Nodes, sender, e);
@@ -177,13 +317,13 @@ namespace JsonTestTool.Frame
                     {
                         switch (requestType)
                         {
-                            case BtnRequestType.POST:
+                            case RequestType.POST:
                                 postResult = htmlUtil.HttpPost(strUrl, postData);
                                 break;
-                            case BtnRequestType.POSTUTF8:
+                            case RequestType.POSTUTF8:
                                 postResult = htmlUtil.HttpPostUTF8(strUrl, postData);
                                 break;
-                            case BtnRequestType.GET:
+                            case RequestType.GET:
                                 postResult = htmlUtil.HttpGet(strUrl, postData);
                                 break;
                             default:
@@ -196,7 +336,7 @@ namespace JsonTestTool.Frame
                     {
                         tr.isSucceesul = false;
                         tr.result = reqEX.Message;
-                        bgWorker.ReportProgress(nodeIndex,tr);
+                        bgWorker.ReportProgress(nodeIndex, tr);
                     }
                     //bgWorker.ReportProgress(nodeIndex, temp);
                     Thread.Sleep(100);
@@ -204,7 +344,9 @@ namespace JsonTestTool.Frame
             }
             return tr;
         }
+        #endregion
 
+        #region 控件处理
         /// <summary>
         /// 遍历指定目录，获取所有下级文件夹和XML文件
         /// </summary>
@@ -237,21 +379,6 @@ namespace JsonTestTool.Frame
                 count += LoadFilesAndDirectoriesToTree(item, node.Nodes);
             }
             return count;
-        }
-
-        private string GetUrlString()
-        {
-            string strUrl = string.Empty;
-            try
-            {
-                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + ":" + this.Tb_Port.Text + "/"), this.cb_Request.SelectedItem.ToString());
-                strUrl = uri.OriginalString;
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
-            }
-            return strUrl;
         }
 
         private void tv_Method_AfterExpand(object sender, TreeViewEventArgs e)
@@ -353,94 +480,70 @@ namespace JsonTestTool.Frame
             ShowToolTipMouseEnter(sender, "测试服务器的IP地址");
         }
 
-        private void btn_Choose_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 控制MessageBox的弹出位置
+        /// </summary>
+        /// <param name="x">新的x坐标</param>
+        /// <param name="y">新的y坐标</param>
+        /// <param name="rePaint">是否重绘</param>
+        /// <param name="title">MessageBox的Title</param>
+        private void FindAndMoveMsgBox(int x, int y, bool rePaint, string title)
         {
+            Thread thr = new Thread(() =>
+            {
+                IntPtr msgBox = IntPtr.Zero;
+                while ((msgBox = FindWindow(IntPtr.Zero, title)) == IntPtr.Zero) ;
+                Rectangle r = new Rectangle();
+                GetWindowRect(msgBox, out r);
+                int xx = x + Math.Abs(this.Width - r.Width) / 2;
+                int yy = y + Math.Abs(this.Height - r.Height);
+                MoveWindow(msgBox, xx, yy, r.Width - r.X, r.Height - r.Y, rePaint);
+            });
+            thr.Start();
+        }
+
+        /// <summary>
+        /// 控件Enable控制逻辑，在测试期间Disabled一部分输入控件
+        /// </summary>
+        /// <param name="isEnable"></param>
+        private void EnableRequestButton(bool isEnable)
+        {
+            if (isEnable)
+            {
+                this.gb_TargeServerInfo.Enabled = true;
+                this.gb_RequestType.Enabled = true;
+                this.gb_CaseManager.Enabled = true;
+                this.btn_BeginTest.Enabled = true;
+                this.btn_StopTest.Enabled = false;
+                this.tv_Method.Enabled = true;
+            }
+            else
+            {
+                this.gb_TargeServerInfo.Enabled = false;
+                this.gb_RequestType.Enabled = false;
+                this.gb_CaseManager.Enabled = false;
+                this.btn_BeginTest.Enabled = false;
+                this.btn_StopTest.Enabled = true;
+                this.tv_Method.Enabled = false;
+            }
+        }
+        #endregion
+
+        #region 字符串处理
+        private string GetUrlString()
+        {
+            string strUrl = string.Empty;
             try
             {
-                folderBrowserDialog1.Description = "请选择保存Case XML文件的目录";
-                folderBrowserDialog1.ShowNewFolderButton = true;
-                folderBrowserDialog1.SelectedPath = string.IsNullOrEmpty(this.tb_CaseFolder.Text) ? "请选择目录" : this.tb_CaseFolder.Text;
-                DialogResult result = folderBrowserDialog1.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    this.tb_CaseFolder.Text = folderBrowserDialog1.SelectedPath;
-                }
+                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + ":" + this.Tb_Port.Text + "/"), this.cb_Request.SelectedItem.ToString());
+                strUrl = uri.OriginalString;
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                this.rtb_Logs.Text = "展开Folder失败。";
-                this.rtb_Logs.Text += ex.ToString();
+                MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
             }
-
+            return strUrl;
         }
-
-        private void btn_LoadTree_Click(object sender, EventArgs e)
-        {
-            this.tv_Method.Nodes.Clear();
-            this.btn_Expand.Text = EXPAND;
-            try
-            {
-                nodesCount = LoadFilesAndDirectoriesToTree(this.tb_CaseFolder.Text, this.tv_Method.Nodes);
-            }
-            catch (Exception es)
-            {
-                this.rtb_Data.Text = es.Message;
-            }
-        }
-
-        private void rbtn_POST_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = BtnRequestType.POST;
-        }
-
-        private void rbtn_POSTUTF8_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = BtnRequestType.POSTUTF8;
-        }
-
-        private void rbtn_GET_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = BtnRequestType.GET;
-        }
-
-        private void btn_LogPathChoose_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog path = new FolderBrowserDialog();
-            path.SelectedPath = this.tb_LogPath.Text;
-            path.ShowDialog();
-            this.tb_LogPath.Text = path.SelectedPath;
-        }
-
-        private void btn_BeginTest_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-                reportName = string.Format("Report_{0}.csv", DateTime.Now.ToString("[MMddHH_mmssfff]"));
-                if (!Directory.Exists(this.tb_LogPath.Text))
-                {
-                    Directory.CreateDirectory(this.tb_LogPath.Text);
-                }
-                if (!File.Exists(Path.Combine(this.tb_LogPath.Text, reportName)))
-                {
-                    File.Create(Path.Combine(this.tb_LogPath.Text, reportName)).Close();
-                }
-                using (StreamWriter sw = new StreamWriter(Path.Combine(this.tb_LogPath.Text, reportName), true, Encoding.UTF8))
-                {
-                    sw.WriteLine("编号,节点名称,测试时间,测试结果,测试请求,测试返回结果");
-                    sw.Close();
-                }
-
-                this.rtb_Logs.Text = string.Empty;
-                this.pbar_TestProcess.Maximum = nodesCount;
-                this.processBGWorker.RunWorkerAsync();
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
         private string GetUrlFromMain()
         {
             string temp = string.Empty;
@@ -487,7 +590,7 @@ namespace JsonTestTool.Frame
             try
             {
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine(string.Format(">>>{0}<<< 测试进度: ({1}/{2})", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"), time, nodesCount));
+                sb.AppendLine(string.Format("{0} 测试进度: ({1}/{2})", DateTime.Now.ToString("MM-dd HH:mm:ss,fff"), time, nodesCount));
                 sb.AppendLine(string.Format("请求路径为:{0}", GetUrlFromMain()));
                 sb.AppendLine(string.Format("Json请求为:{0}", requestType.ToString()));
                 sb.AppendLine(string.Format("返回结果：{0}", msg));
@@ -499,26 +602,30 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private string reportLineCreator(int time, string nodeName, bool isSucessful,string reqStr,string msg)
+        private string reportLineCreator(int time, string nodeName, bool isSucessful, string reqStr, string msg)
         {
-
             try
             {
                 StringBuilder sb = new StringBuilder();
-                msg = msg.Replace("\"", "\"\"");
-                if (msg.Contains(',') | msg.Contains('"') | msg.Contains('\r') | msg.Contains('\n'))
+                if (!string.IsNullOrEmpty(msg))
                 {
-                    msg = string.Format("\"{0}\"", msg);
+                    msg = msg.Replace("\"", "\"\"");
+                    if (msg.Contains(',') | msg.Contains('"') | msg.Contains('\r') | msg.Contains('\n'))
+                    {
+                        msg = string.Format("\"{0}\"", msg);
+                    }
                 }
-                //msg = msg.Replace("\n", "").Replace("\r", "").Replace("\t", "").Replace(" ","");
-                reqStr = reqStr.Replace("\"", "\"\"");
-                if (reqStr.Contains(',') | reqStr.Contains('"') | reqStr.Contains('\r') | reqStr.Contains('\n'))
+                if (!string.IsNullOrEmpty(reqStr))
                 {
-                    reqStr = string.Format("\"{0}\"", reqStr);
+                    reqStr = reqStr.Replace("\"", "\"\"");
+                    if (reqStr.Contains(',') | reqStr.Contains('"') | reqStr.Contains('\r') | reqStr.Contains('\n'))
+                    {
+                        reqStr = string.Format("\"{0}\"", reqStr);
+                    }
                 }
-                //reqStr = reqStr.Replace("\n", "").Replace("\r", "").Replace("\t", "").Replace(" ", "");
                 string sucessful = isSucessful ? "成功" : "失败";
-                sb.Append(string.Format("{0},{1},{2},{3},{4},{5}", time, nodeName, DateTime.Now.ToString(), sucessful, reqStr, msg));
+                string strTime = DateTime.Now.ToString();
+                sb.Append(string.Format("{0},{1},{2},{3},{4},{5}", time, nodeName, strTime, sucessful, reqStr, msg));
                 return sb.ToString();
             }
             catch (Exception e)
@@ -527,10 +634,19 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void btn_StopTest_Click(object sender, EventArgs e)
+        #endregion
+
+        private void rtb_Data_TextChanged(object sender, EventArgs e)
         {
-            processBGWorker.WorkerSupportsCancellation = true;
-            processBGWorker.CancelAsync();
+            RichTextBox rtBox = sender as RichTextBox;
+            if (!string.IsNullOrEmpty(rtBox.Text))
+            {
+                EnableRequestButton(true);
+            }
+            else
+            {
+                this.btn_BeginTest.Enabled = false;
+            }
         }
     }
 }
