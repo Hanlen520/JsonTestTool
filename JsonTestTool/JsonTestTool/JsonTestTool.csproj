@@ -153,6 +153,9 @@
     <Content Include="PerformanceTreeXml.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Help.ico" />
+    <None Include="Resources\Info.ico" />
+    <Content Include="Resources\Touch.ico" />
     <None Include="Resources\test3.png" />
     <None Include="Resources\test2.png" />
     <None Include="Resources\test1.png" />

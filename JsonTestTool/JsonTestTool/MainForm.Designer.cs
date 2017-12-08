@@ -28,13 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStripInForm = new System.Windows.Forms.MenuStrip();
+            this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
+            this.pl_Main = new System.Windows.Forms.Panel();
             this.tsMenu_Normal = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Polling = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Performance = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Help = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
-            this.pl_Main = new System.Windows.Forms.Panel();
             this.menuStripInForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,39 +53,11 @@
             this.menuStripInForm.TabIndex = 0;
             this.menuStripInForm.Text = "menuStrip1";
             // 
-            // tsMenu_Normal
-            // 
-            this.tsMenu_Normal.BackColor = System.Drawing.SystemColors.Control;
-            this.tsMenu_Normal.Name = "tsMenu_Normal";
-            this.tsMenu_Normal.Size = new System.Drawing.Size(68, 21);
-            this.tsMenu_Normal.Text = "常规测试";
-            this.tsMenu_Normal.Click += new System.EventHandler(this.tsMenu_Normal_Click);
-            // 
-            // tsMenu_Polling
-            // 
-            this.tsMenu_Polling.Name = "tsMenu_Polling";
-            this.tsMenu_Polling.Size = new System.Drawing.Size(68, 21);
-            this.tsMenu_Polling.Text = "批量测试";
-            this.tsMenu_Polling.Click += new System.EventHandler(this.tsMenu_Polling_Click);
-            // 
-            // tsMenu_Performance
-            // 
-            this.tsMenu_Performance.Name = "tsMenu_Performance";
-            this.tsMenu_Performance.Size = new System.Drawing.Size(68, 21);
-            this.tsMenu_Performance.Text = "性能测试";
-            this.tsMenu_Performance.Click += new System.EventHandler(this.tsMenu_Performance_Click);
-            // 
-            // tsMenu_Help
-            // 
-            this.tsMenu_Help.Name = "tsMenu_Help";
-            this.tsMenu_Help.Size = new System.Drawing.Size(44, 21);
-            this.tsMenu_Help.Text = "帮助";
-            this.tsMenu_Help.Click += new System.EventHandler(this.tsMenu_Help_Click);
-            // 
             // tsMenu_About
             // 
+            this.tsMenu_About.Image = global::JsonTestTool.Properties.Resources.Info;
             this.tsMenu_About.Name = "tsMenu_About";
-            this.tsMenu_About.Size = new System.Drawing.Size(44, 21);
+            this.tsMenu_About.Size = new System.Drawing.Size(60, 21);
             this.tsMenu_About.Text = "关于";
             this.tsMenu_About.Click += new System.EventHandler(this.tsMenu_About_Click);
             // 
@@ -99,6 +72,39 @@
             this.pl_Main.TabIndex = 1;
             this.pl_Main.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.pl_Main_ControlRemoved);
             // 
+            // tsMenu_Normal
+            // 
+            this.tsMenu_Normal.BackColor = System.Drawing.SystemColors.Control;
+            this.tsMenu_Normal.Image = global::JsonTestTool.Properties.Resources.test1;
+            this.tsMenu_Normal.Name = "tsMenu_Normal";
+            this.tsMenu_Normal.Size = new System.Drawing.Size(84, 21);
+            this.tsMenu_Normal.Text = "常规测试";
+            this.tsMenu_Normal.Click += new System.EventHandler(this.tsMenu_Normal_Click);
+            // 
+            // tsMenu_Polling
+            // 
+            this.tsMenu_Polling.Image = global::JsonTestTool.Properties.Resources.test3;
+            this.tsMenu_Polling.Name = "tsMenu_Polling";
+            this.tsMenu_Polling.Size = new System.Drawing.Size(84, 21);
+            this.tsMenu_Polling.Text = "批量测试";
+            this.tsMenu_Polling.Click += new System.EventHandler(this.tsMenu_Polling_Click);
+            // 
+            // tsMenu_Performance
+            // 
+            this.tsMenu_Performance.Image = global::JsonTestTool.Properties.Resources.test2;
+            this.tsMenu_Performance.Name = "tsMenu_Performance";
+            this.tsMenu_Performance.Size = new System.Drawing.Size(84, 21);
+            this.tsMenu_Performance.Text = "性能测试";
+            this.tsMenu_Performance.Click += new System.EventHandler(this.tsMenu_Performance_Click);
+            // 
+            // tsMenu_Help
+            // 
+            this.tsMenu_Help.Image = global::JsonTestTool.Properties.Resources.Help;
+            this.tsMenu_Help.Name = "tsMenu_Help";
+            this.tsMenu_Help.Size = new System.Drawing.Size(60, 21);
+            this.tsMenu_Help.Text = "帮助";
+            this.tsMenu_Help.Click += new System.EventHandler(this.tsMenu_Help_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -106,9 +112,11 @@
             this.ClientSize = new System.Drawing.Size(750, 569);
             this.Controls.Add(this.pl_Main);
             this.Controls.Add(this.menuStripInForm);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripInForm;
+            this.MinimumSize = new System.Drawing.Size(650, 430);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Json Test Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
