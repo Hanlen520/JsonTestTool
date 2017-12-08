@@ -73,7 +73,7 @@ namespace JsonTestTool.Frame
             try
             {
                 //默认为不可操作，需要先选择请求文本之后，才可用
-                EnableRequestButton(false);
+                //EnableRequestButton(false);
                 this.gb_TargeServerInfo.Enabled = true;
                 this.gb_RequestType.Enabled = true;
                 this.gb_CaseManager.Enabled = true;
@@ -85,9 +85,9 @@ namespace JsonTestTool.Frame
 
 
                 //显示默认的Log目录
-                this.tb_LogPath.Text = Path.Combine(Application.StartupPath, "Logs");
+                this.tb_LogPath.Text = Path.Combine(Application.StartupPath, "Reports");
                 //默认加载程序平级目录Cases下的所有子目录和xml文件
-                string caseUrl = Path.Combine(Application.StartupPath, "Cases1");
+                string caseUrl = Path.Combine(Application.StartupPath, "Cases");
                 //显示Cases目录
                 this.tb_CaseFolder.Text = caseUrl;
                 //遍历并添加TreeView节点
@@ -172,6 +172,7 @@ namespace JsonTestTool.Frame
                 this.pbar_TestProcess.Maximum = nodesCount;
                 reportFullPath = Logger.CreateReportCSV(this.tb_LogPath.Text);
                 this.processBGWorker.RunWorkerAsync();
+                EnableRequestButton(false);
             }
             catch (ApplicationException aex)
             {
@@ -191,6 +192,7 @@ namespace JsonTestTool.Frame
 
         private void btn_StopTest_Click(object sender, EventArgs e)
         {
+            EnableRequestButton(true);
             processBGWorker.WorkerSupportsCancellation = true;
             processBGWorker.CancelAsync();
         }
@@ -234,6 +236,7 @@ namespace JsonTestTool.Frame
             {
                 MessageBox.Show("测试完成。");
             }
+            EnableRequestButton(true);
             reportFullPath = string.Empty;
             nodeIndex = 0;
             nodesCount = 0;
@@ -489,17 +492,17 @@ namespace JsonTestTool.Frame
         /// <param name="title">MessageBox的Title</param>
         private void FindAndMoveMsgBox(int x, int y, bool rePaint, string title)
         {
-            Thread thr = new Thread(() =>
+            ThreadPool.QueueUserWorkItem(a =>
             {
                 IntPtr msgBox = IntPtr.Zero;
                 while ((msgBox = FindWindow(IntPtr.Zero, title)) == IntPtr.Zero) ;
                 Rectangle r = new Rectangle();
                 GetWindowRect(msgBox, out r);
-                int xx = x + Math.Abs(this.Width - r.Width) / 2;
-                int yy = y + Math.Abs(this.Height - r.Height);
+                //取父窗体的大小取中间范围
+                int xx = x + (this.Width - r.Width + r.X) / 2;
+                int yy = y + (this.Height - r.Height + r.Y) / 2;
                 MoveWindow(msgBox, xx, yy, r.Width - r.X, r.Height - r.Y, rePaint);
-            });
-            thr.Start();
+            }, null);
         }
 
         /// <summary>
@@ -635,18 +638,5 @@ namespace JsonTestTool.Frame
         }
 
         #endregion
-
-        private void rtb_Data_TextChanged(object sender, EventArgs e)
-        {
-            RichTextBox rtBox = sender as RichTextBox;
-            if (!string.IsNullOrEmpty(rtBox.Text))
-            {
-                EnableRequestButton(true);
-            }
-            else
-            {
-                this.btn_BeginTest.Enabled = false;
-            }
-        }
     }
 }

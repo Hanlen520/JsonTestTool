@@ -110,7 +110,7 @@
             this.tv_Method.Location = new System.Drawing.Point(6, 96);
             this.tv_Method.Name = "tv_Method";
             this.tv_Method.SelectedImageIndex = 0;
-            this.tv_Method.Size = new System.Drawing.Size(232, 359);
+            this.tv_Method.Size = new System.Drawing.Size(232, 369);
             this.tv_Method.TabIndex = 8;
             this.tv_Method.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterCollapse);
             this.tv_Method.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterExpand);
@@ -142,6 +142,7 @@
             this.rtb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.rtb_ACK.BackColor = System.Drawing.SystemColors.Window;
             this.rtb_ACK.Location = new System.Drawing.Point(6, 20);
             this.rtb_ACK.Name = "rtb_ACK";
             this.rtb_ACK.Size = new System.Drawing.Size(465, 273);
@@ -277,9 +278,9 @@
             this.gb_CaseManager.Controls.Add(this.btn_Expand);
             this.gb_CaseManager.Controls.Add(this.btn_LoadTree);
             this.gb_CaseManager.Controls.Add(this.btn_Choose);
-            this.gb_CaseManager.Location = new System.Drawing.Point(12, 77);
+            this.gb_CaseManager.Location = new System.Drawing.Point(12, 67);
             this.gb_CaseManager.Name = "gb_CaseManager";
-            this.gb_CaseManager.Size = new System.Drawing.Size(244, 461);
+            this.gb_CaseManager.Size = new System.Drawing.Size(244, 471);
             this.gb_CaseManager.TabIndex = 19;
             this.gb_CaseManager.TabStop = false;
             this.gb_CaseManager.Text = "测试用例管理";
@@ -301,7 +302,7 @@
             // 
             // btn_Clear
             // 
-            this.btn_Clear.Location = new System.Drawing.Point(265, 20);
+            this.btn_Clear.Location = new System.Drawing.Point(250, 20);
             this.btn_Clear.Name = "btn_Clear";
             this.btn_Clear.Size = new System.Drawing.Size(73, 32);
             this.btn_Clear.TabIndex = 14;

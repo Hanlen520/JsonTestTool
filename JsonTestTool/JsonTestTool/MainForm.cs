@@ -31,7 +31,7 @@ namespace JsonTestTool
         /// </summary>
         private Point FrmCoordinate
         {
-            get { return this.PointToScreen(this.Location); }
+            get { return this.Location; }
             set { this.m_frmCoordinate = value; }
         }
 
@@ -98,7 +98,7 @@ namespace JsonTestTool
             catch (Exception ex)
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "常规测试");
-                MessageBox.Show(string.Format("未能正常加载常规测试模块。{0}", ex.Message),"常规测试");
+                MessageBox.Show(string.Format("未能正常加载常规测试模块。{0}", ex.Message), "常规测试");
             }
         }
 
@@ -224,17 +224,17 @@ namespace JsonTestTool
         /// <param name="title">MessageBox的Title</param>
         private void FindAndMoveMsgBox(int x, int y, bool rePaint, string title)
         {
-            Thread thr = new Thread(() =>
+            ThreadPool.QueueUserWorkItem(a =>
             {
                 IntPtr msgBox = IntPtr.Zero;
                 while ((msgBox = FindWindow(IntPtr.Zero, title)) == IntPtr.Zero) ;
                 Rectangle r = new Rectangle();
                 GetWindowRect(msgBox, out r);
-                int xx = x + Math.Abs(this.Width - r.Width) / 2;
-                int yy = y + Math.Abs(this.Height - r.Height);
+                //取父窗体的大小取中间范围
+                int xx = x + (this.Width - r.Width + r.X) / 2;
+                int yy = y + (this.Height - r.Height + r.Y) / 2;
                 MoveWindow(msgBox, xx, yy, r.Width - r.X, r.Height - r.Y, rePaint);
-            });
-            thr.Start();
+            }, null);
         }
     }
 }

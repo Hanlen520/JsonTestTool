@@ -149,7 +149,6 @@
             this.rtb_Data.Size = new System.Drawing.Size(230, 154);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
-            this.rtb_Data.TextChanged += new System.EventHandler(this.rtb_Data_TextChanged);
             // 
             // rtb_Logs
             // 
