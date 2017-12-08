@@ -30,12 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStripInForm = new System.Windows.Forms.MenuStrip();
-            this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
-            this.pl_Main = new System.Windows.Forms.Panel();
             this.tsMenu_Normal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenu_AutoTest = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Polling = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Performance = new System.Windows.Forms.ToolStripMenuItem();
             this.tsMenu_Help = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsMenu_About = new System.Windows.Forms.ToolStripMenuItem();
+            this.pl_Main = new System.Windows.Forms.Panel();
             this.menuStripInForm.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,6 +44,7 @@
             // 
             this.menuStripInForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsMenu_Normal,
+            this.tsMenu_AutoTest,
             this.tsMenu_Polling,
             this.tsMenu_Performance,
             this.tsMenu_Help,
@@ -51,26 +53,7 @@
             this.menuStripInForm.Name = "menuStripInForm";
             this.menuStripInForm.Size = new System.Drawing.Size(750, 25);
             this.menuStripInForm.TabIndex = 0;
-            this.menuStripInForm.Text = "menuStrip1";
-            // 
-            // tsMenu_About
-            // 
-            this.tsMenu_About.Image = global::JsonTestTool.Properties.Resources.Info;
-            this.tsMenu_About.Name = "tsMenu_About";
-            this.tsMenu_About.Size = new System.Drawing.Size(60, 21);
-            this.tsMenu_About.Text = "关于";
-            this.tsMenu_About.Click += new System.EventHandler(this.tsMenu_About_Click);
-            // 
-            // pl_Main
-            // 
-            this.pl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pl_Main.Location = new System.Drawing.Point(0, 21);
-            this.pl_Main.Name = "pl_Main";
-            this.pl_Main.Size = new System.Drawing.Size(750, 550);
-            this.pl_Main.TabIndex = 1;
-            this.pl_Main.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.pl_Main_ControlRemoved);
+            this.menuStripInForm.Text = "menuStripMain";
             // 
             // tsMenu_Normal
             // 
@@ -80,6 +63,13 @@
             this.tsMenu_Normal.Size = new System.Drawing.Size(84, 21);
             this.tsMenu_Normal.Text = "常规测试";
             this.tsMenu_Normal.Click += new System.EventHandler(this.tsMenu_Normal_Click);
+            // 
+            // tsMenu_AutoTest
+            // 
+            this.tsMenu_AutoTest.Name = "tsMenu_AutoTest";
+            this.tsMenu_AutoTest.Size = new System.Drawing.Size(68, 21);
+            this.tsMenu_AutoTest.Text = "自动测试";
+            this.tsMenu_AutoTest.Click += new System.EventHandler(this.tsMenu_AutoTest_Click);
             // 
             // tsMenu_Polling
             // 
@@ -104,6 +94,24 @@
             this.tsMenu_Help.Size = new System.Drawing.Size(60, 21);
             this.tsMenu_Help.Text = "帮助";
             this.tsMenu_Help.Click += new System.EventHandler(this.tsMenu_Help_Click);
+            // 
+            // tsMenu_About
+            // 
+            this.tsMenu_About.Image = global::JsonTestTool.Properties.Resources.Info;
+            this.tsMenu_About.Name = "tsMenu_About";
+            this.tsMenu_About.Size = new System.Drawing.Size(60, 21);
+            this.tsMenu_About.Text = "关于";
+            this.tsMenu_About.Click += new System.EventHandler(this.tsMenu_About_Click);
+            // 
+            // pl_Main
+            // 
+            this.pl_Main.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pl_Main.Location = new System.Drawing.Point(0, 21);
+            this.pl_Main.Name = "pl_Main";
+            this.pl_Main.Size = new System.Drawing.Size(750, 550);
+            this.pl_Main.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -136,6 +144,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsMenu_About;
         private System.Windows.Forms.Panel pl_Main;
         private System.Windows.Forms.ToolStripMenuItem tsMenu_Polling;
+        private System.Windows.Forms.ToolStripMenuItem tsMenu_AutoTest;
     }
 }
 

@@ -60,6 +60,14 @@
       <DependentUpon>FrmPerformentTest.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Frame\FrmAutoTest.cs">
+      <SubType>Form</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Frame\FrmAutoTest.designer.cs">
+      <DependentUpon>FrmAutoTest.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Frame\FrmPollingTest.cs">
       <SubType>Form</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -106,6 +114,10 @@
     <EmbeddedResource Include="Frame\FrmPerformentTest.resx">
       <DependentUpon>FrmPerformentTest.cs</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frame\FrmAutoTest.resx">
+      <DependentUpon>FrmAutoTest.cs</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Frame\FrmPollingTest.resx">
       <DependentUpon>FrmPollingTest.cs</DependentUpon>

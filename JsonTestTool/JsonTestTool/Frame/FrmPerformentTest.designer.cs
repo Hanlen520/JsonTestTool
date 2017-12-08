@@ -49,7 +49,7 @@
             this.pbar_TestProcess = new System.Windows.Forms.ProgressBar();
             this.lb_Process = new System.Windows.Forms.Label();
             this.btn_Cancel = new System.Windows.Forms.Button();
-            this.gb_RequestType = new System.Windows.Forms.GroupBox();
+            this.gb_RequestMode = new System.Windows.Forms.GroupBox();
             this.rb_GET = new System.Windows.Forms.RadioButton();
             this.rb_POST_UTF8 = new System.Windows.Forms.RadioButton();
             this.rb_POST = new System.Windows.Forms.RadioButton();
@@ -65,7 +65,7 @@
             this.gb_Data = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Count)).BeginInit();
             this.gb_TargetServer.SuspendLayout();
-            this.gb_RequestType.SuspendLayout();
+            this.gb_RequestMode.SuspendLayout();
             this.gb_LogControl.SuspendLayout();
             this.gb_TestRequirements.SuspendLayout();
             this.gb_TestManage.SuspendLayout();
@@ -282,17 +282,17 @@
             this.btn_Cancel.UseVisualStyleBackColor = true;
             this.btn_Cancel.Click += new System.EventHandler(this.btn_Cancel_Click);
             // 
-            // gb_RequestType
+            // gb_RequestMode
             // 
-            this.gb_RequestType.Controls.Add(this.rb_GET);
-            this.gb_RequestType.Controls.Add(this.rb_POST_UTF8);
-            this.gb_RequestType.Controls.Add(this.rb_POST);
-            this.gb_RequestType.Location = new System.Drawing.Point(151, 77);
-            this.gb_RequestType.Name = "gb_RequestType";
-            this.gb_RequestType.Size = new System.Drawing.Size(105, 72);
-            this.gb_RequestType.TabIndex = 22;
-            this.gb_RequestType.TabStop = false;
-            this.gb_RequestType.Text = "请求格式";
+            this.gb_RequestMode.Controls.Add(this.rb_GET);
+            this.gb_RequestMode.Controls.Add(this.rb_POST_UTF8);
+            this.gb_RequestMode.Controls.Add(this.rb_POST);
+            this.gb_RequestMode.Location = new System.Drawing.Point(151, 77);
+            this.gb_RequestMode.Name = "gb_RequestMode";
+            this.gb_RequestMode.Size = new System.Drawing.Size(105, 72);
+            this.gb_RequestMode.TabIndex = 22;
+            this.gb_RequestMode.TabStop = false;
+            this.gb_RequestMode.Text = "请求方式";
             // 
             // rb_GET
             // 
@@ -456,7 +456,7 @@
             this.Controls.Add(this.gb_TestManage);
             this.Controls.Add(this.gb_TestRequirements);
             this.Controls.Add(this.gb_LogControl);
-            this.Controls.Add(this.gb_RequestType);
+            this.Controls.Add(this.gb_RequestMode);
             this.Controls.Add(this.gb_TargetServer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmPerformentTest";
@@ -464,8 +464,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_Count)).EndInit();
             this.gb_TargetServer.ResumeLayout(false);
             this.gb_TargetServer.PerformLayout();
-            this.gb_RequestType.ResumeLayout(false);
-            this.gb_RequestType.PerformLayout();
+            this.gb_RequestMode.ResumeLayout(false);
+            this.gb_RequestMode.PerformLayout();
             this.gb_LogControl.ResumeLayout(false);
             this.gb_LogControl.PerformLayout();
             this.gb_TestRequirements.ResumeLayout(false);
@@ -500,7 +500,7 @@
         private System.Windows.Forms.ProgressBar pbar_TestProcess;
         private System.Windows.Forms.Label lb_Process;
         private System.Windows.Forms.Button btn_Cancel;
-        private System.Windows.Forms.GroupBox gb_RequestType;
+        private System.Windows.Forms.GroupBox gb_RequestMode;
         private System.Windows.Forms.RadioButton rb_GET;
         private System.Windows.Forms.RadioButton rb_POST_UTF8;
         private System.Windows.Forms.RadioButton rb_POST;

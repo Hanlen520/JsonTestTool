@@ -65,11 +65,54 @@ namespace JsonTestTool.Util
             }
         }
 
+        /// <summary>
+        /// 生成Report CSV文件，添加属性头：
+        /// 编号,节点名称,测试时间,测试结果,测试请求,测试返回结果
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static string CreateReportCSV(string path)
         {
             try
             {
                 string name = string.Format("JsonTestReport_{0}.csv", DateTime.Now.ToString("yyyyMMdd_HHmm_ssfff"));
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                if (!File.Exists(Path.Combine(path, name)))
+                {
+                    File.Create(Path.Combine(path, name)).Close();
+                }
+                using (StreamWriter sw = new StreamWriter(Path.Combine(path, name), true, Encoding.UTF8))
+                {
+                    //为CSV文件添加头
+                    sw.WriteLine("编号,节点名称,测试时间,测试结果,测试请求,测试返回结果");
+                    sw.Close();
+                }
+                return Path.Combine(path, name);
+            }
+            catch (ApplicationException aEx)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 生成自动测试Report，添加属性头：
+        /// 编号,节点名称,测试时间,请求路径，请求方法，测试结果,测试请求,测试返回结果
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string CreateAutoReportCSV(string path)
+        {
+            try
+            {
+                string name = string.Format("JsonAutoTestReport_{0}.csv", DateTime.Now.ToString("yyyyMMdd_HHmm_ssfff"));
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
@@ -121,5 +164,6 @@ namespace JsonTestTool.Util
                 //do nothing
             }
         }
+
     }
 }

@@ -21,7 +21,7 @@ namespace JsonTestTool.Frame
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
         private BackgroundWorker processBGWorker = new BackgroundWorker();
-        private RequestType requestType = RequestType.POST;
+        private RequestMode requestType = RequestMode.POST;
         private string logFullPath = string.Empty;
         private delegate string GetUrlOrData();
         private delegate int GetInterval();
@@ -67,7 +67,7 @@ namespace JsonTestTool.Frame
                 //这部分在首次加载时不能灰显
                 this.tv_Method.Enabled = true;
                 this.gb_TargetServer.Enabled = true;
-                this.gb_RequestType.Enabled = true;
+                this.gb_RequestMode.Enabled = true;
                 this.gb_TestRequirements.Enabled = true;
                 //后台更新进程
                 processBGWorker.DoWork += ProcessBGWorker_DoWork;
@@ -126,17 +126,17 @@ namespace JsonTestTool.Frame
             {
                 this.rtb_ACK.Text = string.Empty;
                 this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
-                Dictionary<decimal, RequestType> ee = new Dictionary<decimal, RequestType>();
+                Dictionary<decimal, RequestMode> ee = new Dictionary<decimal, RequestMode>();
                 switch (requestType)
                 {
-                    case RequestType.POST:
-                        ee.Add(this.nud_Count.Value, RequestType.POST);
+                    case RequestMode.POST:
+                        ee.Add(this.nud_Count.Value, RequestMode.POST);
                         break;
-                    case RequestType.POSTUTF8:
-                        ee.Add(this.nud_Count.Value, RequestType.POSTUTF8);
+                    case RequestMode.POSTUTF8:
+                        ee.Add(this.nud_Count.Value, RequestMode.POSTUTF8);
                         break;
-                    case RequestType.GET:
-                        ee.Add(this.nud_Count.Value, RequestType.GET);
+                    case RequestMode.GET:
+                        ee.Add(this.nud_Count.Value, RequestMode.GET);
                         break;
                     default:
                         break;
@@ -151,17 +151,17 @@ namespace JsonTestTool.Frame
 
         private void rb_POST_CheckedChanged(object sender, EventArgs e)
         {
-            requestType = RequestType.POST;
+            requestType = RequestMode.POST;
         }
 
         private void rb_POST_UTF8_CheckedChanged(object sender, EventArgs e)
         {
-            requestType = RequestType.POSTUTF8;
+            requestType = RequestMode.POSTUTF8;
         }
 
         private void rb_GET_CheckedChanged(object sender, EventArgs e)
         {
-            requestType = RequestType.GET;
+            requestType = RequestMode.GET;
         }
         #endregion
 
@@ -202,13 +202,13 @@ namespace JsonTestTool.Frame
             string temp = string.Empty;
             int endNumber = 0;
             decimal key = 0;
-            RequestType reqType = RequestType.POST;
+            RequestMode reqType = RequestMode.POST;
             try
             {
                 //耗时
                 if (e.Argument != null)
                 {
-                    Dictionary<decimal, RequestType> tempDic = (Dictionary<decimal, RequestType>)e.Argument;
+                    Dictionary<decimal, RequestMode> tempDic = (Dictionary<decimal, RequestMode>)e.Argument;
                     if (tempDic.Count > 0)
                     {
                         key = tempDic.Keys.First<decimal>();
@@ -230,13 +230,13 @@ namespace JsonTestTool.Frame
                         int interval = GetIntervalFromForm();
                         switch (requestType)
                         {
-                            case RequestType.POST:
+                            case RequestMode.POST:
                                 temp = htmlUtil.HttpPost(strUrl, postdata);
                                 break;
-                            case RequestType.POSTUTF8:
+                            case RequestMode.POSTUTF8:
                                 temp = htmlUtil.HttpPostUTF8(strUrl, postdata);
                                 break;
-                            case RequestType.GET:
+                            case RequestMode.GET:
                                 temp = htmlUtil.HttpGet(strUrl, postdata);
                                 break;
                             default:
@@ -349,7 +349,7 @@ namespace JsonTestTool.Frame
             if (isEnable)
             {
                 this.gb_TargetServer.Enabled = true;
-                this.gb_RequestType.Enabled = true;
+                this.gb_RequestMode.Enabled = true;
                 this.gb_TestRequirements.Enabled = true;
                 this.btn_Begin.Enabled = true;
                 this.btn_Cancel.Enabled = false;
@@ -358,7 +358,7 @@ namespace JsonTestTool.Frame
             else
             {
                 this.gb_TargetServer.Enabled = false;
-                this.gb_RequestType.Enabled = false;
+                this.gb_RequestMode.Enabled = false;
                 this.gb_TestRequirements.Enabled = false;
                 this.btn_Begin.Enabled = false;
                 this.btn_Cancel.Enabled = true;

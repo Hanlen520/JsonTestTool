@@ -14,10 +14,11 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using JsonTestTool.Util;
+using System.Text.RegularExpressions;
 
 namespace JsonTestTool.Frame
 {
-    public partial class FrmPollingTest : Form
+    public partial class FrmAutoTest : Form
     {
         #region 字段属性
         const string EXPAND = "展开节点";
@@ -33,6 +34,16 @@ namespace JsonTestTool.Frame
         private delegate void SetData(string postData);
         private Point m_frmCoordinate = new Point();
 
+        private enum xmlElementType
+        {
+            isSSL,
+            IP,
+            Port,
+            RequestType,
+            RequestMode,
+            RequestData,
+            None,
+        }
         /// <summary>
         /// 获取当前窗口的屏幕坐标
         /// </summary>
@@ -62,7 +73,7 @@ namespace JsonTestTool.Frame
         static extern IntPtr GetWindowRect(IntPtr hwnd, out Rectangle rect);
         #endregion
 
-        public FrmPollingTest()
+        public FrmAutoTest()
         {
             InitializeComponent();
         }
@@ -75,7 +86,6 @@ namespace JsonTestTool.Frame
                 //默认为不可操作，需要先选择请求文本之后，才可用
                 //EnableRequestButton(false);
                 this.gb_TargeServerInfo.Enabled = true;
-                this.gb_RequestMode.Enabled = true;
                 this.gb_CaseManager.Enabled = true;
                 this.tv_Method.Enabled = true;
                 processBGWorker.DoWork += ProcessBGWorker_DoWork;
@@ -87,7 +97,7 @@ namespace JsonTestTool.Frame
                 //显示默认的Log目录
                 this.tb_LogPath.Text = Path.Combine(Application.StartupPath, "Reports");
                 //默认加载程序平级目录Cases下的所有子目录和xml文件
-                string caseUrl = Path.Combine(Application.StartupPath, "Cases");
+                string caseUrl = Path.Combine(Application.StartupPath, "AutoCases");
                 //显示Cases目录
                 this.tb_CaseFolder.Text = caseUrl;
                 //遍历并添加TreeView节点
@@ -141,21 +151,6 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void rbtn_POST_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = RequestMode.POST;
-        }
-
-        private void rbtn_POSTUTF8_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = RequestMode.POSTUTF8;
-        }
-
-        private void rbtn_GET_CheckedChanged(object sender, EventArgs e)
-        {
-            requestType = RequestMode.GET;
-        }
-
         private void btn_LogPathChoose_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog path = new FolderBrowserDialog();
@@ -170,7 +165,7 @@ namespace JsonTestTool.Frame
             {
                 this.rtb_Logs.Text = string.Empty;
                 this.pbar_TestProcess.Maximum = nodesCount;
-                reportFullPath = Logger.CreateReportCSV(this.tb_LogPath.Text);
+                reportFullPath = Logger.CreateAutoReportCSV(this.tb_LogPath.Text);
                 this.processBGWorker.RunWorkerAsync();
                 EnableRequestButton(false);
             }
@@ -257,7 +252,7 @@ namespace JsonTestTool.Frame
             this.rtb_Logs.Text += strForRTB;
 
             string strForReport = reportLineCreator(e.ProgressPercentage, tr.nodeName, tr.isSucceesul, tr.reqStr, tr.result);
-            Logger.WriteReport(reportFullPath,strForReport);
+            Logger.WriteReport(reportFullPath, strForReport);
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -407,7 +402,17 @@ namespace JsonTestTool.Frame
                     doc.Load(e.Node.Name);
                     if (doc.DocumentElement != null)
                     {
-                        this.rtb_Data.Text = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
+                        //XML文件格式检查
+                        this.rtb_Data.Text = parseXmlValidity(doc) + "\r\n";
+                        this.rtb_Data.Text += parseXml(doc, xmlElementType.isSSL) + "\r\n";
+                        this.rtb_Data.Text += parseXml(doc, xmlElementType.IP) + "\r\n";
+                        this.rtb_Data.Text += parseXml(doc, xmlElementType.Port) + "\r\n";
+                        this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestType) + "\r\n";
+                        this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestMode) + "\r\n";
+                        this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestData);
+                        //分别获取几项数据
+                        //XmlNode x = doc.SelectSingleNode("AutoRoot/RequestData");
+                        //this.rtb_Data.Text += JsonConvert.SerializeXmlNode(x, Newtonsoft.Json.Formatting.Indented, true);
                     }
                 }
                 catch (FileNotFoundException fnfe)
@@ -514,7 +519,6 @@ namespace JsonTestTool.Frame
             if (isEnable)
             {
                 this.gb_TargeServerInfo.Enabled = true;
-                this.gb_RequestMode.Enabled = true;
                 this.gb_CaseManager.Enabled = true;
                 this.btn_BeginTest.Enabled = true;
                 this.btn_StopTest.Enabled = false;
@@ -523,7 +527,6 @@ namespace JsonTestTool.Frame
             else
             {
                 this.gb_TargeServerInfo.Enabled = false;
-                this.gb_RequestMode.Enabled = false;
                 this.gb_CaseManager.Enabled = false;
                 this.btn_BeginTest.Enabled = false;
                 this.btn_StopTest.Enabled = true;
@@ -538,7 +541,7 @@ namespace JsonTestTool.Frame
             string strUrl = string.Empty;
             try
             {
-                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + ":" + this.Tb_Port.Text + "/"), this.cb_Request.SelectedItem.ToString());
+                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + "/"), this.cb_Request.SelectedItem.ToString());
                 strUrl = uri.OriginalString;
             }
             catch (System.Exception ex)
@@ -547,6 +550,7 @@ namespace JsonTestTool.Frame
             }
             return strUrl;
         }
+
         private string GetUrlFromMain()
         {
             string temp = string.Empty;
@@ -637,6 +641,110 @@ namespace JsonTestTool.Frame
             }
         }
 
+        private string parseXml(XmlDocument doc, xmlElementType xeType)
+        {
+            string tempStr = string.Empty;
+            XmlNode node = null;
+            if (doc.DocumentElement != null)
+            {
+                switch (xeType)
+                {
+                    case xmlElementType.isSSL:
+                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                        tempStr = (0 == Convert.ToInt32(node.InnerXml)) ? "http://" : "https://";
+                        break;
+                    case xmlElementType.IP:
+                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                        string regIP = @"(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])";
+                        if (Regex.IsMatch(node.InnerXml, regIP))
+                        {
+                            tempStr = node.InnerXml;
+                        }
+                        break;
+                    case xmlElementType.Port:
+                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                        string regPort = @"([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])";
+                        if (Regex.IsMatch(node.InnerXml, regPort))
+                        {
+                            tempStr = node.InnerXml;
+                        }
+                        break;
+                    case xmlElementType.RequestType:
+                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                        tempStr = node.InnerXml;
+                        break;
+                    case xmlElementType.RequestMode:
+                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                        tempStr = node.InnerXml;
+                        break;
+                    case xmlElementType.RequestData:
+                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                        tempStr = JsonConvert.SerializeXmlNode(node, Newtonsoft.Json.Formatting.Indented, true);
+                        break;
+                    case xmlElementType.None:
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            return tempStr;
+        }
+
+        private string parseXmlValidity(XmlDocument doc)
+        {
+            string tempStr = string.Empty;
+            XmlNode node = null;
+            int flag = 0;
+            XmlNodeList oList = doc.DocumentElement.ChildNodes;
+            xmlElementType xeType = xmlElementType.None;
+            foreach (XmlNode temp in oList)
+            {
+                if (!Enum.TryParse(temp.Name, out xeType))
+                {
+                    tempStr += temp.Name.ToLower() + ",";
+                    flag++;
+                }
+                else
+                {
+                    switch (xeType)
+                    {
+                        case xmlElementType.isSSL:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            tempStr += ((0 == Convert.ToInt32(node.InnerXml))|| (1 == Convert.ToInt32(node.InnerXml))) ? "" : node.InnerXml;
+                            break;
+                        case xmlElementType.IP:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            string regIP = @"(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])";
+                            if (!Regex.IsMatch(node.InnerXml, regIP))
+                            {
+                                tempStr += node.InnerXml;
+                            }
+                            break;
+                        case xmlElementType.Port:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            string regPort = @"([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])";
+                            if (!Regex.IsMatch(node.InnerXml, regPort))
+                            {
+                                tempStr += node.InnerXml;
+                            }
+                            break;
+                        case xmlElementType.RequestType:
+                        case xmlElementType.RequestMode:
+                        case xmlElementType.RequestData:
+                        case xmlElementType.None:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (flag > 0)
+            {
+                return string.Format("XML不合法,节点不存在", tempStr.Trim(','));
+            }
+            return tempStr;
+        }
         #endregion
     }
 }

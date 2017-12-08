@@ -55,7 +55,7 @@ namespace JsonTestTool
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(string.Format("程序加载出现问题：", ex.Message));
+                MessageBox.Show(string.Format("程序加载出现问题：\r\n", ex.Message));
             }
         }
 
@@ -98,7 +98,7 @@ namespace JsonTestTool
             catch (Exception ex)
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "常规测试");
-                MessageBox.Show(string.Format("未能正常加载常规测试模块。{0}", ex.Message), "常规测试");
+                MessageBox.Show(string.Format("未能正常加载常规测试模块。\r\n{0}", ex.Message), "常规测试");
             }
         }
 
@@ -118,7 +118,7 @@ namespace JsonTestTool
             catch (Exception ex)
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "性能测试");
-                MessageBox.Show(string.Format("未能正常加载性能测试模块。{0}", ex.Message), "性能测试");
+                MessageBox.Show(string.Format("未能正常加载性能测试模块。\r\n{0}", ex.Message), "性能测试");
             }
         }
 
@@ -138,7 +138,7 @@ namespace JsonTestTool
             catch (System.Exception ex)
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "帮助");
-                MessageBox.Show(string.Format("未能正常加载帮助页面。{0}", ex.Message), "帮助");
+                MessageBox.Show(string.Format("未能正常加载帮助页面。\r\n{0}", ex.Message), "帮助");
             }
         }
 
@@ -158,7 +158,7 @@ namespace JsonTestTool
             catch (System.Exception ex)
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "关于");
-                MessageBox.Show(string.Format("未能正确加载关于页面。{0}", ex.Message), "关于");
+                MessageBox.Show(string.Format("未能正确加载关于页面。\r\n{0}", ex.Message), "关于");
             }
         }
 
@@ -178,7 +178,27 @@ namespace JsonTestTool
             catch (System.Exception ex)
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "批量测试");
-                MessageBox.Show(string.Format("未能正常加载批量测试模块。{0}", ex.Message), "批量测试");
+                MessageBox.Show(string.Format("未能正常加载批量测试模块。\r\n{0}", ex.Message), "批量测试");
+            }
+        }
+
+        private void tsMenu_AutoTest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                highLightMenuStrip(menuStripType.Auto);
+                this.pl_Main.Controls.Clear();
+                FrmAutoTest autoTestForm = new FrmAutoTest();
+                autoTestForm.FormBorderStyle = FormBorderStyle.None;
+                autoTestForm.Dock = System.Windows.Forms.DockStyle.Fill;
+                autoTestForm.TopLevel = false;
+                this.pl_Main.Controls.Add(autoTestForm);
+                autoTestForm.Show();
+            }
+            catch (System.Exception ex)
+            {
+                FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "自动测试");
+                MessageBox.Show(string.Format("未能正常加载自动测试模块。\r\n{0}", ex.Message), "自动测试");
             }
         }
 
@@ -192,6 +212,9 @@ namespace JsonTestTool
             {
                 case menuStripType.Normal:
                     tsMenu_Normal.BackColor = Color.LightSkyBlue;
+                    break;
+                case menuStripType.Auto:
+                    tsMenu_AutoTest.BackColor = Color.LightSkyBlue;
                     break;
                 case menuStripType.Performance:
                     tsMenu_Performance.BackColor = Color.LightSkyBlue;
@@ -208,11 +231,6 @@ namespace JsonTestTool
                 default:
                     break;
             }
-        }
-
-        private void pl_Main_ControlRemoved(object sender, ControlEventArgs e)
-        {
-            string temp = "";
         }
 
         /// <summary>
@@ -236,5 +254,6 @@ namespace JsonTestTool
                 MoveWindow(msgBox, xx, yy, r.Width - r.X, r.Height - r.Y, rePaint);
             }, null);
         }
+
     }
 }
