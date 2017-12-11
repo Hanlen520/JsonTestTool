@@ -82,7 +82,7 @@
             this.Tb_IP.Location = new System.Drawing.Point(6, 32);
             this.Tb_IP.Multiline = true;
             this.Tb_IP.Name = "Tb_IP";
-            this.Tb_IP.Size = new System.Drawing.Size(156, 20);
+            this.Tb_IP.Size = new System.Drawing.Size(180, 20);
             this.Tb_IP.TabIndex = 3;
             this.Tb_IP.Text = "http://10.10.1.77:9905";
             this.Tb_IP.MouseEnter += new System.EventHandler(this.Tb_IP_MouseEnter);
@@ -122,7 +122,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Data.Location = new System.Drawing.Point(8, 20);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(217, 73);
+            this.rtb_Data.Size = new System.Drawing.Size(247, 134);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
             // 
@@ -133,7 +133,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Logs.Location = new System.Drawing.Point(6, 20);
             this.rtb_Logs.Name = "rtb_Logs";
-            this.rtb_Logs.Size = new System.Drawing.Size(470, 74);
+            this.rtb_Logs.Size = new System.Drawing.Size(464, 161);
             this.rtb_Logs.TabIndex = 12;
             this.rtb_Logs.Text = "";
             // 
@@ -219,7 +219,7 @@
             this.gb_TargeServerInfo.Controls.Add(this.lb_RequestType);
             this.gb_TargeServerInfo.Location = new System.Drawing.Point(256, 140);
             this.gb_TargeServerInfo.Name = "gb_TargeServerInfo";
-            this.gb_TargeServerInfo.Size = new System.Drawing.Size(244, 99);
+            this.gb_TargeServerInfo.Size = new System.Drawing.Size(214, 99);
             this.gb_TargeServerInfo.TabIndex = 18;
             this.gb_TargeServerInfo.TabStop = false;
             this.gb_TargeServerInfo.Text = "测试服务器信息";
@@ -352,9 +352,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_Log.Controls.Add(this.rtb_Logs);
-            this.gb_Log.Location = new System.Drawing.Point(256, 438);
+            this.gb_Log.Location = new System.Drawing.Point(262, 306);
             this.gb_Log.Name = "gb_Log";
-            this.gb_Log.Size = new System.Drawing.Size(482, 100);
+            this.gb_Log.Size = new System.Drawing.Size(476, 187);
             this.gb_Log.TabIndex = 22;
             this.gb_Log.TabStop = false;
             this.gb_Log.Text = "测试日志：";
@@ -363,9 +363,9 @@
             // 
             this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
-            this.gb_Data.Location = new System.Drawing.Point(506, 140);
+            this.gb_Data.Location = new System.Drawing.Point(476, 140);
             this.gb_Data.Name = "gb_Data";
-            this.gb_Data.Size = new System.Drawing.Size(231, 99);
+            this.gb_Data.Size = new System.Drawing.Size(261, 160);
             this.gb_Data.TabIndex = 23;
             this.gb_Data.TabStop = false;
             this.gb_Data.Text = "请求数据：";

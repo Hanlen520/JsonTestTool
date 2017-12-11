@@ -403,12 +403,16 @@ namespace JsonTestTool.Frame
                     if (doc.DocumentElement != null)
                     {
                         //XML文件格式检查
-                        this.rtb_Data.Text = parseXmlValidity(doc) + "\r\n";
-                        this.rtb_Data.Text += parseXml(doc, xmlElementType.isSSL) + "\r\n";
-                        this.rtb_Data.Text += parseXml(doc, xmlElementType.IP) + "\r\n";
-                        this.rtb_Data.Text += parseXml(doc, xmlElementType.Port) + "\r\n";
-                        this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestType) + "\r\n";
-                        this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestMode) + "\r\n";
+                        if (!string.IsNullOrEmpty(parseXmlValidity(doc)))
+                        {
+                            throw new XmlException();
+                        }
+                        string headerStr = parseXml(doc, xmlElementType.isSSL);
+                        string ipStr = parseXml(doc, xmlElementType.IP).Trim('/');
+                        string portStr = parseXml(doc, xmlElementType.Port).Trim('/');
+                        string reqTypeStr = parseXml(doc, xmlElementType.RequestType).Trim('/');
+                        this.Tb_IP.Text = string.Format("{0}{1}/{2}/{3}",headerStr,ipStr,portStr,reqTypeStr);
+                        this.cb_Request.Text = parseXml(doc, xmlElementType.RequestMode) + "\r\n";
                         this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestData);
                         //分别获取几项数据
                         //XmlNode x = doc.SelectSingleNode("AutoRoot/RequestData");
