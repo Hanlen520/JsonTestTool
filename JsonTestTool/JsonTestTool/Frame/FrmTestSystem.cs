@@ -77,7 +77,7 @@ namespace JsonTestTool.Frame
             }
 
         }
-        
+
         private string GetUrlString()
         {
             string strUrl = string.Empty;
@@ -121,11 +121,11 @@ namespace JsonTestTool.Frame
                 }
                 catch (FileNotFoundException fnfe)
                 {
-                    this.rtb_Data.Text = string.Format("加载XML出现异常，请检查路径({0})文件是否存在.{1}",e.Node.Name, fnfe.Message);
+                    this.rtb_Data.Text = string.Format("加载XML出现异常，请检查路径({0})文件是否存在.{1}", e.Node.Name, fnfe.Message);
                 }
                 catch (XmlException xml)
                 {
-                    this.rtb_Data.Text = string.Format("XML文件不合法。{0}",xml.Message);
+                    this.rtb_Data.Text = string.Format("XML文件不合法。{0}", xml.Message);
                 }
                 catch (Exception exc)
                 {
@@ -156,10 +156,15 @@ namespace JsonTestTool.Frame
                 else if (string.Equals(this.btn_Expand.Text, EXPAND))
                 {
                     tv_Method.ExpandAll();
-                    if (tv_Method.Nodes[0] != null)
+                    //设置首个节点为焦点
+                    if (tv_Method.Nodes.Count > 0)
                     {
-                        tv_Method.TopNode = tv_Method.Nodes[0];
-                        btn_Expand.Text = COLLAPSE;
+                        if (tv_Method.Nodes[0] != null)
+                        {
+                            tv_Method.TopNode = tv_Method.Nodes[0];
+                            btn_Expand.Text = COLLAPSE;
+                        }
+
                     }
                 }
             }

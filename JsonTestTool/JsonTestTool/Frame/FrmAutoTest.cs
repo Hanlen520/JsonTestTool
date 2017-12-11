@@ -492,10 +492,13 @@ namespace JsonTestTool.Frame
                 else if (string.Equals(this.btn_Expand.Text, EXPAND))
                 {
                     tv_Method.ExpandAll();
-                    if (tv_Method.Nodes[0] != null)
+                    if (tv_Method.Nodes.Count > 0)
                     {
-                        tv_Method.TopNode = tv_Method.Nodes[0];
-                        btn_Expand.Text = COLLAPSE;
+                        if (tv_Method.Nodes[0] != null)
+                        {
+                            tv_Method.TopNode = tv_Method.Nodes[0];
+                            btn_Expand.Text = COLLAPSE;
+                        }
                     }
                 }
             }
