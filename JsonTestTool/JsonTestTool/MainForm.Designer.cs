@@ -66,8 +66,9 @@
             // 
             // tsMenu_AutoTest
             // 
+            this.tsMenu_AutoTest.Image = global::JsonTestTool.Properties.Resources.test4;
             this.tsMenu_AutoTest.Name = "tsMenu_AutoTest";
-            this.tsMenu_AutoTest.Size = new System.Drawing.Size(68, 21);
+            this.tsMenu_AutoTest.Size = new System.Drawing.Size(84, 21);
             this.tsMenu_AutoTest.Text = "自动测试";
             this.tsMenu_AutoTest.Click += new System.EventHandler(this.tsMenu_AutoTest_Click);
             // 

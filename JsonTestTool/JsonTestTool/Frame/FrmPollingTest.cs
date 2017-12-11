@@ -251,13 +251,23 @@ namespace JsonTestTool.Frame
             {
                 tr = (TestResult)e.UserState;
             }
-            this.lb_Process.Text = string.Format("测试进度：({0}/{1})", e.ProgressPercentage, nodesCount);
+            if (e.ProgressPercentage > 0)
+            {
+                this.lb_Process.Text = string.Format("测试进度：({0}/{1})", e.ProgressPercentage, nodesCount);
 
-            string strForRTB = logStringCreator(e.ProgressPercentage, tr.result);
-            this.rtb_Logs.Text += strForRTB;
+                string strForRTB = logStringCreator(e.ProgressPercentage, tr.result);
+                this.rtb_Logs.Text += strForRTB;
 
-            string strForReport = reportLineCreator(e.ProgressPercentage, tr.nodeName, tr.isSucceesul, tr.reqStr, tr.result);
-            Logger.WriteReport(reportFullPath,strForReport);
+                string strForReport = reportLineCreator(e.ProgressPercentage, tr.nodeName, tr.isSucceesul, tr.reqStr, tr.result);
+                Logger.WriteReport(reportFullPath, strForReport);
+            }
+            else
+            {
+                this.lb_Process.Text = string.Format("测试进度：({0}/{1})", nodesCount, nodesCount);
+                this.rtb_Logs.Text += "测试结束！";
+                
+                Logger.WriteReport(reportFullPath, "All Done!!!");
+            }
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -270,7 +280,7 @@ namespace JsonTestTool.Frame
                 TraverseTreeView(this.tv_Method.Nodes, sender, e);
                 tr.isSucceesul = true;
                 tr.result = "测试结束！！！";
-                bgWorker.ReportProgress(nodesCount, tr);
+                bgWorker.ReportProgress(0, tr);
             }
             catch (Exception ex)
             {

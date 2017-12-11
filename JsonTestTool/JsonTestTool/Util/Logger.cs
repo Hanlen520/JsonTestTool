@@ -124,7 +124,7 @@ namespace JsonTestTool.Util
                 using (StreamWriter sw = new StreamWriter(Path.Combine(path, name), true, Encoding.UTF8))
                 {
                     //为CSV文件添加头
-                    sw.WriteLine("编号,节点名称,测试时间,测试结果,测试请求,测试返回结果");
+                    sw.WriteLine("编号,节点名称,测试时间,请求路径,请求方法,测试结果,测试请求,测试返回结果");
                     sw.Close();
                 }
                 return Path.Combine(path, name);

@@ -170,6 +170,7 @@
     </Content>
     <None Include="Resources\Help.ico" />
     <None Include="Resources\Info.ico" />
+    <None Include="Resources\test4.png" />
     <Content Include="Resources\Touch.ico" />
     <None Include="Resources\test3.png" />
     <None Include="Resources\test2.png" />

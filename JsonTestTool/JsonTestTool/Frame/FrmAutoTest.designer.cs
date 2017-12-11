@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAutoTest));
             this.Lbl_Url = new System.Windows.Forms.Label();
-            this.Tb_IP = new System.Windows.Forms.TextBox();
+            this.tb_Url = new System.Windows.Forms.TextBox();
             this.tv_Method = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.rtb_Data = new System.Windows.Forms.RichTextBox();
@@ -45,6 +45,8 @@
             this.btn_CaseFolderOpen = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.gb_TargeServerInfo = new System.Windows.Forms.GroupBox();
+            this.lb_RequestMode = new System.Windows.Forms.Label();
+            this.tb_RequestMode = new System.Windows.Forms.TextBox();
             this.gb_CaseManager = new System.Windows.Forms.GroupBox();
             this.gb_LogControl = new System.Windows.Forms.GroupBox();
             this.btn_LogPathOpen = new System.Windows.Forms.Button();
@@ -71,21 +73,21 @@
             // Lbl_Url
             // 
             this.Lbl_Url.AutoSize = true;
-            this.Lbl_Url.Location = new System.Drawing.Point(6, 17);
+            this.Lbl_Url.Location = new System.Drawing.Point(6, 24);
             this.Lbl_Url.Name = "Lbl_Url";
             this.Lbl_Url.Size = new System.Drawing.Size(65, 12);
             this.Lbl_Url.TabIndex = 1;
             this.Lbl_Url.Text = "请求网址：";
             // 
-            // Tb_IP
+            // tb_Url
             // 
-            this.Tb_IP.Location = new System.Drawing.Point(6, 32);
-            this.Tb_IP.Multiline = true;
-            this.Tb_IP.Name = "Tb_IP";
-            this.Tb_IP.Size = new System.Drawing.Size(180, 20);
-            this.Tb_IP.TabIndex = 3;
-            this.Tb_IP.Text = "http://10.10.1.77:9905";
-            this.Tb_IP.MouseEnter += new System.EventHandler(this.Tb_IP_MouseEnter);
+            this.tb_Url.Location = new System.Drawing.Point(6, 39);
+            this.tb_Url.Multiline = true;
+            this.tb_Url.Name = "tb_Url";
+            this.tb_Url.Size = new System.Drawing.Size(196, 20);
+            this.tb_Url.TabIndex = 3;
+            this.tb_Url.Text = "http://";
+            this.tb_Url.MouseEnter += new System.EventHandler(this.Tb_IP_MouseEnter);
             // 
             // tv_Method
             // 
@@ -99,7 +101,7 @@
             this.tv_Method.Location = new System.Drawing.Point(8, 20);
             this.tv_Method.Name = "tv_Method";
             this.tv_Method.SelectedImageIndex = 0;
-            this.tv_Method.Size = new System.Drawing.Size(224, 399);
+            this.tv_Method.Size = new System.Drawing.Size(224, 400);
             this.tv_Method.TabIndex = 8;
             this.tv_Method.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterCollapse);
             this.tv_Method.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterExpand);
@@ -122,7 +124,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Data.Location = new System.Drawing.Point(8, 20);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(247, 134);
+            this.rtb_Data.Size = new System.Drawing.Size(194, 202);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
             // 
@@ -133,14 +135,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Logs.Location = new System.Drawing.Point(6, 20);
             this.rtb_Logs.Name = "rtb_Logs";
-            this.rtb_Logs.Size = new System.Drawing.Size(464, 161);
+            this.rtb_Logs.Size = new System.Drawing.Size(256, 372);
             this.rtb_Logs.TabIndex = 12;
             this.rtb_Logs.Text = "";
             // 
             // lb_RequestType
             // 
             this.lb_RequestType.AutoSize = true;
-            this.lb_RequestType.Location = new System.Drawing.Point(6, 55);
+            this.lb_RequestType.Location = new System.Drawing.Point(6, 72);
             this.lb_RequestType.Name = "lb_RequestType";
             this.lb_RequestType.Size = new System.Drawing.Size(65, 12);
             this.lb_RequestType.TabIndex = 14;
@@ -155,9 +157,9 @@
             "api/hedacmdreq",
             "api/sysinfo",
             "xml/upload"});
-            this.cb_Request.Location = new System.Drawing.Point(7, 70);
+            this.cb_Request.Location = new System.Drawing.Point(7, 87);
             this.cb_Request.Name = "cb_Request";
-            this.cb_Request.Size = new System.Drawing.Size(155, 20);
+            this.cb_Request.Size = new System.Drawing.Size(195, 20);
             this.cb_Request.TabIndex = 15;
             this.cb_Request.Text = "api/hedajwreq";
             // 
@@ -174,7 +176,7 @@
             // 
             // btn_LoadTree
             // 
-            this.btn_LoadTree.Location = new System.Drawing.Point(164, 58);
+            this.btn_LoadTree.Location = new System.Drawing.Point(159, 58);
             this.btn_LoadTree.Name = "btn_LoadTree";
             this.btn_LoadTree.Size = new System.Drawing.Size(73, 32);
             this.btn_LoadTree.TabIndex = 16;
@@ -187,7 +189,7 @@
             this.tb_CaseFolder.Location = new System.Drawing.Point(6, 32);
             this.tb_CaseFolder.Multiline = true;
             this.tb_CaseFolder.Name = "tb_CaseFolder";
-            this.tb_CaseFolder.Size = new System.Drawing.Size(232, 20);
+            this.tb_CaseFolder.Size = new System.Drawing.Size(224, 20);
             this.tb_CaseFolder.TabIndex = 3;
             this.tb_CaseFolder.MouseEnter += new System.EventHandler(this.Tb_IP_MouseEnter);
             // 
@@ -202,27 +204,46 @@
             // 
             // btn_CaseFolderOpen
             // 
-            this.btn_CaseFolderOpen.Location = new System.Drawing.Point(85, 58);
+            this.btn_CaseFolderOpen.Location = new System.Drawing.Point(82, 58);
             this.btn_CaseFolderOpen.Name = "btn_CaseFolderOpen";
             this.btn_CaseFolderOpen.Size = new System.Drawing.Size(73, 32);
             this.btn_CaseFolderOpen.TabIndex = 16;
             this.btn_CaseFolderOpen.Text = "浏览";
             this.btn_CaseFolderOpen.UseVisualStyleBackColor = true;
             this.btn_CaseFolderOpen.Click += new System.EventHandler(this.btn_Choose_Click);
-            this.btn_CaseFolderOpen.MouseEnter += new System.EventHandler(this.btb_SaveNodesToXml_MouseEnter);
             // 
             // gb_TargeServerInfo
             // 
+            this.gb_TargeServerInfo.Controls.Add(this.lb_RequestMode);
             this.gb_TargeServerInfo.Controls.Add(this.Lbl_Url);
-            this.gb_TargeServerInfo.Controls.Add(this.Tb_IP);
+            this.gb_TargeServerInfo.Controls.Add(this.tb_RequestMode);
+            this.gb_TargeServerInfo.Controls.Add(this.tb_Url);
             this.gb_TargeServerInfo.Controls.Add(this.cb_Request);
             this.gb_TargeServerInfo.Controls.Add(this.lb_RequestType);
             this.gb_TargeServerInfo.Location = new System.Drawing.Point(256, 140);
             this.gb_TargeServerInfo.Name = "gb_TargeServerInfo";
-            this.gb_TargeServerInfo.Size = new System.Drawing.Size(214, 99);
+            this.gb_TargeServerInfo.Size = new System.Drawing.Size(208, 164);
             this.gb_TargeServerInfo.TabIndex = 18;
             this.gb_TargeServerInfo.TabStop = false;
             this.gb_TargeServerInfo.Text = "测试服务器信息";
+            // 
+            // lb_RequestMode
+            // 
+            this.lb_RequestMode.AutoSize = true;
+            this.lb_RequestMode.Location = new System.Drawing.Point(7, 123);
+            this.lb_RequestMode.Name = "lb_RequestMode";
+            this.lb_RequestMode.Size = new System.Drawing.Size(65, 12);
+            this.lb_RequestMode.TabIndex = 1;
+            this.lb_RequestMode.Text = "请求方式：";
+            // 
+            // tb_RequestMode
+            // 
+            this.tb_RequestMode.Location = new System.Drawing.Point(7, 138);
+            this.tb_RequestMode.Multiline = true;
+            this.tb_RequestMode.Name = "tb_RequestMode";
+            this.tb_RequestMode.Size = new System.Drawing.Size(196, 20);
+            this.tb_RequestMode.TabIndex = 3;
+            this.tb_RequestMode.MouseEnter += new System.EventHandler(this.Tb_IP_MouseEnter);
             // 
             // gb_CaseManager
             // 
@@ -233,7 +254,7 @@
             this.gb_CaseManager.Controls.Add(this.tb_CaseFolder);
             this.gb_CaseManager.Location = new System.Drawing.Point(12, 12);
             this.gb_CaseManager.Name = "gb_CaseManager";
-            this.gb_CaseManager.Size = new System.Drawing.Size(238, 95);
+            this.gb_CaseManager.Size = new System.Drawing.Size(238, 94);
             this.gb_CaseManager.TabIndex = 19;
             this.gb_CaseManager.TabStop = false;
             this.gb_CaseManager.Text = "测试用例管理";
@@ -352,9 +373,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_Log.Controls.Add(this.rtb_Logs);
-            this.gb_Log.Location = new System.Drawing.Point(262, 306);
+            this.gb_Log.Location = new System.Drawing.Point(470, 140);
             this.gb_Log.Name = "gb_Log";
-            this.gb_Log.Size = new System.Drawing.Size(476, 187);
+            this.gb_Log.Size = new System.Drawing.Size(268, 398);
             this.gb_Log.TabIndex = 22;
             this.gb_Log.TabStop = false;
             this.gb_Log.Text = "测试日志：";
@@ -363,9 +384,9 @@
             // 
             this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
-            this.gb_Data.Location = new System.Drawing.Point(476, 140);
+            this.gb_Data.Location = new System.Drawing.Point(256, 310);
             this.gb_Data.Name = "gb_Data";
-            this.gb_Data.Size = new System.Drawing.Size(261, 160);
+            this.gb_Data.Size = new System.Drawing.Size(208, 228);
             this.gb_Data.TabIndex = 23;
             this.gb_Data.TabStop = false;
             this.gb_Data.Text = "请求数据：";
@@ -375,9 +396,9 @@
             this.gb_Tree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Tree.Controls.Add(this.tv_Method);
-            this.gb_Tree.Location = new System.Drawing.Point(12, 113);
+            this.gb_Tree.Location = new System.Drawing.Point(12, 112);
             this.gb_Tree.Name = "gb_Tree";
-            this.gb_Tree.Size = new System.Drawing.Size(238, 425);
+            this.gb_Tree.Size = new System.Drawing.Size(238, 426);
             this.gb_Tree.TabIndex = 24;
             this.gb_Tree.TabStop = false;
             this.gb_Tree.Text = "批量测试请求列表：";
@@ -415,7 +436,7 @@
 
         #endregion
         private System.Windows.Forms.Label Lbl_Url;
-        private System.Windows.Forms.TextBox Tb_IP;
+        private System.Windows.Forms.TextBox tb_Url;
         private System.Windows.Forms.TreeView tv_Method;
         private System.Windows.Forms.RichTextBox rtb_Data;
         private System.Windows.Forms.RichTextBox rtb_Logs;
@@ -443,6 +464,8 @@
         private System.Windows.Forms.GroupBox gb_Log;
         private System.Windows.Forms.GroupBox gb_Data;
         private System.Windows.Forms.GroupBox gb_Tree;
+        private System.Windows.Forms.Label lb_RequestMode;
+        private System.Windows.Forms.TextBox tb_RequestMode;
     }
 }
 

@@ -32,13 +32,16 @@
             this.rtb_DeviceInfo = new System.Windows.Forms.RichTextBox();
             this.tc_Info = new System.Windows.Forms.TabControl();
             this.tab_Details = new System.Windows.Forms.TabPage();
+            this.lb_AutoTest = new System.Windows.Forms.Label();
             this.lb_PerformanceTest = new System.Windows.Forms.Label();
             this.lb_PollingTest = new System.Windows.Forms.Label();
             this.lb_Normal = new System.Windows.Forms.Label();
             this.rtb_PerformanceTest = new System.Windows.Forms.RichTextBox();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rtb_PollingTest = new System.Windows.Forms.RichTextBox();
             this.rtb_Normal = new System.Windows.Forms.RichTextBox();
             this.pb_PerformanceTest = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pb_PollingTest = new System.Windows.Forms.PictureBox();
             this.pb_NormalTest = new System.Windows.Forms.PictureBox();
             this.tab_DeviceType = new System.Windows.Forms.TabPage();
@@ -53,6 +56,7 @@
             this.tc_Info.SuspendLayout();
             this.tab_Details.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_PerformanceTest)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_PollingTest)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_NormalTest)).BeginInit();
             this.tab_DeviceType.SuspendLayout();
@@ -107,13 +111,16 @@
             // tab_Details
             // 
             this.tab_Details.BackColor = System.Drawing.SystemColors.Control;
+            this.tab_Details.Controls.Add(this.lb_AutoTest);
             this.tab_Details.Controls.Add(this.lb_PerformanceTest);
             this.tab_Details.Controls.Add(this.lb_PollingTest);
             this.tab_Details.Controls.Add(this.lb_Normal);
             this.tab_Details.Controls.Add(this.rtb_PerformanceTest);
+            this.tab_Details.Controls.Add(this.richTextBox1);
             this.tab_Details.Controls.Add(this.rtb_PollingTest);
             this.tab_Details.Controls.Add(this.rtb_Normal);
             this.tab_Details.Controls.Add(this.pb_PerformanceTest);
+            this.tab_Details.Controls.Add(this.pictureBox1);
             this.tab_Details.Controls.Add(this.pb_PollingTest);
             this.tab_Details.Controls.Add(this.pb_NormalTest);
             this.tab_Details.Location = new System.Drawing.Point(4, 22);
@@ -122,33 +129,43 @@
             this.tab_Details.TabIndex = 5;
             this.tab_Details.Text = "测试工具说明";
             // 
+            // lb_AutoTest
+            // 
+            this.lb_AutoTest.AutoSize = true;
+            this.lb_AutoTest.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_AutoTest.Location = new System.Drawing.Point(141, 113);
+            this.lb_AutoTest.Name = "lb_AutoTest";
+            this.lb_AutoTest.Size = new System.Drawing.Size(134, 31);
+            this.lb_AutoTest.TabIndex = 4;
+            this.lb_AutoTest.Text = "自动测试：";
+            // 
             // lb_PerformanceTest
             // 
             this.lb_PerformanceTest.AutoSize = true;
-            this.lb_PerformanceTest.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_PerformanceTest.Location = new System.Drawing.Point(172, 338);
+            this.lb_PerformanceTest.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_PerformanceTest.Location = new System.Drawing.Point(141, 355);
             this.lb_PerformanceTest.Name = "lb_PerformanceTest";
-            this.lb_PerformanceTest.Size = new System.Drawing.Size(162, 39);
+            this.lb_PerformanceTest.Size = new System.Drawing.Size(134, 31);
             this.lb_PerformanceTest.TabIndex = 4;
             this.lb_PerformanceTest.Text = "性能测试：";
             // 
             // lb_PollingTest
             // 
             this.lb_PollingTest.AutoSize = true;
-            this.lb_PollingTest.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_PollingTest.Location = new System.Drawing.Point(172, 155);
+            this.lb_PollingTest.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_PollingTest.Location = new System.Drawing.Point(141, 234);
             this.lb_PollingTest.Name = "lb_PollingTest";
-            this.lb_PollingTest.Size = new System.Drawing.Size(162, 39);
+            this.lb_PollingTest.Size = new System.Drawing.Size(134, 31);
             this.lb_PollingTest.TabIndex = 4;
             this.lb_PollingTest.Text = "批量测试：";
             // 
             // lb_Normal
             // 
             this.lb_Normal.AutoSize = true;
-            this.lb_Normal.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb_Normal.Location = new System.Drawing.Point(172, 14);
+            this.lb_Normal.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb_Normal.Location = new System.Drawing.Point(141, 14);
             this.lb_Normal.Name = "lb_Normal";
-            this.lb_Normal.Size = new System.Drawing.Size(162, 39);
+            this.lb_Normal.Size = new System.Drawing.Size(134, 31);
             this.lb_Normal.TabIndex = 4;
             this.lb_Normal.Text = "常规测试：";
             // 
@@ -159,11 +176,24 @@
             this.rtb_PerformanceTest.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_PerformanceTest.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtb_PerformanceTest.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtb_PerformanceTest.Location = new System.Drawing.Point(179, 380);
+            this.rtb_PerformanceTest.Location = new System.Drawing.Point(147, 389);
             this.rtb_PerformanceTest.Name = "rtb_PerformanceTest";
-            this.rtb_PerformanceTest.Size = new System.Drawing.Size(432, 118);
+            this.rtb_PerformanceTest.Size = new System.Drawing.Size(473, 106);
             this.rtb_PerformanceTest.TabIndex = 3;
             this.rtb_PerformanceTest.Text = "按指定的间隔，连续测试同一条请求。可以通过修改PerformanceTreeXml来自定义测试请求列表。";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.richTextBox1.Location = new System.Drawing.Point(147, 147);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(473, 95);
+            this.richTextBox1.TabIndex = 3;
+            this.richTextBox1.Text = "每个XML文本中可以保存测试路径，请求文本和请求方式，依次执行达到全自动测试的效果。";
             // 
             // rtb_PollingTest
             // 
@@ -172,9 +202,9 @@
             this.rtb_PollingTest.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_PollingTest.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rtb_PollingTest.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtb_PollingTest.Location = new System.Drawing.Point(179, 197);
+            this.rtb_PollingTest.Location = new System.Drawing.Point(147, 268);
             this.rtb_PollingTest.Name = "rtb_PollingTest";
-            this.rtb_PollingTest.Size = new System.Drawing.Size(432, 121);
+            this.rtb_PollingTest.Size = new System.Drawing.Size(473, 100);
             this.rtb_PollingTest.TabIndex = 3;
             this.rtb_PollingTest.Text = "按顺序依次测试一遍，每条测试请求编写一个XML，放到指定目录进行加载，就可以进行批量测试。";
             // 
@@ -182,8 +212,8 @@
             // 
             this.rtb_Normal.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_Normal.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rtb_Normal.Font = new System.Drawing.Font("微软雅黑", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.rtb_Normal.Location = new System.Drawing.Point(179, 56);
+            this.rtb_Normal.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.rtb_Normal.Location = new System.Drawing.Point(147, 48);
             this.rtb_Normal.Name = "rtb_Normal";
             this.rtb_Normal.Size = new System.Drawing.Size(407, 44);
             this.rtb_Normal.TabIndex = 3;
@@ -193,17 +223,27 @@
             // 
             this.pb_PerformanceTest.BackgroundImage = global::JsonTestTool.Properties.Resources.test2;
             this.pb_PerformanceTest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pb_PerformanceTest.Location = new System.Drawing.Point(69, 338);
+            this.pb_PerformanceTest.Location = new System.Drawing.Point(38, 355);
             this.pb_PerformanceTest.Name = "pb_PerformanceTest";
             this.pb_PerformanceTest.Size = new System.Drawing.Size(97, 93);
             this.pb_PerformanceTest.TabIndex = 2;
             this.pb_PerformanceTest.TabStop = false;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::JsonTestTool.Properties.Resources.test4;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(38, 113);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(97, 100);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
             // pb_PollingTest
             // 
             this.pb_PollingTest.BackgroundImage = global::JsonTestTool.Properties.Resources.test3;
             this.pb_PollingTest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pb_PollingTest.Location = new System.Drawing.Point(69, 178);
+            this.pb_PollingTest.Location = new System.Drawing.Point(38, 234);
             this.pb_PollingTest.Name = "pb_PollingTest";
             this.pb_PollingTest.Size = new System.Drawing.Size(97, 93);
             this.pb_PollingTest.TabIndex = 1;
@@ -213,7 +253,7 @@
             // 
             this.pb_NormalTest.BackgroundImage = global::JsonTestTool.Properties.Resources.test1;
             this.pb_NormalTest.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pb_NormalTest.Location = new System.Drawing.Point(69, 14);
+            this.pb_NormalTest.Location = new System.Drawing.Point(38, 14);
             this.pb_NormalTest.Name = "pb_NormalTest";
             this.pb_NormalTest.Size = new System.Drawing.Size(97, 93);
             this.pb_NormalTest.TabIndex = 0;
@@ -335,6 +375,7 @@
             this.tab_Details.ResumeLayout(false);
             this.tab_Details.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_PerformanceTest)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_PollingTest)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_NormalTest)).EndInit();
             this.tab_DeviceType.ResumeLayout(false);
@@ -370,5 +411,8 @@
         private System.Windows.Forms.Label lb_Normal;
         private System.Windows.Forms.Label lb_PollingTest;
         private System.Windows.Forms.Label lb_PerformanceTest;
+        private System.Windows.Forms.Label lb_AutoTest;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
     }
 }

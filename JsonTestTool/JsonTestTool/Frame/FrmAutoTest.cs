@@ -31,7 +31,7 @@ namespace JsonTestTool.Frame
         private int nodesCount = 0;
         private int nodeIndex = 0;
         private delegate string GetUrlOrData();
-        private delegate void SetData(string postData);
+        private delegate void SetData(string url, string requestType, string postData);
         private Point m_frmCoordinate = new Point();
 
         private enum xmlElementType
@@ -59,6 +59,8 @@ namespace JsonTestTool.Frame
         {
             public bool isSucceesul;    //测试是否成功
             public string nodeName;     //测试的节点
+            public string reqUrl;   //测试的请求路径
+            public string reqMode;  //测试的请求方式
             public string reqStr;       //测试的Json请求文本
             public string result;       //测试返回值(Json返回数据或者返回的异常)
         }
@@ -246,13 +248,23 @@ namespace JsonTestTool.Frame
             {
                 tr = (TestResult)e.UserState;
             }
-            this.lb_Process.Text = string.Format("测试进度：({0}/{1})", e.ProgressPercentage, nodesCount);
+            if (e.ProgressPercentage > 0)
+            {
+                this.lb_Process.Text = string.Format("测试进度：({0}/{1})", e.ProgressPercentage, nodesCount);
 
-            string strForRTB = logStringCreator(e.ProgressPercentage, tr.result);
-            this.rtb_Logs.Text += strForRTB;
+                string strForRTB = LogStringCreator(e.ProgressPercentage, tr.result);
+                this.rtb_Logs.Text += strForRTB;
 
-            string strForReport = reportLineCreator(e.ProgressPercentage, tr.nodeName, tr.isSucceesul, tr.reqStr, tr.result);
-            Logger.WriteReport(reportFullPath, strForReport);
+                string strForReport = ReportLineCreator(e.ProgressPercentage, tr);
+                Logger.WriteReport(reportFullPath, strForReport);
+            }
+            else
+            {
+                this.lb_Process.Text = string.Format("测试进度：({0}/{1})", nodesCount, nodesCount);
+                this.rtb_Logs.Text += "测试结束！";
+
+                Logger.WriteReport(reportFullPath, "All Done!!!");
+            }
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -263,9 +275,6 @@ namespace JsonTestTool.Frame
             try
             {
                 TraverseTreeView(this.tv_Method.Nodes, sender, e);
-                tr.isSucceesul = true;
-                tr.result = "测试结束！！！";
-                bgWorker.ReportProgress(nodesCount, tr);
             }
             catch (Exception ex)
             {
@@ -279,14 +288,14 @@ namespace JsonTestTool.Frame
         private TestResult TraverseTreeView(TreeNodeCollection nodes, object sender, DoWorkEventArgs e)
         {
             TestResult tr = new TestResult();
-            string strUrl = GetUrlFromMain();
+            string reqFullUrl = string.Empty;
             string postData = string.Empty;
             string postResult = string.Empty;
             BackgroundWorker bgWorker = sender as BackgroundWorker;
             tr.isSucceesul = true;
             foreach (TreeNode node in nodes)
             {
-                tr.nodeName = Path.GetFileName(node.Text);
+                tr.nodeName = Path.GetFileNameWithoutExtension(node.Name);
                 if (bgWorker.CancellationPending == true)
                 {
                     e.Cancel = true;
@@ -295,7 +304,10 @@ namespace JsonTestTool.Frame
                 nodeIndex++;
                 if (string.IsNullOrEmpty(node.Name))
                 {
-                    tr.reqStr = "父节点无请求文本。";
+                    tr.reqStr = "父节点无请求文本";
+                    tr.nodeName = node.Name;
+                    tr.reqUrl = "空";
+                    tr.reqMode = "空";
                     tr.result = "空";
                     bgWorker.ReportProgress(nodeIndex, tr);
                     Thread.Sleep(100);
@@ -303,42 +315,64 @@ namespace JsonTestTool.Frame
                 }
                 else
                 {
+                    //加载测试用例XML文件
                     doc.Load(node.Name);
+                    tr.nodeName = Path.GetFileNameWithoutExtension(node.Name);
                     if (doc.DocumentElement != null)
                     {
-                        postData = JsonConvert.SerializeXmlNode(doc, Newtonsoft.Json.Formatting.Indented, true);
-                        SetDataToRTB(postData);
-                    }
-                    tr.reqStr = postData;
-                    tr.nodeName = Path.GetFileName(node.Text);
-                    try
-                    {
-                        switch (requestType)
+                        string parseResult = ParseXmlValidity(doc);
+                        string headerStr = ParseXml(doc, xmlElementType.isSSL);
+                        string ipStr = ParseXml(doc, xmlElementType.IP).Trim('/');
+                        string portStr = ParseXml(doc, xmlElementType.Port).Trim('/');
+                        string reqTypeStr = ParseXml(doc, xmlElementType.RequestType).Trim('/');
+                        string regUrl = string.Format("{0}{1}/{2}", headerStr, ipStr, portStr);
+                        string reqModeStr = Enum.ToObject(typeof(RequestMode), Convert.ToInt32(ParseXml(doc, xmlElementType.RequestMode))).ToString();
+                        reqFullUrl = string.Format("{0}/{1}", regUrl, reqTypeStr);
+                        tr.reqUrl = reqFullUrl;
+                        tr.reqMode = reqModeStr;
+                        postData = ParseXml(doc, xmlElementType.RequestData);
+                        tr.reqStr = postData;
+                        //更新主窗体内容
+                        SetDataToMainForm(regUrl, reqModeStr, postData);
+                        //XML文件合法性检查
+                        if (!string.IsNullOrEmpty(parseResult))
                         {
-                            case RequestMode.POST:
-                                postResult = htmlUtil.HttpPost(strUrl, postData);
-                                break;
-                            case RequestMode.POSTUTF8:
-                                postResult = htmlUtil.HttpPostUTF8(strUrl, postData);
-                                break;
-                            case RequestMode.GET:
-                                postResult = htmlUtil.HttpGet(strUrl, postData);
-                                break;
-                            default:
-                                break;
+                            tr.result = parseResult;
+                            tr.reqUrl = string.Empty;
+                            tr.isSucceesul = false;
+                            bgWorker.ReportProgress(nodeIndex, tr);
                         }
-                        tr.result = postResult;
-                        bgWorker.ReportProgress(nodeIndex, tr);
+                        else
+                        {
+                            try
+                            {
+                                switch (requestType)
+                                {
+                                    case RequestMode.POST:
+                                        postResult = htmlUtil.HttpPost(reqFullUrl, postData);
+                                        break;
+                                    case RequestMode.POSTUTF8:
+                                        postResult = htmlUtil.HttpPostUTF8(reqFullUrl, postData);
+                                        break;
+                                    case RequestMode.GET:
+                                        postResult = htmlUtil.HttpGet(reqFullUrl, postData);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                tr.result = postResult;
+                                bgWorker.ReportProgress(nodeIndex, tr);
+                            }
+                            catch (Exception reqEX)
+                            {
+                                tr.isSucceesul = false;
+                                tr.result = reqEX.Message;
+                                bgWorker.ReportProgress(nodeIndex, tr);
+                            }
+                        }
                     }
-                    catch (Exception reqEX)
-                    {
-                        tr.isSucceesul = false;
-                        tr.result = reqEX.Message;
-                        bgWorker.ReportProgress(nodeIndex, tr);
-                    }
-                    //bgWorker.ReportProgress(nodeIndex, temp);
-                    Thread.Sleep(100);
                 }
+                Thread.Sleep(100);
             }
             return tr;
         }
@@ -393,6 +427,9 @@ namespace JsonTestTool.Frame
 
         private void tv_Method_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            this.tb_Url.Text = string.Empty;
+            this.cb_Request.Text = string.Empty;
+            this.rtb_Data.Text = string.Empty;
             //通过判断子节点的方式，来判断是否处理XML
             if (e.Node.Nodes.Count == 0)
             {
@@ -402,21 +439,20 @@ namespace JsonTestTool.Frame
                     doc.Load(e.Node.Name);
                     if (doc.DocumentElement != null)
                     {
+                        string headerStr = ParseXml(doc, xmlElementType.isSSL);
+                        string ipStr = ParseXml(doc, xmlElementType.IP).Trim('/');
+                        string portStr = ParseXml(doc, xmlElementType.Port).Trim('/');
+                        string reqTypeStr = ParseXml(doc, xmlElementType.RequestType).Trim('/');
+                        this.tb_Url.Text = string.Format("{0}{1}/{2}/", headerStr, ipStr, portStr);
+                        this.cb_Request.Text = reqTypeStr;
+                        this.tb_RequestMode.Text = Enum.ToObject(typeof(RequestMode), Convert.ToInt32(ParseXml(doc, xmlElementType.RequestMode))).ToString();
+                        this.rtb_Data.Text = ParseXml(doc, xmlElementType.RequestData);
                         //XML文件格式检查
-                        if (!string.IsNullOrEmpty(parseXmlValidity(doc)))
+                        string parseResult = ParseXmlValidity(doc);
+                        if (!string.IsNullOrEmpty(parseResult))
                         {
-                            throw new XmlException();
+                            throw new XmlException(parseResult);
                         }
-                        string headerStr = parseXml(doc, xmlElementType.isSSL);
-                        string ipStr = parseXml(doc, xmlElementType.IP).Trim('/');
-                        string portStr = parseXml(doc, xmlElementType.Port).Trim('/');
-                        string reqTypeStr = parseXml(doc, xmlElementType.RequestType).Trim('/');
-                        this.Tb_IP.Text = string.Format("{0}{1}/{2}/{3}",headerStr,ipStr,portStr,reqTypeStr);
-                        this.cb_Request.Text = parseXml(doc, xmlElementType.RequestMode) + "\r\n";
-                        this.rtb_Data.Text += parseXml(doc, xmlElementType.RequestData);
-                        //分别获取几项数据
-                        //XmlNode x = doc.SelectSingleNode("AutoRoot/RequestData");
-                        //this.rtb_Data.Text += JsonConvert.SerializeXmlNode(x, Newtonsoft.Json.Formatting.Indented, true);
                     }
                 }
                 catch (FileNotFoundException fnfe)
@@ -425,7 +461,7 @@ namespace JsonTestTool.Frame
                 }
                 catch (XmlException xml)
                 {
-                    this.rtb_Data.Text = string.Format("XML文件不合法。{0}", xml.Message);
+                    this.rtb_Data.Text = string.Format("XML文件合法性检查未通过,原因如下.\r\n{0}", xml.Message);
                 }
                 catch (Exception exc)
                 {
@@ -477,14 +513,9 @@ namespace JsonTestTool.Frame
             tt.SetToolTip((Control)sender, str);
         }
 
-        private void btb_SaveNodesToXml_MouseEnter(object sender, EventArgs e)
-        {
-            ShowToolTipMouseEnter(sender, "保存左侧目录树所有内容为Xml文件至自定义路径。");
-        }
-
         private void btn_Expand_MouseEnter(object sender, EventArgs e)
         {
-            ShowToolTipMouseEnter(sender, "收缩或展开左侧目录树。");
+            ShowToolTipMouseEnter(sender, "收缩或展开下方目录树。");
         }
 
         private void Tb_IP_MouseEnter(object sender, EventArgs e)
@@ -545,12 +576,12 @@ namespace JsonTestTool.Frame
             string strUrl = string.Empty;
             try
             {
-                Uri uri = new Uri(new Uri("http://" + this.Tb_IP.Text + "/"), this.cb_Request.SelectedItem.ToString());
+                Uri uri = new Uri(new Uri(this.tb_Url.Text + "/"), this.cb_Request.SelectedItem.ToString());
                 strUrl = uri.OriginalString;
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
+                //MessageBox.Show("Url不合法，请检查输入项。\r\n{0}", ex.Message);
             }
             return strUrl;
         }
@@ -583,20 +614,22 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private void SetDataToRTB(string msg)
+        private void SetDataToMainForm(string url, string requestType, string msg)
         {
             if (this.InvokeRequired)
             {
-                SetData setD = new SetData(SetDataToRTB);
-                this.Invoke(setD, new object[] { msg });
+                SetData setD = new SetData(SetDataToMainForm);
+                this.Invoke(setD, new object[] { url, requestType, msg });
             }
             else
             {
+                this.tb_Url.Text = url;
+                this.cb_Request.Text = requestType;
                 this.rtb_Data.Text = msg;
             }
         }
 
-        private string logStringCreator(int time, string msg)
+        private string LogStringCreator(int time, string msg)
         {
             try
             {
@@ -613,10 +646,12 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private string reportLineCreator(int time, string nodeName, bool isSucessful, string reqStr, string msg)
+        private string ReportLineCreator(int time, TestResult tr)
         {
             try
             {
+                string msg = tr.result;
+                string reqStr = tr.reqStr;
                 StringBuilder sb = new StringBuilder();
                 if (!string.IsNullOrEmpty(msg))
                 {
@@ -634,9 +669,9 @@ namespace JsonTestTool.Frame
                         reqStr = string.Format("\"{0}\"", reqStr);
                     }
                 }
-                string sucessful = isSucessful ? "成功" : "失败";
+                string sucessful = tr.isSucceesul ? "成功" : "失败";
                 string strTime = DateTime.Now.ToString();
-                sb.Append(string.Format("{0},{1},{2},{3},{4},{5}", time, nodeName, strTime, sucessful, reqStr, msg));
+                sb.Append(string.Format("{0},{1},{2},{3},{4},{5},{6},{7}", time, tr.nodeName, strTime, tr.reqUrl, tr.reqMode, sucessful, reqStr, msg));
                 return sb.ToString();
             }
             catch (Exception e)
@@ -645,97 +680,56 @@ namespace JsonTestTool.Frame
             }
         }
 
-        private string parseXml(XmlDocument doc, xmlElementType xeType)
+        private string ParseXml(XmlDocument doc, xmlElementType xeType)
         {
             string tempStr = string.Empty;
             XmlNode node = null;
-            if (doc.DocumentElement != null)
+            try
             {
-                switch (xeType)
-                {
-                    case xmlElementType.isSSL:
-                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                        tempStr = (0 == Convert.ToInt32(node.InnerXml)) ? "http://" : "https://";
-                        break;
-                    case xmlElementType.IP:
-                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                        string regIP = @"(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])";
-                        if (Regex.IsMatch(node.InnerXml, regIP))
-                        {
-                            tempStr = node.InnerXml;
-                        }
-                        break;
-                    case xmlElementType.Port:
-                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                        string regPort = @"([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])";
-                        if (Regex.IsMatch(node.InnerXml, regPort))
-                        {
-                            tempStr = node.InnerXml;
-                        }
-                        break;
-                    case xmlElementType.RequestType:
-                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                        tempStr = node.InnerXml;
-                        break;
-                    case xmlElementType.RequestMode:
-                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                        tempStr = node.InnerXml;
-                        break;
-                    case xmlElementType.RequestData:
-                        node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                        tempStr = JsonConvert.SerializeXmlNode(node, Newtonsoft.Json.Formatting.Indented, true);
-                        break;
-                    case xmlElementType.None:
-                        break;
-                    default:
-                        break;
-                }
-
-            }
-            return tempStr;
-        }
-
-        private string parseXmlValidity(XmlDocument doc)
-        {
-            string tempStr = string.Empty;
-            XmlNode node = null;
-            int flag = 0;
-            XmlNodeList oList = doc.DocumentElement.ChildNodes;
-            xmlElementType xeType = xmlElementType.None;
-            foreach (XmlNode temp in oList)
-            {
-                if (!Enum.TryParse(temp.Name, out xeType))
-                {
-                    tempStr += temp.Name.ToLower() + ",";
-                    flag++;
-                }
-                else
+                if (doc.DocumentElement != null)
                 {
                     switch (xeType)
                     {
                         case xmlElementType.isSSL:
                             node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                            tempStr += ((0 == Convert.ToInt32(node.InnerXml))|| (1 == Convert.ToInt32(node.InnerXml))) ? "" : node.InnerXml;
+                            tempStr = (0 == Convert.ToInt32(node.InnerXml)) ? "http://" : "https://";
                             break;
                         case xmlElementType.IP:
                             node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                            string regIP = @"(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])\.(\d|[1-9]\d|1\d{2}|2[0-5][0-5])";
-                            if (!Regex.IsMatch(node.InnerXml, regIP))
+                            string regIP = @"^(?:(?:1[0-9][0-9]\.)|(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])|(?:[1-9][0-9])|(?:[0-9]))$";
+                            if (Regex.IsMatch(node.InnerXml, regIP))
                             {
-                                tempStr += node.InnerXml;
+                                tempStr = node.InnerXml;
+                            }
+                            else
+                            {
+                                tempStr = "错误的IP";
                             }
                             break;
                         case xmlElementType.Port:
                             node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
-                            string regPort = @"([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])";
-                            if (!Regex.IsMatch(node.InnerXml, regPort))
+                            string regPort = @"^([0-9]|[1-9]\d{1}|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$";
+                            if (Regex.IsMatch(node.InnerXml, regPort))
                             {
-                                tempStr += node.InnerXml;
+                                tempStr = node.InnerXml;
+                            }
+                            else
+                            {
+                                tempStr = "错误的端口号";
                             }
                             break;
                         case xmlElementType.RequestType:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            tempStr = node.InnerXml;
+                            break;
                         case xmlElementType.RequestMode:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            tempStr = node.InnerXml;
+                            break;
                         case xmlElementType.RequestData:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            tempStr = JsonConvert.SerializeXmlNode(node, Newtonsoft.Json.Formatting.Indented, true);
+                            break;
                         case xmlElementType.None:
                             break;
                         default:
@@ -743,11 +737,101 @@ namespace JsonTestTool.Frame
                     }
                 }
             }
-            if (flag > 0)
+            catch (NullReferenceException)
             {
-                return string.Format("XML不合法,节点不存在", tempStr.Trim(','));
+                tempStr = string.Format("元素不存在。");
+            }
+            catch (Exception ex)
+            {
+                tempStr = ex.Message;
             }
             return tempStr;
+        }
+
+        private string ParseXmlValidity(XmlDocument doc)
+        {
+            //记录三轮检查结果
+            string tempStr1 = string.Empty;
+            string tempStr2 = string.Empty;
+            string tempStr3 = string.Empty;
+            XmlNode node = null;
+            int flag = 0;
+            XmlNodeList oList = doc.DocumentElement.ChildNodes;
+            xmlElementType xeType = xmlElementType.None;
+            //元素不合法标记,用于检查元素是否完整
+            List<string> elementTypes = new List<string>() { "isSSL", "IP", "Port", "RequestType", "RequestMode", "RequestData" };
+            //遍历检查元素是否都是合法元素
+            foreach (XmlNode temp in oList)
+            {
+                if (!Enum.TryParse(temp.Name, out xeType))
+                {
+                    tempStr1 += temp.Name.ToLower() + ",";
+                    flag++;
+                }
+                else
+                {
+                    //如果元素合法,删除不合法标记
+                    elementTypes.Remove(temp.Name);
+                    //检查合法元素的内容是否是正确格式
+                    switch (xeType)
+                    {
+                        case xmlElementType.isSSL:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            tempStr3 += ((0 == Convert.ToInt32(node.InnerXml)) || (1 == Convert.ToInt32(node.InnerXml))) ? "" : string.Format("[{0}:{1}]\r\n", xeType.ToString(), node.InnerXml);
+                            break;
+                        case xmlElementType.IP:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            string regIP = @"^(?:(?:1[0-9][0-9]\.)|(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])|(?:[1-9][0-9])|(?:[0-9]))$";
+                            if (!Regex.IsMatch(node.InnerXml, regIP))
+                            {
+                                tempStr3 += string.Format("[{0}:{1}]\r\n", xeType.ToString(), node.InnerXml);
+                            }
+                            break;
+                        case xmlElementType.Port:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            string regPort = @"^([0-9]|[1-9]\d{1}|[1-9]\d{2}|[1-9]\d{3}|[1-5]\d{4}|6[0-4]\d{3}|65[0-4]\d{2}|655[0-2]\d|6553[0-5])$";
+                            if (!Regex.IsMatch(node.InnerXml, regPort))
+                            {
+                                tempStr3 += string.Format("[{0}:{1}]\r\n", xeType.ToString(), node.InnerXml);
+                            }
+                            break;
+                        case xmlElementType.RequestMode:
+                            node = doc.DocumentElement.SelectSingleNode(xeType.ToString());
+                            tempStr3 += (Convert.ToInt32(node.InnerXml) >= 1 || (Convert.ToInt32(node.InnerXml) <= 3)) ? "" : string.Format("[{0}:{1}]\r\n", xeType.ToString(), node.InnerXml);
+                            break;
+                        case xmlElementType.RequestData:
+                        case xmlElementType.RequestType:
+                        case xmlElementType.None:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            //经过三轮检查,如果XML文件有异常刚返回Error信息
+            if (elementTypes.Count > 0 || flag > 0 || !string.IsNullOrEmpty(tempStr3))
+            {
+                string xmlError = string.Empty;
+                if (elementTypes.Count > 0)
+                {
+                    foreach (string item in elementTypes)
+                    {
+                        tempStr2 += item + ',';
+                    }
+                    xmlError += string.Format("缺失必要节点: \r\n{0}\r\n", tempStr2.Trim(','));
+
+                }
+                if (flag > 0)
+                {
+                    xmlError += string.Format("名称不合法节点: \r\n{0}\r\n", tempStr1.Trim(','));
+                }
+                if (!string.IsNullOrEmpty(tempStr3))
+                {
+                    xmlError += string.Format("格式不正确的节点:\r\n{0}\r\n", tempStr3);
+                }
+                return xmlError;
+            }
+            return tempStr1;
         }
         #endregion
     }
