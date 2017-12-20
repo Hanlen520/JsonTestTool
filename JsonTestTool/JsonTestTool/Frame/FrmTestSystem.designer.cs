@@ -52,14 +52,17 @@
             this.gb_TargeServerInfomation = new System.Windows.Forms.GroupBox();
             this.gb_CaseManager = new System.Windows.Forms.GroupBox();
             this.gb_TestManager = new System.Windows.Forms.GroupBox();
+            this.cb_GetScreenshots = new System.Windows.Forms.CheckBox();
             this.btn_Clear = new System.Windows.Forms.Button();
             this.gb_Data = new System.Windows.Forms.GroupBox();
             this.gb_ACK = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.gb_TargeServerInfomation.SuspendLayout();
             this.gb_CaseManager.SuspendLayout();
             this.gb_TestManager.SuspendLayout();
             this.gb_Data.SuspendLayout();
             this.gb_ACK.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_IP
@@ -145,7 +148,7 @@
             this.rtb_ACK.BackColor = System.Drawing.SystemColors.Window;
             this.rtb_ACK.Location = new System.Drawing.Point(6, 20);
             this.rtb_ACK.Name = "rtb_ACK";
-            this.rtb_ACK.Size = new System.Drawing.Size(465, 273);
+            this.rtb_ACK.Size = new System.Drawing.Size(465, 270);
             this.rtb_ACK.TabIndex = 12;
             this.rtb_ACK.Text = "";
             // 
@@ -295,10 +298,20 @@
             this.gb_TestManager.Controls.Add(this.btn_GET);
             this.gb_TestManager.Location = new System.Drawing.Point(262, 172);
             this.gb_TestManager.Name = "gb_TestManager";
-            this.gb_TestManager.Size = new System.Drawing.Size(477, 61);
+            this.gb_TestManager.Size = new System.Drawing.Size(330, 64);
             this.gb_TestManager.TabIndex = 20;
             this.gb_TestManager.TabStop = false;
             this.gb_TestManager.Text = "测试管理";
+            // 
+            // cb_GetScreenshots
+            // 
+            this.cb_GetScreenshots.AutoSize = true;
+            this.cb_GetScreenshots.Location = new System.Drawing.Point(6, 20);
+            this.cb_GetScreenshots.Name = "cb_GetScreenshots";
+            this.cb_GetScreenshots.Size = new System.Drawing.Size(132, 28);
+            this.cb_GetScreenshots.TabIndex = 15;
+            this.cb_GetScreenshots.Text = "测试结束是否截图？\r\n确认是请勾选。\r\n";
+            this.cb_GetScreenshots.UseVisualStyleBackColor = true;
             // 
             // btn_Clear
             // 
@@ -328,18 +341,29 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gb_ACK.Controls.Add(this.rtb_ACK);
-            this.gb_ACK.Location = new System.Drawing.Point(262, 239);
+            this.gb_ACK.Location = new System.Drawing.Point(262, 242);
             this.gb_ACK.Name = "gb_ACK";
-            this.gb_ACK.Size = new System.Drawing.Size(477, 299);
+            this.gb_ACK.Size = new System.Drawing.Size(477, 296);
             this.gb_ACK.TabIndex = 23;
             this.gb_ACK.TabStop = false;
             this.gb_ACK.Text = "返回应答：";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cb_GetScreenshots);
+            this.groupBox1.Location = new System.Drawing.Point(598, 172);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(141, 64);
+            this.groupBox1.TabIndex = 24;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "测试截图管理";
             // 
             // FrmTestSystem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 550);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gb_ACK);
             this.Controls.Add(this.gb_Data);
             this.Controls.Add(this.gb_TestManager);
@@ -356,6 +380,8 @@
             this.gb_TestManager.ResumeLayout(false);
             this.gb_Data.ResumeLayout(false);
             this.gb_ACK.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -386,6 +412,8 @@
         private System.Windows.Forms.GroupBox gb_Data;
         private System.Windows.Forms.GroupBox gb_ACK;
         private System.Windows.Forms.Button btn_Clear;
+        private System.Windows.Forms.CheckBox cb_GetScreenshots;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

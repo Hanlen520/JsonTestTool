@@ -8,6 +8,7 @@ using System.Collections;
 using Newtonsoft;
 using Newtonsoft.Json;
 using System.Linq;
+using System.Drawing;
 
 namespace JsonTestTool.Frame
 {
@@ -17,6 +18,7 @@ namespace JsonTestTool.Frame
         const string COLLAPSE = "收缩节点";
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
+        public bool getScreenshots = false;
 
         public FrmTestSystem()
         {
@@ -169,18 +171,7 @@ namespace JsonTestTool.Frame
                 }
             }
         }
-
-        /// <summary>
-        /// 显示数据RichTextBox的文本
-        /// </summary>
-        /// <param name="type">JsonMethodType</param>
-        private void updateDateToRTB(string type)
-        {
-            if (!string.IsNullOrEmpty(type))
-            {
-            }
-        }
-
+        
         /// <summary>
         /// 为控件显示ToolsTips
         /// </summary>
@@ -246,6 +237,7 @@ namespace JsonTestTool.Frame
 
         private void btn_POST_Click(object sender, EventArgs e)
         {
+            this.ParentForm.TopMost = true;
             string url = GetUrlString();
             try
             {
@@ -256,11 +248,22 @@ namespace JsonTestTool.Frame
             {
                 this.rtb_ACK.Text = ex.Message;
             }
+            finally
+            {
+                //必须执行一次Update再截图，否则截图中无RichTextBox的文本内容
+                this.rtb_ACK.Update();
+                this.ParentForm.TopMost = false;
+                if (this.cb_GetScreenshots.Checked)
+                {
+                    GetScreenshots();
+                }
+            }
         }
 
         private void btn_POST8_Click(object sender, EventArgs e)
         {
             string url = GetUrlString();
+            this.ParentForm.TopMost = true;
             try
             {
                 string temp = htmlUtil.HttpPostUTF8(url, this.rtb_Data.Text);
@@ -270,11 +273,22 @@ namespace JsonTestTool.Frame
             {
                 this.rtb_ACK.Text = ex.Message;
             }
+            finally
+            {
+                //必须执行一次Update再截图，否则截图中无RichTextBox的文本内容
+                this.rtb_ACK.Update();
+                this.ParentForm.TopMost = false;
+                if (this.cb_GetScreenshots.Checked)
+                {
+                    GetScreenshots();
+                }
+            }
         }
 
         private void btn_GET_Click(object sender, EventArgs e)
         {
             string url = GetUrlString();
+            this.ParentForm.TopMost = true; 
             try
             {
                 string temp = htmlUtil.HttpGet(url, this.rtb_Data.Text);
@@ -284,12 +298,42 @@ namespace JsonTestTool.Frame
             {
                 this.rtb_ACK.Text = ex.Message;
             }
+            finally
+            {
+                //必须执行一次Update再截图，否则截图中无RichTextBox的文本内容
+                this.rtb_ACK.Update();
+                this.ParentForm.TopMost = false;
+                if (this.cb_GetScreenshots.Checked)
+                {
+                    GetScreenshots();
+                }
+            }
         }
 
         private void btn_Clear_Click(object sender, EventArgs e)
         {
             this.rtb_ACK.Text = "请选择一个测试节点。";
             this.rtb_Data.Text = string.Empty;
+            this.cb_GetScreenshots.Checked = false;
+        }
+
+        private void GetScreenshots()
+        {
+            try
+            {
+                this.Parent.Show();
+                Bitmap bitmap = new Bitmap(this.Parent.Width, this.Parent.Height);
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    this.Parent.Show();
+                    g.CopyFromScreen(this.Parent.PointToScreen(Point.Empty), Point.Empty, Parent.Size);
+                }
+                bitmap.Save(Path.Combine(Application.StartupPath, string.Format("Screenshots{0}.jpg", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
+            }
+            catch
+            {
+
+            }
         }
     }
 }
