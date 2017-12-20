@@ -25,6 +25,7 @@ namespace JsonTestTool.Frame
         private string logFullPath = string.Empty;
         private delegate string GetUrlOrData();
         private delegate int GetInterval();
+        private delegate void SetMainFormTopMost(bool isTopMost);
 
         private Point m_frmCoordinate = new Point();
 
@@ -114,6 +115,7 @@ namespace JsonTestTool.Frame
 
         private void btn_Cancel_Click(object sender, EventArgs e)
         {
+            SetMainTop(false);
             processBGWorker.WorkerSupportsCancellation = true;
             processBGWorker.CancelAsync();
         }
@@ -121,10 +123,11 @@ namespace JsonTestTool.Frame
         private void btn_Begin_Click(object sender, EventArgs e)
         {
             EnableRequestButton(false);
+            SetMainTop(true);
             logFullPath = Logger.CreateLogFile(this.tb_LogPath.Text);
             try
             {
-                this.rtb_ACK.Text = string.Empty;
+                this.rtb_Logs.Text = string.Empty;
                 this.pbar_TestProcess.Maximum = Convert.ToInt32(this.nud_Count.Value);
                 Dictionary<decimal, RequestMode> ee = new Dictionary<decimal, RequestMode>();
                 switch (requestType)
@@ -181,6 +184,9 @@ namespace JsonTestTool.Frame
             //测试结束后，把LogName置为空。
             logFullPath = string.Empty;
             EnableRequestButton(true);
+
+            SetMainTop(false);
+            GetScreenshots();
         }
 
         private void ProcessBGWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -191,9 +197,32 @@ namespace JsonTestTool.Frame
             {
                 message = e.UserState.ToString();
             }
-            this.rtb_ACK.Text += message;
-            this.lb_Process.Text = string.Format("测试进度:({0}/{1})", e.ProgressPercentage, this.pbar_TestProcess.Maximum);
-            Logger.WriteLog(Path.Combine(this.tb_LogPath.Text, logFullPath),message);
+            //this.rtb_Logs.Text += message;
+            //this.lb_Process.Text = string.Format("测试进度:({0}/{1})", e.ProgressPercentage, this.pbar_TestProcess.Maximum);
+            //Logger.WriteLog(Path.Combine(this.tb_LogPath.Text, logFullPath),message);
+
+            if (e.ProgressPercentage > 0)
+            {
+                this.lb_Process.Text = string.Format("测试进度：({0}/{1})", e.ProgressPercentage, this.pbar_TestProcess.Maximum);
+
+                string strForRTB = LogStringCreator(e.ProgressPercentage, message);
+                this.rtb_Logs.Text += strForRTB;
+            }
+            else
+            {
+                this.lb_Process.Text = string.Format("测试进度：({0}/{1})", this.pbar_TestProcess.Maximum, this.pbar_TestProcess.Maximum);
+                this.rtb_Logs.Text += "测试结束！";
+            }
+
+            this.rtb_Logs.Focus();//让文本框获取焦点   
+            this.rtb_Logs.Select(this.rtb_Logs.TextLength, 0);//设置光标的位置到文本尾  
+            this.rtb_Logs.ScrollToCaret();//滚动到控件光标处
+            if (this.cb_Scrrenshots.Checked)
+            {
+                this.pbar_TestProcess.Update();
+                this.rtb_Logs.Update();
+                GetScreenshots();
+            }
         }
 
         private void ProcessBGWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -494,6 +523,54 @@ namespace JsonTestTool.Frame
             {
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "打开目录");
                 MessageBox.Show(string.Format("打开目录失败。\r\n {0}", ex.Message), "打开目录", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void SetMainTop(bool isTopMost)
+        {
+            string temp = string.Empty;
+            if (this.InvokeRequired)
+            {
+                SetMainFormTopMost guod = new SetMainFormTopMost(SetMainTop);
+                this.Invoke(guod);
+            }
+            else
+            {
+                this.ParentForm.TopMost = isTopMost;
+            }
+        }
+
+        private void GetScreenshots()
+        {
+            try
+            {
+                Bitmap bitmap = new Bitmap(this.Parent.Width, this.Parent.Height);
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.CopyFromScreen(this.Parent.PointToScreen(Point.Empty), Point.Empty, Parent.Size);
+                }
+                bitmap.Save(Path.Combine(Application.StartupPath, string.Format("性能测试Screenshots{0}.jpg", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
+            }
+            catch
+            {
+
+            }
+        }
+
+        private string LogStringCreator(int time, string msg)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine(string.Format("{0} 测试进度: ({1}/{2})", DateTime.Now.ToString("MM-dd HH:mm:ss,fff"), time, this.pbar_TestProcess.Maximum));
+                sb.AppendLine(string.Format("Json请求为:{0}", requestType.ToString()));
+                sb.AppendLine(string.Format("返回结果：{0}", msg));
+                return sb.ToString();
+            }
+            catch (Exception e)
+            {
+                return string.Format("日志生成出错，异常：{0}", e);
             }
         }
     }

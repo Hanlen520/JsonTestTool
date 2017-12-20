@@ -61,6 +61,8 @@
             this.gb_Log = new System.Windows.Forms.GroupBox();
             this.gb_Data = new System.Windows.Forms.GroupBox();
             this.gb_Tree = new System.Windows.Forms.GroupBox();
+            this.gb_ScreenshotsManager = new System.Windows.Forms.GroupBox();
+            this.cb_Scrrenshots = new System.Windows.Forms.CheckBox();
             this.gb_TargeServerInfo.SuspendLayout();
             this.gb_CaseManager.SuspendLayout();
             this.gb_LogControl.SuspendLayout();
@@ -68,6 +70,7 @@
             this.gb_Log.SuspendLayout();
             this.gb_Data.SuspendLayout();
             this.gb_Tree.SuspendLayout();
+            this.gb_ScreenshotsManager.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_Url
@@ -124,7 +127,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Data.Location = new System.Drawing.Point(8, 20);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(194, 202);
+            this.rtb_Data.Size = new System.Drawing.Size(194, 157);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
             // 
@@ -142,7 +145,7 @@
             // lb_RequestType
             // 
             this.lb_RequestType.AutoSize = true;
-            this.lb_RequestType.Location = new System.Drawing.Point(6, 72);
+            this.lb_RequestType.Location = new System.Drawing.Point(6, 66);
             this.lb_RequestType.Name = "lb_RequestType";
             this.lb_RequestType.Size = new System.Drawing.Size(65, 12);
             this.lb_RequestType.TabIndex = 14;
@@ -157,7 +160,7 @@
             "api/hedacmdreq",
             "api/sysinfo",
             "xml/upload"});
-            this.cb_Request.Location = new System.Drawing.Point(7, 87);
+            this.cb_Request.Location = new System.Drawing.Point(7, 81);
             this.cb_Request.Name = "cb_Request";
             this.cb_Request.Size = new System.Drawing.Size(195, 20);
             this.cb_Request.TabIndex = 15;
@@ -222,7 +225,7 @@
             this.gb_TargeServerInfo.Controls.Add(this.lb_RequestType);
             this.gb_TargeServerInfo.Location = new System.Drawing.Point(256, 140);
             this.gb_TargeServerInfo.Name = "gb_TargeServerInfo";
-            this.gb_TargeServerInfo.Size = new System.Drawing.Size(208, 164);
+            this.gb_TargeServerInfo.Size = new System.Drawing.Size(208, 150);
             this.gb_TargeServerInfo.TabIndex = 18;
             this.gb_TargeServerInfo.TabStop = false;
             this.gb_TargeServerInfo.Text = "测试服务器信息";
@@ -230,7 +233,7 @@
             // lb_RequestMode
             // 
             this.lb_RequestMode.AutoSize = true;
-            this.lb_RequestMode.Location = new System.Drawing.Point(7, 123);
+            this.lb_RequestMode.Location = new System.Drawing.Point(7, 108);
             this.lb_RequestMode.Name = "lb_RequestMode";
             this.lb_RequestMode.Size = new System.Drawing.Size(65, 12);
             this.lb_RequestMode.TabIndex = 1;
@@ -238,7 +241,7 @@
             // 
             // tb_RequestMode
             // 
-            this.tb_RequestMode.Location = new System.Drawing.Point(7, 138);
+            this.tb_RequestMode.Location = new System.Drawing.Point(7, 123);
             this.tb_RequestMode.Multiline = true;
             this.tb_RequestMode.Name = "tb_RequestMode";
             this.tb_RequestMode.Size = new System.Drawing.Size(196, 20);
@@ -384,9 +387,9 @@
             // 
             this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
-            this.gb_Data.Location = new System.Drawing.Point(256, 310);
+            this.gb_Data.Location = new System.Drawing.Point(256, 355);
             this.gb_Data.Name = "gb_Data";
-            this.gb_Data.Size = new System.Drawing.Size(208, 228);
+            this.gb_Data.Size = new System.Drawing.Size(208, 183);
             this.gb_Data.TabIndex = 23;
             this.gb_Data.TabStop = false;
             this.gb_Data.Text = "请求数据：";
@@ -403,11 +406,32 @@
             this.gb_Tree.TabStop = false;
             this.gb_Tree.Text = "批量测试请求列表：";
             // 
+            // gb_ScreenshotsManager
+            // 
+            this.gb_ScreenshotsManager.Controls.Add(this.cb_Scrrenshots);
+            this.gb_ScreenshotsManager.Location = new System.Drawing.Point(256, 296);
+            this.gb_ScreenshotsManager.Name = "gb_ScreenshotsManager";
+            this.gb_ScreenshotsManager.Size = new System.Drawing.Size(207, 53);
+            this.gb_ScreenshotsManager.TabIndex = 25;
+            this.gb_ScreenshotsManager.TabStop = false;
+            this.gb_ScreenshotsManager.Text = "测试截图管理";
+            // 
+            // cb_Scrrenshots
+            // 
+            this.cb_Scrrenshots.AutoSize = true;
+            this.cb_Scrrenshots.Location = new System.Drawing.Point(9, 21);
+            this.cb_Scrrenshots.Name = "cb_Scrrenshots";
+            this.cb_Scrrenshots.Size = new System.Drawing.Size(168, 28);
+            this.cb_Scrrenshots.TabIndex = 0;
+            this.cb_Scrrenshots.Text = "测试时是否截图？\r\n勾选后测试期间程序置顶。\r\n";
+            this.cb_Scrrenshots.UseVisualStyleBackColor = true;
+            // 
             // FrmAutoTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 550);
+            this.Controls.Add(this.gb_ScreenshotsManager);
             this.Controls.Add(this.gb_Tree);
             this.Controls.Add(this.gb_TestManager);
             this.Controls.Add(this.gb_Data);
@@ -430,6 +454,8 @@
             this.gb_Log.ResumeLayout(false);
             this.gb_Data.ResumeLayout(false);
             this.gb_Tree.ResumeLayout(false);
+            this.gb_ScreenshotsManager.ResumeLayout(false);
+            this.gb_ScreenshotsManager.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -466,6 +492,8 @@
         private System.Windows.Forms.GroupBox gb_Tree;
         private System.Windows.Forms.Label lb_RequestMode;
         private System.Windows.Forms.TextBox tb_RequestMode;
+        private System.Windows.Forms.GroupBox gb_ScreenshotsManager;
+        private System.Windows.Forms.CheckBox cb_Scrrenshots;
     }
 }
 

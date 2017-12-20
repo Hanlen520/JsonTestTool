@@ -65,6 +65,8 @@
             this.gb_Log = new System.Windows.Forms.GroupBox();
             this.gb_Data = new System.Windows.Forms.GroupBox();
             this.gb_Tree = new System.Windows.Forms.GroupBox();
+            this.gb_ScreenshotsManager = new System.Windows.Forms.GroupBox();
+            this.cb_Scrrenshots = new System.Windows.Forms.CheckBox();
             this.gb_TargeServerInfo.SuspendLayout();
             this.gb_CaseManager.SuspendLayout();
             this.gb_LogControl.SuspendLayout();
@@ -73,6 +75,7 @@
             this.gb_Log.SuspendLayout();
             this.gb_Data.SuspendLayout();
             this.gb_Tree.SuspendLayout();
+            this.gb_ScreenshotsManager.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_IP
@@ -123,7 +126,7 @@
             this.tv_Method.Location = new System.Drawing.Point(8, 20);
             this.tv_Method.Name = "tv_Method";
             this.tv_Method.SelectedImageIndex = 0;
-            this.tv_Method.Size = new System.Drawing.Size(230, 148);
+            this.tv_Method.Size = new System.Drawing.Size(230, 127);
             this.tv_Method.TabIndex = 8;
             this.tv_Method.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterCollapse);
             this.tv_Method.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterExpand);
@@ -146,7 +149,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Data.Location = new System.Drawing.Point(8, 20);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(230, 154);
+            this.rtb_Data.Size = new System.Drawing.Size(230, 109);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
             // 
@@ -436,9 +439,9 @@
             // 
             this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
-            this.gb_Data.Location = new System.Drawing.Point(12, 358);
+            this.gb_Data.Location = new System.Drawing.Point(12, 403);
             this.gb_Data.Name = "gb_Data";
-            this.gb_Data.Size = new System.Drawing.Size(244, 180);
+            this.gb_Data.Size = new System.Drawing.Size(244, 135);
             this.gb_Data.TabIndex = 23;
             this.gb_Data.TabStop = false;
             this.gb_Data.Text = "请求数据：";
@@ -448,18 +451,39 @@
             this.gb_Tree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Tree.Controls.Add(this.tv_Method);
-            this.gb_Tree.Location = new System.Drawing.Point(12, 178);
+            this.gb_Tree.Location = new System.Drawing.Point(12, 244);
             this.gb_Tree.Name = "gb_Tree";
-            this.gb_Tree.Size = new System.Drawing.Size(244, 174);
+            this.gb_Tree.Size = new System.Drawing.Size(244, 153);
             this.gb_Tree.TabIndex = 24;
             this.gb_Tree.TabStop = false;
             this.gb_Tree.Text = "批量测试请求列表：";
+            // 
+            // gb_ScreenshotsManager
+            // 
+            this.gb_ScreenshotsManager.Controls.Add(this.cb_Scrrenshots);
+            this.gb_ScreenshotsManager.Location = new System.Drawing.Point(12, 178);
+            this.gb_ScreenshotsManager.Name = "gb_ScreenshotsManager";
+            this.gb_ScreenshotsManager.Size = new System.Drawing.Size(244, 60);
+            this.gb_ScreenshotsManager.TabIndex = 26;
+            this.gb_ScreenshotsManager.TabStop = false;
+            this.gb_ScreenshotsManager.Text = "测试截图管理";
+            // 
+            // cb_Scrrenshots
+            // 
+            this.cb_Scrrenshots.AutoSize = true;
+            this.cb_Scrrenshots.Location = new System.Drawing.Point(9, 21);
+            this.cb_Scrrenshots.Name = "cb_Scrrenshots";
+            this.cb_Scrrenshots.Size = new System.Drawing.Size(168, 28);
+            this.cb_Scrrenshots.TabIndex = 0;
+            this.cb_Scrrenshots.Text = "测试时是否截图？\r\n勾选后测试期间程序置顶。\r\n";
+            this.cb_Scrrenshots.UseVisualStyleBackColor = true;
             // 
             // FrmPollingTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 550);
+            this.Controls.Add(this.gb_ScreenshotsManager);
             this.Controls.Add(this.gb_Tree);
             this.Controls.Add(this.gb_Data);
             this.Controls.Add(this.gb_Log);
@@ -485,6 +509,8 @@
             this.gb_Log.ResumeLayout(false);
             this.gb_Data.ResumeLayout(false);
             this.gb_Tree.ResumeLayout(false);
+            this.gb_ScreenshotsManager.ResumeLayout(false);
+            this.gb_ScreenshotsManager.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -525,6 +551,8 @@
         private System.Windows.Forms.GroupBox gb_Log;
         private System.Windows.Forms.GroupBox gb_Data;
         private System.Windows.Forms.GroupBox gb_Tree;
+        private System.Windows.Forms.GroupBox gb_ScreenshotsManager;
+        private System.Windows.Forms.CheckBox cb_Scrrenshots;
     }
 }
 

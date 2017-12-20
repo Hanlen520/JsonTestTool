@@ -39,7 +39,7 @@
             this.lb_RequestType = new System.Windows.Forms.Label();
             this.cb_Request = new System.Windows.Forms.ComboBox();
             this.rtb_Data = new System.Windows.Forms.RichTextBox();
-            this.rtb_ACK = new System.Windows.Forms.RichTextBox();
+            this.rtb_Logs = new System.Windows.Forms.RichTextBox();
             this.lb_TestCount = new System.Windows.Forms.Label();
             this.nud_Count = new System.Windows.Forms.NumericUpDown();
             this.gb_TargetServer = new System.Windows.Forms.GroupBox();
@@ -63,6 +63,8 @@
             this.gb_Log = new System.Windows.Forms.GroupBox();
             this.gb_TreeView = new System.Windows.Forms.GroupBox();
             this.gb_Data = new System.Windows.Forms.GroupBox();
+            this.gb_Screenshots = new System.Windows.Forms.GroupBox();
+            this.cb_Scrrenshots = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Count)).BeginInit();
             this.gb_TargetServer.SuspendLayout();
             this.gb_RequestMode.SuspendLayout();
@@ -72,6 +74,7 @@
             this.gb_Log.SuspendLayout();
             this.gb_TreeView.SuspendLayout();
             this.gb_Data.SuspendLayout();
+            this.gb_Screenshots.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_IP
@@ -123,7 +126,7 @@
             this.tv_Method.Location = new System.Drawing.Point(6, 20);
             this.tv_Method.Name = "tv_Method";
             this.tv_Method.SelectedImageIndex = 0;
-            this.tv_Method.Size = new System.Drawing.Size(232, 161);
+            this.tv_Method.Size = new System.Drawing.Size(232, 142);
             this.tv_Method.TabIndex = 8;
             this.tv_Method.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterCollapse);
             this.tv_Method.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.tv_Method_AfterExpand);
@@ -168,22 +171,22 @@
             this.rtb_Data.Cursor = System.Windows.Forms.Cursors.Default;
             this.rtb_Data.Location = new System.Drawing.Point(6, 20);
             this.rtb_Data.Name = "rtb_Data";
-            this.rtb_Data.Size = new System.Drawing.Size(232, 165);
+            this.rtb_Data.Size = new System.Drawing.Size(232, 130);
             this.rtb_Data.TabIndex = 10;
             this.rtb_Data.Text = "";
             this.rtb_Data.TextChanged += new System.EventHandler(this.rtb_Data_TextChanged);
             // 
-            // rtb_ACK
+            // rtb_Logs
             // 
-            this.rtb_ACK.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.rtb_Logs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtb_ACK.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtb_ACK.Location = new System.Drawing.Point(6, 20);
-            this.rtb_ACK.Name = "rtb_ACK";
-            this.rtb_ACK.Size = new System.Drawing.Size(464, 358);
-            this.rtb_ACK.TabIndex = 12;
-            this.rtb_ACK.Text = "";
+            this.rtb_Logs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rtb_Logs.Location = new System.Drawing.Point(6, 20);
+            this.rtb_Logs.Name = "rtb_Logs";
+            this.rtb_Logs.Size = new System.Drawing.Size(464, 358);
+            this.rtb_Logs.TabIndex = 12;
+            this.rtb_Logs.Text = "";
             // 
             // lb_TestCount
             // 
@@ -414,7 +417,7 @@
             this.gb_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gb_Log.Controls.Add(this.rtb_ACK);
+            this.gb_Log.Controls.Add(this.rtb_Logs);
             this.gb_Log.Location = new System.Drawing.Point(262, 155);
             this.gb_Log.Name = "gb_Log";
             this.gb_Log.Size = new System.Drawing.Size(476, 384);
@@ -427,9 +430,9 @@
             this.gb_TreeView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_TreeView.Controls.Add(this.tv_Method);
-            this.gb_TreeView.Location = new System.Drawing.Point(12, 155);
+            this.gb_TreeView.Location = new System.Drawing.Point(12, 209);
             this.gb_TreeView.Name = "gb_TreeView";
-            this.gb_TreeView.Size = new System.Drawing.Size(244, 187);
+            this.gb_TreeView.Size = new System.Drawing.Size(244, 168);
             this.gb_TreeView.TabIndex = 27;
             this.gb_TreeView.TabStop = false;
             this.gb_TreeView.Text = "性能测试请求列表：";
@@ -438,18 +441,39 @@
             // 
             this.gb_Data.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.gb_Data.Controls.Add(this.rtb_Data);
-            this.gb_Data.Location = new System.Drawing.Point(12, 348);
+            this.gb_Data.Location = new System.Drawing.Point(12, 383);
             this.gb_Data.Name = "gb_Data";
-            this.gb_Data.Size = new System.Drawing.Size(244, 191);
+            this.gb_Data.Size = new System.Drawing.Size(244, 156);
             this.gb_Data.TabIndex = 28;
             this.gb_Data.TabStop = false;
             this.gb_Data.Text = "Json请求数据：";
+            // 
+            // gb_Screenshots
+            // 
+            this.gb_Screenshots.Controls.Add(this.cb_Scrrenshots);
+            this.gb_Screenshots.Location = new System.Drawing.Point(12, 155);
+            this.gb_Screenshots.Name = "gb_Screenshots";
+            this.gb_Screenshots.Size = new System.Drawing.Size(244, 48);
+            this.gb_Screenshots.TabIndex = 29;
+            this.gb_Screenshots.TabStop = false;
+            this.gb_Screenshots.Text = "测试截图管理";
+            // 
+            // cb_Scrrenshots
+            // 
+            this.cb_Scrrenshots.AutoSize = true;
+            this.cb_Scrrenshots.Location = new System.Drawing.Point(11, 21);
+            this.cb_Scrrenshots.Name = "cb_Scrrenshots";
+            this.cb_Scrrenshots.Size = new System.Drawing.Size(192, 16);
+            this.cb_Scrrenshots.TabIndex = 1;
+            this.cb_Scrrenshots.Text = "测试时是否截图？截图请勾选。\r\n";
+            this.cb_Scrrenshots.UseVisualStyleBackColor = true;
             // 
             // FrmPerformentTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 550);
+            this.Controls.Add(this.gb_Screenshots);
             this.Controls.Add(this.gb_Data);
             this.Controls.Add(this.gb_TreeView);
             this.Controls.Add(this.gb_Log);
@@ -475,6 +499,8 @@
             this.gb_Log.ResumeLayout(false);
             this.gb_TreeView.ResumeLayout(false);
             this.gb_Data.ResumeLayout(false);
+            this.gb_Screenshots.ResumeLayout(false);
+            this.gb_Screenshots.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -487,7 +513,7 @@
         private System.Windows.Forms.TextBox Tb_Port;
         private System.Windows.Forms.TreeView tv_Method;
         private System.Windows.Forms.RichTextBox rtb_Data;
-        private System.Windows.Forms.RichTextBox rtb_ACK;
+        private System.Windows.Forms.RichTextBox rtb_Logs;
         private System.Windows.Forms.Label lb_RequestType;
         private System.Windows.Forms.ComboBox cb_Request;
         private System.Windows.Forms.Label lb_TestCount;
@@ -514,5 +540,7 @@
         private System.Windows.Forms.GroupBox gb_Log;
         private System.Windows.Forms.GroupBox gb_TreeView;
         private System.Windows.Forms.GroupBox gb_Data;
+        private System.Windows.Forms.GroupBox gb_Screenshots;
+        private System.Windows.Forms.CheckBox cb_Scrrenshots;
     }
 }

@@ -18,7 +18,6 @@ namespace JsonTestTool.Frame
         const string COLLAPSE = "收缩节点";
         HttpUtil htmlUtil = new HttpUtil();
         XmlDocument doc = new XmlDocument();
-        public bool getScreenshots = false;
 
         public FrmTestSystem()
         {
@@ -328,7 +327,7 @@ namespace JsonTestTool.Frame
                     this.Parent.Show();
                     g.CopyFromScreen(this.Parent.PointToScreen(Point.Empty), Point.Empty, Parent.Size);
                 }
-                bitmap.Save(Path.Combine(Application.StartupPath, string.Format("Screenshots{0}.jpg", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
+                bitmap.Save(Path.Combine(Application.StartupPath, string.Format("普通测试Screenshots{0}.jpg", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
             }
             catch
             {

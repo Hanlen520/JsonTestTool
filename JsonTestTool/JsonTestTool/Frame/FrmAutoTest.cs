@@ -32,6 +32,7 @@ namespace JsonTestTool.Frame
         private int nodeIndex = 0;
         private delegate string GetUrlOrData();
         private delegate void SetData(string url, string requestType, string postData);
+        private delegate void SetMainFormTopMost(bool isTopMost);
         private Point m_frmCoordinate = new Point();
 
         private enum xmlElementType
@@ -170,6 +171,7 @@ namespace JsonTestTool.Frame
                 reportFullPath = Logger.CreateAutoReportCSV(this.tb_LogPath.Text);
                 this.processBGWorker.RunWorkerAsync();
                 EnableRequestButton(false);
+                SetMainTop(true);
             }
             catch (ApplicationException aex)
             {
@@ -190,6 +192,7 @@ namespace JsonTestTool.Frame
         private void btn_StopTest_Click(object sender, EventArgs e)
         {
             EnableRequestButton(true);
+            SetMainTop(false);
             processBGWorker.WorkerSupportsCancellation = true;
             processBGWorker.CancelAsync();
         }
@@ -219,6 +222,24 @@ namespace JsonTestTool.Frame
                 FindAndMoveMsgBox(FrmCoordinate.X, FrmCoordinate.Y, true, "打开目录");
                 MessageBox.Show(string.Format("打开目录失败。\r\n {0}", ex.Message), "打开目录", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+        }
+
+        private void GetScreenshots()
+        {
+            try
+            {
+                Bitmap bitmap = new Bitmap(this.Parent.Width, this.Parent.Height);
+                using (Graphics g = Graphics.FromImage(bitmap))
+                {
+                    g.CopyFromScreen(this.Parent.PointToScreen(Point.Empty), Point.Empty, Parent.Size);
+                }
+                bitmap.Save(Path.Combine(Application.StartupPath, string.Format("自动测试Screenshots{0}.jpg", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
+            }
+            catch
+            {
+
+            }
         }
         #endregion
 
@@ -234,6 +255,8 @@ namespace JsonTestTool.Frame
                 MessageBox.Show("测试完成。");
             }
             EnableRequestButton(true);
+            SetMainTop(false);
+            GetScreenshots();
             reportFullPath = string.Empty;
             nodeIndex = 0;
             nodesCount = 0;
@@ -264,6 +287,15 @@ namespace JsonTestTool.Frame
                 this.rtb_Logs.Text += "测试结束！";
 
                 Logger.WriteReport(reportFullPath, "All Done!!!");
+            }
+            this.rtb_Logs.Focus();//让文本框获取焦点   
+            this.rtb_Logs.Select(this.rtb_Logs.TextLength, 0);//设置光标的位置到文本尾  
+            this.rtb_Logs.ScrollToCaret();//滚动到控件光标处
+            if (this.cb_Scrrenshots.Checked)
+            {
+                this.pbar_TestProcess.Update();
+                this.rtb_Logs.Update();
+                GetScreenshots();
             }
         }
 
@@ -600,6 +632,20 @@ namespace JsonTestTool.Frame
             else
             {
                 return this.GetUrlString();
+            }
+        }
+
+        private void SetMainTop(bool isTopMost)
+        {
+            string temp = string.Empty;
+            if (this.InvokeRequired)
+            {
+                SetMainFormTopMost guod = new SetMainFormTopMost(SetMainTop);
+                this.Invoke(guod);
+            }
+            else
+            {
+                this.ParentForm.TopMost = isTopMost;
             }
         }
 

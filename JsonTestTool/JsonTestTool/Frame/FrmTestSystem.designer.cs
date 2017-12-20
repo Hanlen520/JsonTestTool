@@ -52,17 +52,17 @@
             this.gb_TargeServerInfomation = new System.Windows.Forms.GroupBox();
             this.gb_CaseManager = new System.Windows.Forms.GroupBox();
             this.gb_TestManager = new System.Windows.Forms.GroupBox();
-            this.cb_GetScreenshots = new System.Windows.Forms.CheckBox();
             this.btn_Clear = new System.Windows.Forms.Button();
+            this.cb_GetScreenshots = new System.Windows.Forms.CheckBox();
             this.gb_Data = new System.Windows.Forms.GroupBox();
             this.gb_ACK = new System.Windows.Forms.GroupBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gb_ScreenshotsManager = new System.Windows.Forms.GroupBox();
             this.gb_TargeServerInfomation.SuspendLayout();
             this.gb_CaseManager.SuspendLayout();
             this.gb_TestManager.SuspendLayout();
             this.gb_Data.SuspendLayout();
             this.gb_ACK.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gb_ScreenshotsManager.SuspendLayout();
             this.SuspendLayout();
             // 
             // Lbl_IP
@@ -303,16 +303,6 @@
             this.gb_TestManager.TabStop = false;
             this.gb_TestManager.Text = "测试管理";
             // 
-            // cb_GetScreenshots
-            // 
-            this.cb_GetScreenshots.AutoSize = true;
-            this.cb_GetScreenshots.Location = new System.Drawing.Point(6, 20);
-            this.cb_GetScreenshots.Name = "cb_GetScreenshots";
-            this.cb_GetScreenshots.Size = new System.Drawing.Size(132, 28);
-            this.cb_GetScreenshots.TabIndex = 15;
-            this.cb_GetScreenshots.Text = "测试结束是否截图？\r\n确认是请勾选。\r\n";
-            this.cb_GetScreenshots.UseVisualStyleBackColor = true;
-            // 
             // btn_Clear
             // 
             this.btn_Clear.Location = new System.Drawing.Point(250, 20);
@@ -322,6 +312,16 @@
             this.btn_Clear.Text = "重置";
             this.btn_Clear.UseVisualStyleBackColor = true;
             this.btn_Clear.Click += new System.EventHandler(this.btn_Clear_Click);
+            // 
+            // cb_GetScreenshots
+            // 
+            this.cb_GetScreenshots.AutoSize = true;
+            this.cb_GetScreenshots.Location = new System.Drawing.Point(6, 20);
+            this.cb_GetScreenshots.Name = "cb_GetScreenshots";
+            this.cb_GetScreenshots.Size = new System.Drawing.Size(132, 28);
+            this.cb_GetScreenshots.TabIndex = 15;
+            this.cb_GetScreenshots.Text = "测试结束是否截图？\r\n确认是请勾选。\r\n";
+            this.cb_GetScreenshots.UseVisualStyleBackColor = true;
             // 
             // gb_Data
             // 
@@ -348,22 +348,22 @@
             this.gb_ACK.TabStop = false;
             this.gb_ACK.Text = "返回应答：";
             // 
-            // groupBox1
+            // gb_ScreenshotsManager
             // 
-            this.groupBox1.Controls.Add(this.cb_GetScreenshots);
-            this.groupBox1.Location = new System.Drawing.Point(598, 172);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(141, 64);
-            this.groupBox1.TabIndex = 24;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "测试截图管理";
+            this.gb_ScreenshotsManager.Controls.Add(this.cb_GetScreenshots);
+            this.gb_ScreenshotsManager.Location = new System.Drawing.Point(598, 172);
+            this.gb_ScreenshotsManager.Name = "gb_ScreenshotsManager";
+            this.gb_ScreenshotsManager.Size = new System.Drawing.Size(141, 64);
+            this.gb_ScreenshotsManager.TabIndex = 24;
+            this.gb_ScreenshotsManager.TabStop = false;
+            this.gb_ScreenshotsManager.Text = "测试截图管理";
             // 
             // FrmTestSystem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 550);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gb_ScreenshotsManager);
             this.Controls.Add(this.gb_ACK);
             this.Controls.Add(this.gb_Data);
             this.Controls.Add(this.gb_TestManager);
@@ -380,8 +380,8 @@
             this.gb_TestManager.ResumeLayout(false);
             this.gb_Data.ResumeLayout(false);
             this.gb_ACK.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gb_ScreenshotsManager.ResumeLayout(false);
+            this.gb_ScreenshotsManager.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -413,7 +413,7 @@
         private System.Windows.Forms.GroupBox gb_ACK;
         private System.Windows.Forms.Button btn_Clear;
         private System.Windows.Forms.CheckBox cb_GetScreenshots;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gb_ScreenshotsManager;
     }
 }
 
