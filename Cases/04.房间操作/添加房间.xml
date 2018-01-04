@@ -1,0 +1,6 @@
+<case>
+	<method>AddArea</method>
+	<areaname>房间名</areaname>
+	<areatype>房间类型</areatype>
+	<note>备注</note>
+</case>

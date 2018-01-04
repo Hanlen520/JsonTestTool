@@ -1,0 +1,6 @@
+<case>	
+	<method>TSFileRelay</method>
+	<deviceid>(下级平台+)设备ID，如果是本级平台设备，此处是设备ID，如果是下级(可能多级)，规则是：子平台ID/././设备ID</deviceid>
+	<begtime>开始时间</begtime>
+	<endtime>结束时间</endtime>
+</case>

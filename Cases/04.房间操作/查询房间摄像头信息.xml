@@ -1,0 +1,5 @@
+<case>
+	<method>GetAreaCamera</method>
+	<areaname>房间ID或房间名模糊查询</areaname>
+	<areaid>房间ID,此属性不空时为精确查询</areaid>
+</case>

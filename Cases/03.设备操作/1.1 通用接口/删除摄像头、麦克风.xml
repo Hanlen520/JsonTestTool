@@ -1,0 +1,6 @@
+<case>	
+	<method>DeleteCamera</method>
+	<deviceid>设备ID，批量删除时可以是多个ID，设备ID使用|分割</deviceid>
+	<devicename>设备名</devicename>
+	<delrecord>是否删除录像文件，1-删除、0-不删除</delrecord>
+</case>

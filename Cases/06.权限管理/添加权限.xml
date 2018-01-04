@@ -1,0 +1,8 @@
+<case>	
+	<method>AddPrivilege</method>
+	<privilegename>权限名(唯一)</privilegename>
+	<array>
+		<deviceid>设备ID</deviceid>
+		<devicename>设备名</devicename>
+	</array>
+</case>

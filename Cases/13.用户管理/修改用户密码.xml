@@ -1,0 +1,6 @@
+<case>	
+	<method>UpdatePwd</method>
+	<oldpwd>旧密码</oldpwd>
+	<userid>用户ID</userid>
+	<pwd>新密码</pwd>
+</case>

@@ -1,0 +1,15 @@
+<case>
+	<method>RMSConf</method>
+	<ip>测试数据库服务器IP</ip>
+	<port>端口</port>
+	<retain_time>循环删除录像时间小时为单位，超过此时间的视频文件删除</retain_time>
+	<src_num>最大接入设备数量，现在不限制，填写固定值9999</src_num>
+	<reconn_time>资源断线重连时间秒为单位</reconn_time>
+	<save_type>保存类型0-TS、1-MP4，现在只录制一种TS，填写固定值0</save_type>
+	<length>单媒体文件长度秒为单位</length>
+	<section>切片数量，一个m3u8文件对应多少ts文件</section>
+	<save_pos>保持位置，0-本地、1-云存储，现在只保存本地，填写固定值0</save_pos>
+	<local_path>本地路径</local_path>
+	<leave_space>最大使用空间，当磁盘空间使用达到上限时执行over_opt的操作</leave_space>
+	<over_opt>当磁盘空间使用达到上限时采取的操作</over_opt>
+</case>

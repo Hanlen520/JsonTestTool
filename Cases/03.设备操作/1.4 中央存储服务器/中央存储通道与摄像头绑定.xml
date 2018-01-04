@@ -1,0 +1,6 @@
+<case>	
+	<method>BindCVRCamera</method>
+	<channel>通道号</channel>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>CVR ID</deviceid>
+</case>

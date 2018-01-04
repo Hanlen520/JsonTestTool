@@ -1,0 +1,5 @@
+<case>	
+	<method>DeletePrivilege</method>
+	<privilegeid>权限ID</privilegeid>
+	<privilegename>权限名</privilegename>
+</case>

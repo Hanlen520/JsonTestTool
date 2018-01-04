@@ -1,0 +1,6 @@
+<case>	
+	<method>MP4Preview</method>
+	<url>预览视频流的rtsp地址</url>
+	<loginid>设备登录ID，可以为空，onvif扫描出的地址预览时不能为空</loginid>
+	<loginpwd>设备登录密码，可以为空，onvif扫描出的地址预览时不能为空</loginpwd>
+</case>

@@ -1,0 +1,17 @@
+<case>	
+	<method>BatAddDeviceFromIP</method>
+	<devicetype>设备类型</devicetype>
+	<addmode>批量添加类型</addmode>
+	<loginid>设备连接名</loginid>
+	<loginpwd>设备连接密码</loginpwd>
+	<rtspflag>录像使用主辅流标记</rtspflag>
+	<allurl>使用主辅流地址是否是全地址</allurl>
+	<mainurl>主流地址</mainurl>
+	<auxurl>辅流地址</auxurl>
+	<mic>是否连接拾音器1-连接、0-未连接</mic>
+	<radio>是否连接扬声器1-连接、0-未连接</radio>
+	<array>
+		<ip>IP地址</ip>
+		<ip>IP地址</ip>
+	</array>
+</case>

@@ -1,0 +1,9 @@
+<case>	
+	<method>UpdateRole</method>
+	<roleid>角色ID</roleid>
+	<rolename>角色名，角色可以是现有角色，也可以是当前系统没有的角色，没有时默认按照新加角色处理</rolename>
+	<array>
+		<privilegeid>权限ID</privilegeid>
+		<privilegename>权限名</privilegename>
+	</array>
+</case>

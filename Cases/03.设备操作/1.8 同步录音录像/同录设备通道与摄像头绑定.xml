@@ -1,0 +1,6 @@
+<case>
+	<method>BindSyncRecordCamera</method>
+	<channel>通道号</channel>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>同录设备ID</deviceid>
+</case>

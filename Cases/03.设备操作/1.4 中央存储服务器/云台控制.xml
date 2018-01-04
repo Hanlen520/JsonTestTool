@@ -1,0 +1,8 @@
+<case>	
+	<method>PTZControl</method>
+	<cmd>命令</cmd>
+	<speed>速度(1-7),其他值，默认最快速度</speed>
+	<flag>开始关闭标记，0-开始、1-停止。</flag>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>存储设备ID</deviceid>
+</case>

@@ -1,0 +1,8 @@
+<case>	
+	<method>GetAlarmCamera</method>
+	<areaid>房间ID，查询时可为空</areaid>
+	<alarmid>报警主机ID，查询时可为空</alarmid>
+	<cameraid>摄像头ID，查询时可为空</cameraid>
+	<alarm_in_channel>报警主机输入口，查询时可为空</alarm_in_channel>
+	<alarm_out_channel>报警主机输出口，查询时可为空</alarm_out_channel>
+</case>

@@ -1,0 +1,7 @@
+<case>	
+	<method>StartDownloadAreaFile</method>
+	<areaid>房间ID</areaid>
+	<starttime>开始时间，格式(yyyy-MM-dd HH:MM:SS)</starttime>
+	<endtime>结束时间，格式(yyyy-MM-dd HH:MM:SS)</endtime>
+	<savepath>ftp保存路径，格式(/.../.../)</savepath>
+</case>

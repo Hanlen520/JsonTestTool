@@ -1,0 +1,7 @@
+<case>	
+	<method>KeepMove</method>
+	<x>x轴移动速度</x>
+	<y>y轴移动速度</y>
+	<z>调整变焦，z有值时，x,y值默认无效，操作默认为调焦.</z>
+	<deviceid>设备ID</deviceid>
+</case>

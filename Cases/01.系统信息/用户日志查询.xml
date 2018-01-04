@@ -1,0 +1,6 @@
+<case>
+  <method>UserLogSearch</method>
+  <begtime>开始时间，格式：YYYY-MM-DD，可以为空值</begtime>
+  <endtime>开始时间，格式：YYYY-MM-DD，可以为空值</endtime>
+  <user>用户名或用户ID，可以为空值</user>
+</case>

@@ -1,0 +1,5 @@
+<case>	
+	<method>AddPlat</method>
+	<remoteip>远程子平台IP</remoteip>
+	<port>远程平台端口</port>
+</case>

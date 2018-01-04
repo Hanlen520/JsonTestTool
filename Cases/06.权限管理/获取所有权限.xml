@@ -1,0 +1,6 @@
+<case>	
+	<method>GetPrivilege</method>
+	<flag>0-返回全部，1-winform客户端权限</flag>
+	<privilege>权限ID/权限名/设备名</privilege>
+	<isexact>是否精确查询</isexact>
+</case>

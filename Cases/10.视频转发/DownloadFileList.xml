@@ -1,0 +1,6 @@
+<case>	
+	<method>DownloadFileList</method>
+	<deviceid>设备ID</deviceid>
+	<begtime>开始时间</begtime>
+	<endtime>结束时间</endtime>
+</case>

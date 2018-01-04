@@ -1,0 +1,6 @@
+<case>	
+	<method>GetUser</method>
+	<user>用户ID、用户名、角色名</user>
+	<flag>1-winform,0或空查询所有权限</flag>
+	<isexact>1-精确查询，0-模糊查询</isexact>
+</case>

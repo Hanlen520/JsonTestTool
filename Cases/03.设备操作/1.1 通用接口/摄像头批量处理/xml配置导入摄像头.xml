@@ -1,0 +1,17 @@
+<case>	
+	<method>BatAddDeviceFromXml</method>
+	<addmode>批量添加类型，0-onvif扫描添加、1-手动ip段添加、2-xml文件导入添加</addmode>
+	<array>
+		<devicetype>设备类型</devicetype>
+		<devicename>设备名</devicename>
+		<loginid>设备连接名</loginid>
+		<loginpwd>设备连接密码</loginpwd>
+		<mainrtsp>主流地址</mainrtsp>
+		<auxrtsp>辅流地址</auxrtsp>
+		<flag>录像使用主辅流标记</flag>
+		<devicestate>设备状态</devicestate>
+		<note>备注</note>
+		<mic>拾音器</mic>
+		<radio>扬声器</radio>
+	</array>
+</case>

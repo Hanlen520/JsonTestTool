@@ -1,0 +1,8 @@
+<case>
+	<method>DBConf</method>
+	<dbname>测试数据库名</dbname>
+	<ip>测试数据库服务器IP</ip>
+	<port>端口</port>
+	<dbuser>用户名</dbuser>
+	<dbpwd>密码</dbpwd>
+</case>

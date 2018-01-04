@@ -1,0 +1,5 @@
+<case>	
+	<method>GetRole</method>
+	<role>角色ID/角色名/权限名，等于空字符串时查询所有角色</role>
+	<isexact>1-精确查询，0-模糊查询</isexact>
+</case>

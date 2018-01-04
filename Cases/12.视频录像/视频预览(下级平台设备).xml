@@ -1,0 +1,5 @@
+<case>	
+	<method>DevicePreview</method>
+	<deviceid>设备ID</deviceid>
+	<flag>主辅流标记0-主流，1-辅流。</flag>
+</case>

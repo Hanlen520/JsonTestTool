@@ -1,0 +1,5 @@
+<case>	
+	<method>RtspRelay</method>
+	<deviceid>(下级平台+)设备ID,多个设备ID以|分割，此处不支持下级平台设备的批量转发请求</deviceid>
+	<flag>主辅流标记0-主流，1-辅流</flag>
+</case>

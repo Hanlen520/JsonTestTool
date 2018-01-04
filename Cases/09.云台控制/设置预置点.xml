@@ -1,0 +1,6 @@
+<case>	
+	<method>SetPresets</method>
+	<name>预置点名</name>
+	<token>预置点token，如果是新增预置点，此处设置””或”-1”</token>
+	<deviceid>设备ID</deviceid>
+</case>

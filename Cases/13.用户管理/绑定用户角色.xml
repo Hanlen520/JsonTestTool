@@ -1,0 +1,10 @@
+<case>	
+	<method>BindUserRole</method>
+	<array>
+		<roleid>角色ID</roleid>
+	</array>
+	<array>
+		<roleid>角色ID</roleid>
+	</array>
+	<userid>需要绑定的用户ID</userid>
+</case>

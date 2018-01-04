@@ -1,0 +1,7 @@
+<case>	
+	<method>PTZPreset</method>
+	<cmd>命令，8-设置预置点、9-清除预置点、39-转到预置点</cmd>
+	<index>预置点序号1-300</index>
+	<cameraid>摄像头ID</cameraid>
+	<deviceid>存储设备ID，可为空</deviceid>
+</case>

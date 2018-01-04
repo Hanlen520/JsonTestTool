@@ -1,0 +1,10 @@
+<case>
+	<method>GetDoorCardLog</method>
+	<begtime>开始时间（格式：yyyy-MM-dd）,可以为空</begtime>
+	<endtime>结束时间（格式：yyyy-MM-dd）,可以为空</endtime>
+	<cardid>门卡ID,可以为空</cardid>
+	<user>刷卡用户名或ID,可以为空</user>
+	<area>房间名或ID,可以为空</area>
+	<doorcard>门禁主机名或ID,可以为空</doorcard>
+	<cardreader>门禁读卡器名或ID,可以为空</cardreader>
+</case>
