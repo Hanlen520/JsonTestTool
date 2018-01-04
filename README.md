@@ -32,8 +32,7 @@
 ![][帮助]
 
 ## 关于
-![][]
-
+![][关于]
 
 --------------------------------
 [常规测试]:https://github.com/anthony6li/ARImages/blob/master/ReadMe%E7%94%A8%E5%9B%BE/%E5%B8%B8%E8%A7%84%E6%B5%8B%E8%AF%95%E7%95%8C%E9%9D%A2.png
