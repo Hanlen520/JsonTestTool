@@ -18,11 +18,30 @@
 
 ## 常规测试
 ```XML
-<case>  <method>AddRole</method> <rolename>角色名</rolename> <array>  <privilegeid>权限ID</privilegeid>  <privilegename>权限名</privilegename> </array></case>
+<case>  
+  <method>AddRole</method> 
+  <rolename>角色名</rolename> 
+  <array>  
+    <privilegeid>权限ID</privilegeid>  
+    <privilegename>权限名</privilegename> 
+  </array>
+</case>
 ```
 ![][常规测试]
 
 ## 自动测试
+```XML
+<AutoRoot>
+  <isSSL>0</isSSL> 
+  <IP>10.10.1.77</IP>  
+  <Port>9905</Port>  
+  <RequestType>api/hedajwreq</RequestType>  
+  <RequestMode>1</RequestMode>  
+  <RequestData>    
+    <method>Version</method>  
+  </RequestData>
+</AutoRoot>
+```
 ![][自动测试]
 
 ## 批量测试
