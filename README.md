@@ -5,7 +5,7 @@
 |---|---
 |E-mail|anthony6li@163.com
 
-##  Log
+##    Change Log
 
 
 * 12-4：完成了框架，下一步实现遍历文件夹，获取xml文件，分别添加为TreeView节点。
