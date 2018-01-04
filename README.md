@@ -17,6 +17,9 @@
 * 12-20：添加对测试结果截图的功能，受Winform RichTextBox的限制，只能使用截全屏图的逻辑，故测试期间窗体置顶。
 
 ## 常规测试
+```XML
+<case>  <method>AddRole</method> <rolename>角色名</rolename> <array>  <privilegeid>权限ID</privilegeid>  <privilegename>权限名</privilegename> </array></case>
+```
 ![][常规测试]
 
 ## 自动测试
